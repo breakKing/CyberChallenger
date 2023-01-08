@@ -478,5 +478,4 @@ $RECYCLE.BIN/
 
 # Confing files
 **/appsettings*.json
-**/Properties/*
 !**/ConfigTemplates/*

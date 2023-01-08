@@ -19,9 +19,11 @@ _TournamentService_ - 5005 (http), 7005 (https).
 
 1. Склонировать репозиторий.
 
-2. Для каждого из проектов проделать следующие операции:
-   1. скопировать из папки _ConfigTemplates_ файл _appsettings.Development.json_ в корень проекта (на один уровень с _.csproj_ файлом);
-   2. скопировать из папки _ConfigTemplates_ файл _launchSettings.Development.json_ в папку _Properties_ соответствующего проекта, переименовав файл в _launchSettings.json_; 
-   3. изменить параметры в _appsettings.Development.json_ под свою конфигурацию (адреса сервисов, БД и т.д.).
+2. Для каждого из C#-проектов проделать следующие операции:
+   1. Скопировать из папки _ConfigTemplates_ файл _appsettings.Development.json_ в корень проекта (на один уровень с _.csproj_ файлом);
+   2. Изменить параметры в _appsettings.Development.json_ под свою конфигурацию (адреса сервисов, БД и т.д.).
 
 ### Production
+
+TODO - продумать, когда это будет нужно и составить инструкцию.  
+Нужно будет взаимодействие с _ConfigTemplates/appsettings.Production.json_.
