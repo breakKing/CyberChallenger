@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayApi", "src\GatewayAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamService", "src\TeamService\TeamService.csproj", "{2D25B381-0E59-434B-AADA-B7A81528A72F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Infrastructure", "src\Shared.Infrastructure\Shared.Infrastructure.csproj", "{84CDF7D9-B5B4-4E86-9D4D-ADD3348DB4EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,6 +18,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{13320C11-C791-4C46-B56A-B428E1997B00} = {A0D770AF-9C8D-42EA-9FAB-58F7A7EFDD4D}
 		{2D25B381-0E59-434B-AADA-B7A81528A72F} = {A0D770AF-9C8D-42EA-9FAB-58F7A7EFDD4D}
+		{84CDF7D9-B5B4-4E86-9D4D-ADD3348DB4EB} = {A0D770AF-9C8D-42EA-9FAB-58F7A7EFDD4D}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{13320C11-C791-4C46-B56A-B428E1997B00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -26,5 +29,9 @@ Global
 		{2D25B381-0E59-434B-AADA-B7A81528A72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D25B381-0E59-434B-AADA-B7A81528A72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D25B381-0E59-434B-AADA-B7A81528A72F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84CDF7D9-B5B4-4E86-9D4D-ADD3348DB4EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84CDF7D9-B5B4-4E86-9D4D-ADD3348DB4EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84CDF7D9-B5B4-4E86-9D4D-ADD3348DB4EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84CDF7D9-B5B4-4E86-9D4D-ADD3348DB4EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
