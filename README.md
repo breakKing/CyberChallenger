@@ -7,7 +7,11 @@
 ## Используемые порты
 
 _GatewayApi_ - 5000 (http), 7000 (https).  
-_TeamService_ - 5001 (http), 7001 (https).
+_IdentityProviderService_ - 5001 (http), 7001 (https).  
+_UserProfileService_ - 5002 (http), 7002 (https).  
+_TeamService_ - 5003 (http), 7003 (https).  
+_GameService_ - 5004 (http), 7004 (https).  
+_TournamentService_ - 5005 (http), 7005 (https).  
 
 ## Подготовка
 
