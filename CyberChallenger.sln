@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A0D770AF-9C8D-42EA-9FAB-58F7A7EFDD4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E519480D-1428-4478-8477-DF048719D29C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayApi", "src\GatewayApi\GatewayApi.csproj", "{13320C11-C791-4C46-B56A-B428E1997B00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamService", "src\TeamService\TeamService.csproj", "{2D25B381-0E59-434B-AADA-B7A81528A72F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{13320C11-C791-4C46-B56A-B428E1997B00} = {A0D770AF-9C8D-42EA-9FAB-58F7A7EFDD4D}
+		{2D25B381-0E59-434B-AADA-B7A81528A72F} = {A0D770AF-9C8D-42EA-9FAB-58F7A7EFDD4D}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13320C11-C791-4C46-B56A-B428E1997B00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13320C11-C791-4C46-B56A-B428E1997B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13320C11-C791-4C46-B56A-B428E1997B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13320C11-C791-4C46-B56A-B428E1997B00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D25B381-0E59-434B-AADA-B7A81528A72F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D25B381-0E59-434B-AADA-B7A81528A72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D25B381-0E59-434B-AADA-B7A81528A72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D25B381-0E59-434B-AADA-B7A81528A72F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
