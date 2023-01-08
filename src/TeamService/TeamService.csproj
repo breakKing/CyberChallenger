@@ -9,6 +9,11 @@
 
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="NewId" Version="3.0.3" />
     </ItemGroup>
 
     <ItemGroup>
