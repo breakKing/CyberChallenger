@@ -2,6 +2,7 @@ using Ardalis.Specification.EntityFrameworkCore;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Shared.Infrastructure.Persistence.Entities;
+using Shared.Infrastructure.Persistence.Extensions;
 using Shared.Infrastructure.Persistence.Interfaces;
 using Shared.Infrastructure.Persistence.Models.Dto;
 using Shared.Infrastructure.Persistence.Specifications;
@@ -45,10 +46,7 @@ public sealed class GenericRepository<TEntity, TContext> : IGenericRepository<TE
     {
         var query = BuildQuery(spec, forReadOnly);
 
-        var skipCount = CountSkip(pageNumber, pageSize);
-        query = query.Skip(skipCount).Take(pageSize);
-
-        var data = await query.ToListAsync(ct);
+        var data = await query.ToListFromPaginationAsync(pageNumber, pageSize, ct);
         var count = await query.LongCountAsync(ct);
 
         var pagination = new Pagination(count, pageNumber, pageSize);
@@ -63,11 +61,7 @@ public sealed class GenericRepository<TEntity, TContext> : IGenericRepository<TE
     {
         var query = BuildQuery(spec, forReadOnly);
 
-        var skipCount = CountSkip(pageNumber, pageSize);
-
-        query = query.Skip(skipCount).Take(pageSize);
-
-        var data = await query.ToListAsync(ct);
+        var data = await query.ToListFromPaginationAsync(pageNumber, pageSize, ct);
         var count = await query.LongCountAsync(ct);
 
         var pagination = new Pagination(count, pageNumber, pageSize);
@@ -94,21 +88,7 @@ public sealed class GenericRepository<TEntity, TContext> : IGenericRepository<TE
     }
 
     /// <inheritdoc />
-    public async Task<int> GetCountAsync(CustomSpecification<TEntity> spec, CancellationToken ct = default)
-    {
-        var query = BuildQuery(spec);
-
-        return await query.CountAsync(ct);
-    }
-
-    /// <inheritdoc />
-    public async Task<int> GetCountAsync(CancellationToken ct = default)
-    {
-        return await BaseQuery.CountAsync(ct);
-    }
-
-    /// <inheritdoc />
-    public async Task<long> GetLongCountAsync(CustomSpecification<TEntity> spec, CancellationToken ct = default)
+    public async Task<long> GetCountAsync(CustomSpecification<TEntity> spec, CancellationToken ct = default)
     {
         var query = BuildQuery(spec);
 
@@ -116,7 +96,7 @@ public sealed class GenericRepository<TEntity, TContext> : IGenericRepository<TE
     }
 
     /// <inheritdoc />
-    public async Task<long> GetLongCountAsync(CancellationToken ct = default)
+    public async Task<long> GetCountAsync(CancellationToken ct = default)
     {
         return await BaseQuery.LongCountAsync(ct);
     }
@@ -208,12 +188,4 @@ public sealed class GenericRepository<TEntity, TContext> : IGenericRepository<TE
 
         return SpecificationEvaluator.Default.GetQuery(query, spec);
     }
-
-    /// <summary>
-    /// Подсчёт скипа для пагинации
-    /// </summary>
-    /// <param name="pageNumber">Количество страниц</param>
-    /// <param name="pageSize">Размер страницы</param>
-    /// <returns></returns>
-    private static int CountSkip(int pageNumber, int pageSize) => pageSize * (pageNumber - 1);
 }

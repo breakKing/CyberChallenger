@@ -33,6 +33,7 @@ public sealed class GenericUnitOfWork<TContext> : IGenericUnitOfWork<TContext>
     public async Task CommitAsync(CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(DbTransaction);
+        await _context.SaveChangesAsync(ct);
         await DbTransaction.CommitAsync(ct);
         DbTransaction = null;
     }

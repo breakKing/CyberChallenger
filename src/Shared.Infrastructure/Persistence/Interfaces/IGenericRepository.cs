@@ -82,29 +82,14 @@ public interface IGenericRepository<TEntity>
     /// <param name="spec"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<int> GetCountAsync(CustomSpecification<TEntity> spec, CancellationToken ct = default);
+    Task<long> GetCountAsync(CustomSpecification<TEntity> spec, CancellationToken ct = default);
 
     /// <summary>
     /// Получение количества всех сущностей
     /// </summary>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<int> GetCountAsync(CancellationToken ct = default);
-
-    /// <summary>
-    /// Получение количества сущностей, удовлетворяющих спецификации
-    /// </summary>
-    /// <param name="spec"></param>
-    /// <param name="ct"></param>
-    /// <returns></returns>
-    Task<long> GetLongCountAsync(CustomSpecification<TEntity> spec, CancellationToken ct = default);
-
-    /// <summary>
-    /// Получение количества всех сущностей
-    /// </summary>
-    /// <param name="ct"></param>
-    /// <returns></returns>
-    Task<long> GetLongCountAsync(CancellationToken ct = default);
+    Task<long> GetCountAsync(CancellationToken ct = default);
 
     /// <summary>
     /// Проверка существования хотя бы одной сущности, удовлетворяющей спецификации
