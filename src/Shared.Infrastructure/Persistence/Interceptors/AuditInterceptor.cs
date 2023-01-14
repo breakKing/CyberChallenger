@@ -29,7 +29,7 @@ public sealed class AuditInterceptor : SaveChangesInterceptor
             return;
         }
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffset.UtcNow;
 
         foreach (var entry in context.ChangeTracker.Entries<EntityBase>())
         {

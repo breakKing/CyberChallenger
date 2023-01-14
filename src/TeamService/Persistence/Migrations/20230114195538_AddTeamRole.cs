@@ -41,7 +41,7 @@ namespace TeamService.Persistence.Migrations
                     table.PrimaryKey("pk_team_roles", x => x.id);
                 });
 
-            var now = DateTimeOffset.Now;
+            var now = DateTimeOffset.UtcNow;
             
             migrationBuilder.InsertData(
                 schema: "teams",
