@@ -9,11 +9,17 @@
 
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
+        <PackageReference Include="Mapster" Version="7.3.0" />
+        <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
+        <PackageReference Include="Mediator.Abstractions" Version="2.0.30" />
+        <PackageReference Include="Mediator.SourceGenerator" Version="2.0.30">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="NewId" Version="3.0.3" />
     </ItemGroup>
 
     <ItemGroup>
@@ -25,6 +31,19 @@
     <ItemGroup>
       <ProjectReference Include="..\Shared.Contracts\Shared.Contracts.csproj" />
       <ProjectReference Include="..\Shared.Infrastructure\Shared.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\Assignment\JoinTeam" />
+      <Folder Include="Features\Assignment\LeaveTeam" />
+      <Folder Include="Features\Assignment\SetTeamRole" />
+      <Folder Include="Features\Crud\Delete" />
+      <Folder Include="Features\Crud\ReadMany" />
+      <Folder Include="Features\Crud\ReadOne" />
+      <Folder Include="Features\Crud\Update" />
+      <Folder Include="Features\Player\Create" />
+      <Folder Include="Features\Player\Delete" />
+      <Folder Include="Features\Player\Update" />
     </ItemGroup>
 
 </Project>

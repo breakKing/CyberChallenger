@@ -4,3 +4,6 @@ option csharp_namespace = "Shared.Contracts.TeamService";
 
 import "team_service_contracts.proto";
 
+service TeamCrud {
+  rpc CreateTeam (CreateTeamGrpcRequest) returns (CreateTeamGrpcResponse);
+}

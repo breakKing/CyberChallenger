@@ -6,3 +6,11 @@ import "google/protobuf/wrappers.proto";
 import "shared_contracts.proto";
 import "team_service_models.proto";
 
+message CreateTeamGrpcRequest {
+  string name = 1;
+  string game_id = 2;
+}
+
+message CreateTeamGrpcResponse {
+  
+}

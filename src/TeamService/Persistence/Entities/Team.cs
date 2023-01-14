@@ -15,4 +15,10 @@ public sealed class Team : EntityBase
     {
         Id = NewId.NextGuid();
     }
+
+    public Team(string name, Guid gameId) : this()
+    {
+        Name = name;
+        GameId = gameId;
+    }
 }

@@ -1,13 +1,23 @@
-using TeamService.Persistence;
+using TeamService.Common;
+using TeamService.Common.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddGrpc();
-builder.Services.AddPersistence(builder.Configuration);
+var services = builder.Services;
+var configuration = builder.Configuration;
+
+// Dependency injection
+
+services.AddGrpc();
+services.AddMainServices();
+services.AddInfrastructure(configuration);
+services.AddFeatures();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// App pipeline
+
+app.MapGrpcServices();
 app.MapGet("/", () => "Grpc is running...");
 
 app.Run();
