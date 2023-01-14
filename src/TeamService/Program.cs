@@ -1,4 +1,4 @@
-using TeamService.Common;
+using Shared.Grpc;
 using TeamService.Common.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +8,6 @@ var configuration = builder.Configuration;
 
 // Dependency injection
 
-services.AddGrpc();
 services.AddMainServices();
 services.AddInfrastructure(configuration);
 services.AddFeatures();
