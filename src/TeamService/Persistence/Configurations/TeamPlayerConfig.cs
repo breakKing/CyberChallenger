@@ -24,5 +24,11 @@ public sealed class TeamPlayerConfig : IEntityTypeConfiguration<TeamPlayer>
             .HasForeignKey(tp => tp.PlayerId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(tp => tp.TeamRole)
+            .WithMany()
+            .HasForeignKey(tp => tp.TeamRoleId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
