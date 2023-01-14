@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityProviderService", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameService", "src\GameService\GameService.csproj", "{FAC2800F-29EE-41BA-8894-74968CDB8FF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Contracts", "src\Shared.Contracts\Shared.Contracts.csproj", "{5751C803-157A-4369-A6B5-22173F7F01D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,7 @@ Global
 		{0B375433-B988-4816-AFD2-8B9856BB669B} = {A0D770AF-9C8D-42EA-9FAB-58F7A7EFDD4D}
 		{92D0A06A-9C05-4F5F-BB88-293AE47EEEC0} = {A0D770AF-9C8D-42EA-9FAB-58F7A7EFDD4D}
 		{FAC2800F-29EE-41BA-8894-74968CDB8FF8} = {A0D770AF-9C8D-42EA-9FAB-58F7A7EFDD4D}
+		{5751C803-157A-4369-A6B5-22173F7F01D1} = {A0D770AF-9C8D-42EA-9FAB-58F7A7EFDD4D}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{13320C11-C791-4C46-B56A-B428E1997B00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -61,5 +64,9 @@ Global
 		{FAC2800F-29EE-41BA-8894-74968CDB8FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAC2800F-29EE-41BA-8894-74968CDB8FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAC2800F-29EE-41BA-8894-74968CDB8FF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5751C803-157A-4369-A6B5-22173F7F01D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5751C803-157A-4369-A6B5-22173F7F01D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5751C803-157A-4369-A6B5-22173F7F01D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5751C803-157A-4369-A6B5-22173F7F01D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

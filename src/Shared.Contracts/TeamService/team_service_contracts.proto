@@ -1,0 +1,8 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Shared.Contracts.TeamService";
+
+import "google/protobuf/wrappers.proto";
+import "shared_contracts.proto";
+import "team_service_models.proto";
+

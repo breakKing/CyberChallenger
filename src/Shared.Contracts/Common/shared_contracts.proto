@@ -1,0 +1,15 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Shared.Contracts.Common";
+
+message PaginationGrpcRequest {
+  int32 page_number = 1;
+  int32 page_size = 2;
+}
+
+message PaginationGrpcResponse {
+  int64 items_count = 1;
+  int32 page_number = 2;
+  int32 page_size = 3;
+  int32 pages_count = 4;
+}

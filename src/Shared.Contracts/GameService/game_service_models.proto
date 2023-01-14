@@ -1,0 +1,5 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Shared.Contracts.GameService";
+
+import "google/protobuf/wrappers.proto";
