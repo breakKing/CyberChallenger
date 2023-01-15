@@ -14,5 +14,7 @@ public sealed class RoleConfig : IEntityTypeConfiguration<Role>
         builder.HasMany(r => r.Users)
             .WithMany(u => u.Roles)
             .UsingEntity<UserRole>();
+
+        builder.HasQueryFilter(r => !r.IsDeleted);
     }
 }
