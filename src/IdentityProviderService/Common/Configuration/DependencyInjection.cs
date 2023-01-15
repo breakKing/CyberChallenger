@@ -10,6 +10,7 @@ using IdentityProviderService.Persistence.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
+using SessionOptions = IdentityProviderService.Common.Models.SessionOptions;
 
 namespace IdentityProviderService.Common.Configuration;
 
@@ -45,7 +46,8 @@ public static class DependencyInjection
         services.Replace(ServiceDescriptor.Transient(typeof(IUserStore<User>), typeof(CustomUserStore)));
         services.Replace(ServiceDescriptor.Transient(typeof(IRoleStore<Role>), typeof(CustomRoleStore)));
         
-        services.AddTransient<ISessionManager, SessionManager>();
+        services.AddScoped<ISessionManager, SessionManager>();
+        services.Configure<SessionOptions>(configuration.GetSection(SessionOptions.SectionName));
 
         return services;
     }

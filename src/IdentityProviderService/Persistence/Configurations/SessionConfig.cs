@@ -11,6 +11,8 @@ public sealed class SessionConfig : IEntityTypeConfiguration<Session>
     {
         builder.ToTable("sessions", "identity");
 
+        builder.HasKey(s => new { s.UserId, s.Fingerprint });
+
         builder.HasOne(s => s.User)
             .WithMany(u => u.Sessions)
             .HasForeignKey(s => s.UserId)
@@ -18,5 +20,6 @@ public sealed class SessionConfig : IEntityTypeConfiguration<Session>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Ignore(s => s.ExpiresAt);
+        builder.Ignore(s => s.Expired);
     }
 }
