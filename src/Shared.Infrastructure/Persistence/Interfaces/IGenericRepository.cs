@@ -38,7 +38,7 @@ public interface IGenericRepository<TEntity>
     /// <param name="forReadOnly"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<PaginatedData<TEntity>> GetManyPaginatedAsync(CustomSpecification<TEntity> spec, int pageNumber = 1,
+    Task<DbPaginatedData<TEntity>> GetManyPaginatedAsync(CustomSpecification<TEntity> spec, int pageNumber = 1,
         int pageSize = 20, bool forReadOnly = true, CancellationToken ct = default);
 
     /// <summary>
@@ -51,7 +51,7 @@ public interface IGenericRepository<TEntity>
     /// <param name="ct"></param>
     /// <typeparam name="TProjection"></typeparam>
     /// <returns></returns>
-    Task<PaginatedData<TProjection>> GetManyPaginatedAsync<TProjection>(CustomSpecification<TEntity, TProjection> spec,
+    Task<DbPaginatedData<TProjection>> GetManyPaginatedAsync<TProjection>(CustomSpecification<TEntity, TProjection> spec,
         int pageNumber = 1,
         int pageSize = 20, bool forReadOnly = true, CancellationToken ct = default);
 

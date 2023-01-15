@@ -41,7 +41,7 @@ public sealed class GenericRepository<TEntity, TContext> : IGenericRepository<TE
     }
 
     /// <inheritdoc />
-    public async Task<PaginatedData<TEntity>> GetManyPaginatedAsync(CustomSpecification<TEntity> spec,
+    public async Task<DbPaginatedData<TEntity>> GetManyPaginatedAsync(CustomSpecification<TEntity> spec,
         int pageNumber = 1, int pageSize = 20, bool forReadOnly = true, CancellationToken ct = default)
     {
         var query = BuildQuery(spec, forReadOnly);
@@ -49,13 +49,13 @@ public sealed class GenericRepository<TEntity, TContext> : IGenericRepository<TE
         var data = await query.ToListFromPaginationAsync(pageNumber, pageSize, ct);
         var count = await query.LongCountAsync(ct);
 
-        var pagination = new Pagination(count, pageNumber, pageSize);
+        var pagination = new DbPagination(count, pageNumber, pageSize);
 
-        return new PaginatedData<TEntity>(data, pagination);
+        return new DbPaginatedData<TEntity>(data, pagination);
     }
 
     /// <inheritdoc />
-    public async Task<PaginatedData<TProjection>> GetManyPaginatedAsync<TProjection>(
+    public async Task<DbPaginatedData<TProjection>> GetManyPaginatedAsync<TProjection>(
         CustomSpecification<TEntity, TProjection> spec, int pageNumber = 1,
         int pageSize = 20, bool forReadOnly = true, CancellationToken ct = default)
     {
@@ -64,9 +64,9 @@ public sealed class GenericRepository<TEntity, TContext> : IGenericRepository<TE
         var data = await query.ToListFromPaginationAsync(pageNumber, pageSize, ct);
         var count = await query.LongCountAsync(ct);
 
-        var pagination = new Pagination(count, pageNumber, pageSize);
+        var pagination = new DbPagination(count, pageNumber, pageSize);
 
-        return new PaginatedData<TProjection>(data, pagination);
+        return new DbPaginatedData<TProjection>(data, pagination);
     }
 
     /// <inheritdoc />

@@ -4,12 +4,12 @@ namespace Shared.Infrastructure.Persistence.Models.Dto;
 /// Данные, полученные с пагинацией
 /// </summary>
 /// <typeparam name="TData"></typeparam>
-public class PaginatedData<TData>
+public class DbPaginatedData<TData>
 {
     public List<TData> Data { get; set; }
-    public Pagination Pagination { get; set; }
+    public DbPagination Pagination { get; set; }
 
-    public PaginatedData(List<TData> data, Pagination pagination)
+    public DbPaginatedData(List<TData> data, DbPagination pagination)
     {
         Data = data;
         Pagination = pagination;
