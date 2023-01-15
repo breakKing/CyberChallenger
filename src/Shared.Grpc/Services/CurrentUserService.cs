@@ -7,22 +7,19 @@ namespace Shared.Grpc.Services;
 
 public sealed class CurrentUserService : ICurrentUserService
 {
-    private readonly HttpContext _httpContext;
+    private readonly HttpContext? _httpContext;
 
-    public CurrentUserService(HttpContext httpContext)
+    public CurrentUserService(IHttpContextAccessor accessor)
     {
-        _httpContext = httpContext;
+        _httpContext = accessor.HttpContext;
     }
 
     /// <inheritdoc />
     public Guid? GetIdFromHttpContext()
     {
-        var result =
-            _httpContext.Request.Headers.TryGetValue(GlobalConstants.UserIdHeader, out var userId);
-        
-        if (!result)
+        if (_httpContext?.Request.Headers.ContainsKey(GlobalConstants.UserIdHeader) ?? false)
         {
-            return new Guid(userId.ToString());
+            return Guid.Parse(_httpContext.Request.Headers[GlobalConstants.UserIdHeader]!);
         }
 
         return null;

@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using IdentityProviderService.Common.Extensions;
+﻿using System.Reflection;
 using IdentityProviderService.Common.Interfaces;
 using IdentityProviderService.Common.Models;
 using IdentityProviderService.Common.Services;
@@ -7,9 +6,10 @@ using IdentityProviderService.Features.Identity;
 using IdentityProviderService.Features.Tokens;
 using IdentityProviderService.Persistence;
 using IdentityProviderService.Persistence.Entities;
+using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.IdentityModel.Tokens;
 using SessionOptions = IdentityProviderService.Common.Models.SessionOptions;
 
 namespace IdentityProviderService.Common.Configuration;
@@ -27,8 +27,25 @@ public static class DependencyInjection
 
     public static IServiceCollection AddFeatures(this IServiceCollection services)
     {
+        services.AddMediator(opt =>
+        {
+            opt.ServiceLifetime = ServiceLifetime.Scoped;
+        });
+        services.AddMapping(Assembly.GetExecutingAssembly());
+        
         services.AddIdentityFeatures();
         services.AddTokensFeatures();
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddMapping(this IServiceCollection services, params Assembly[] assemblies)
+    {
+        var typeAdapterConfig = TypeAdapterConfig.GlobalSettings;
+        typeAdapterConfig.Scan(assemblies);
+        
+        var mapper= new Mapper(typeAdapterConfig);
+        services.AddSingleton<IMapper>(mapper);
         
         return services;
     }
