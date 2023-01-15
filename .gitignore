@@ -476,6 +476,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# Confing files
+# Config files
 **/appsettings*.json
 !**/ConfigTemplates/*
+
+# Key files
+**/RsaKeys/*

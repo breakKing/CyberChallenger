@@ -6,5 +6,5 @@ public interface ITokenService
 {
     string GenerateAccessTokenAsync(User user);
     string GenerateRefreshTokenAsync(User user);
-    string ValidateToken(string token);
+    bool ValidateToken(string token);
 }

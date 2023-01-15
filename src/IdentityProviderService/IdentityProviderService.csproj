@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.2" />
         <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
@@ -39,6 +40,7 @@
       <Folder Include="Features\Identity\UserRegister" />
       <Folder Include="Features\Tokens\RefreshTokens" />
       <Folder Include="Features\Tokens\ValidateAccessToken" />
+      <Folder Include="RsaKeys" />
     </ItemGroup>
 
 </Project>
