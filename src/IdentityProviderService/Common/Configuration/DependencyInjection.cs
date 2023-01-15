@@ -23,17 +23,16 @@ public static class DependencyInjection
 
     private static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddIdentityCore<User>(o =>
+        services.AddIdentity<User, Role>(o =>
             {
                 o.SignIn.RequireConfirmedAccount = false;
                 o.User.RequireUniqueEmail = true;
                 o.Password.RequiredLength = 8;
             })
-            .AddDefaultTokenProviders()
             .AddEntityFrameworkStores<IdentityContext>();
 
-        services.Replace(ServiceDescriptor.Transient(typeof(IUserStore<>), typeof(CustomUserStore)));
-        services.Replace(ServiceDescriptor.Transient(typeof(IRoleStore<>), typeof(CustomRoleStore)));
+        services.Replace(ServiceDescriptor.Transient(typeof(IUserStore<User>), typeof(CustomUserStore)));
+        services.Replace(ServiceDescriptor.Transient(typeof(IRoleStore<Role>), typeof(CustomRoleStore)));
 
         return services;
     }
