@@ -12,6 +12,8 @@ namespace IdentityProviderService.Common.Services;
 
 public sealed class TokenService : ITokenService
 {
+    private const string UserIdClaimType = "user-id";
+    
     private readonly IOptions<JwtOptions> _jwtOptions;
     private readonly ILogger<TokenService> _logger;
     
@@ -77,6 +79,27 @@ public sealed class TokenService : ITokenService
         }
         
         return claimsPrincipal is not null;
+    }
+
+    /// <inheritdoc />
+    public Guid? GetUserIdFromToken(string token)
+    {
+        ClaimsPrincipal? claimsPrincipal = null;
+        try
+        {
+            claimsPrincipal = new JwtSecurityTokenHandler().ValidateToken(token, _validationParameters, out _);
+            var idAsString = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == UserIdClaimType)?.Value;
+            if (Guid.TryParse(idAsString, out var id))
+            {
+                return id;
+            }
+        }
+        catch(Exception ex)
+        {
+            _logger.LogInformation("Exception occurred while obtaining user id token: {@Exception}", ex.Message);
+        }
+
+        return null;
     }
 
     private string GenerateToken(User user, long expirationTimeInMinutes)

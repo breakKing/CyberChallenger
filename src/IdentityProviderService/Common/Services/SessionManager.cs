@@ -22,6 +22,20 @@ public sealed class SessionManager : ISessionManager
     }
 
     /// <inheritdoc />
+    public async Task<bool> SessionExistsAsync(Guid userId, string userAgentFingerprint, CancellationToken ct = default)
+    {
+        return await _context.Sessions.AnyAsync(
+            s => s.UserId == userId && s.Fingerprint == userAgentFingerprint, ct);
+    }
+
+    /// <inheritdoc />
+    public async Task<Session?> GetSessionAsync(Guid userId, string userAgentFingerprint, CancellationToken ct = default)
+    {
+        return await _context.Sessions.FirstOrDefaultAsync(
+            s => s.UserId == userId && s.Fingerprint == userAgentFingerprint, ct);
+    }
+
+    /// <inheritdoc />
     public async Task<SessionOperationResult> CreateSessionAsync(User user, string userAgentFingerprint,
         CancellationToken ct = default)
     {

@@ -34,6 +34,7 @@ public static class DependencyInjection
     private static IServiceCollection AddCurrentUserTracker(this IServiceCollection services)
     {
         services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddHttpContextAccessor();
 
         return services;
     }

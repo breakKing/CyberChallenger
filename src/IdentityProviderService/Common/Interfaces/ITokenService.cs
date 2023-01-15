@@ -7,4 +7,5 @@ public interface ITokenService
     string GenerateAccessTokenAsync(User user);
     string GenerateRefreshTokenAsync(User user);
     bool ValidateToken(string token);
+    Guid? GetUserIdFromToken(string token);
 }

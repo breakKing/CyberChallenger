@@ -5,6 +5,10 @@ namespace IdentityProviderService.Common.Interfaces;
 
 public interface ISessionManager
 {
+    Task<bool> SessionExistsAsync(Guid userId, string userAgentFingerprint, CancellationToken ct = default);
+
+    Task<Session?> GetSessionAsync(Guid userId, string userAgentFingerprint, CancellationToken ct = default);
+    
     Task<SessionOperationResult> CreateSessionAsync(User user, string userAgentFingerprint, 
         CancellationToken ct = default);
     
