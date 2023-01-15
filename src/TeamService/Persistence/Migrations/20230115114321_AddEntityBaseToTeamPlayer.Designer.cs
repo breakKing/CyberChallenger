@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TeamService.Persistence;
@@ -11,9 +12,11 @@ using TeamService.Persistence;
 namespace TeamService.Persistence.Migrations
 {
     [DbContext(typeof(TeamContext))]
-    partial class TeamContextModelSnapshot : ModelSnapshot
+    [Migration("20230115114321_AddEntityBaseToTeamPlayer")]
+    partial class AddEntityBaseToTeamPlayer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

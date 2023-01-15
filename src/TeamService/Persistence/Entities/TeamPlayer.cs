@@ -1,6 +1,8 @@
-﻿namespace TeamService.Persistence.Entities;
+﻿using Shared.Infrastructure.Persistence.Entities;
 
-public sealed class TeamPlayer
+namespace TeamService.Persistence.Entities;
+
+public sealed class TeamPlayer : EntityBase
 {
     public Guid TeamId { get; set; }
     public Guid PlayerId { get; set; }
