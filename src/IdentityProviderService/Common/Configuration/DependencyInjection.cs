@@ -1,4 +1,7 @@
-﻿using IdentityProviderService.Common.Services;
+﻿using IdentityProviderService.Common.Interfaces;
+using IdentityProviderService.Common.Services;
+using IdentityProviderService.Features.Identity;
+using IdentityProviderService.Features.Tokens;
 using IdentityProviderService.Persistence;
 using IdentityProviderService.Persistence.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -18,6 +21,9 @@ public static class DependencyInjection
 
     public static IServiceCollection AddFeatures(this IServiceCollection services)
     {
+        services.AddIdentityFeatures();
+        services.AddTokensFeatures();
+        
         return services;
     }
 
@@ -33,6 +39,9 @@ public static class DependencyInjection
 
         services.Replace(ServiceDescriptor.Transient(typeof(IUserStore<User>), typeof(CustomUserStore)));
         services.Replace(ServiceDescriptor.Transient(typeof(IRoleStore<Role>), typeof(CustomRoleStore)));
+
+        services.AddSingleton<ITokenService, TokenService>();
+        services.AddTransient<ISessionManager, SessionManager>();
 
         return services;
     }

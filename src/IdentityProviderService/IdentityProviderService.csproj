@@ -33,4 +33,12 @@
       <ProjectReference Include="..\Shared.Infrastructure\Shared.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\Identity\UserLogin" />
+      <Folder Include="Features\Identity\UserLogout" />
+      <Folder Include="Features\Identity\UserRegister" />
+      <Folder Include="Features\Tokens\RefreshTokens" />
+      <Folder Include="Features\Tokens\ValidateAccessToken" />
+    </ItemGroup>
+
 </Project>
