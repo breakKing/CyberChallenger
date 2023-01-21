@@ -23,6 +23,15 @@ _TournamentService_ - 5005 (http), 7005 (https).
    1. Скопировать из папки _ConfigTemplates_ файл _appsettings.Development.json_ в корень проекта (на один уровень с _.csproj_ файлом);
    2. Изменить параметры в _appsettings.Development.json_ под свою конфигурацию (адреса сервисов, БД и т.д.).
 
+3. Сгенерировать RSA-ключи для подписывания и валидации JWT-токенов в сервисе _IdentityProviderService_. Это можно сделать при помощи OpenSSL:
+   ```
+   openssl genrsa -out private.pem 2048
+   openssl rsa -in private.pem -outform PEM -pubout -out public.pem
+   ```
+   Вместо _private.pem_ и _public.pem_ использовать названия файлов в соответствии с _appsettings.Development.json_ сервиса _IdentityProviderService_.
+
+4. Полученные ключи перетащить в папку _/src/IdentityProviderService/RsaKeys_.
+
 ### Production
 
 TODO - продумать, когда это будет нужно и составить инструкцию.  

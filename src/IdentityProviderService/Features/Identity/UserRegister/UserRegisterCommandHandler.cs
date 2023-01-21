@@ -21,7 +21,7 @@ public sealed class UserRegisterCommandHandler : ICommandHandler<UserRegisterCom
     public async ValueTask<UserRegisterResponse> Handle(UserRegisterCommand command, CancellationToken ct)
     {
         var userExists = await _userManager.Users.AnyAsync(
-            u => u.UserName == command.UserName || u.Email == command.Email, ct);
+            u => u.UserName == command.Username || u.Email == command.Email, ct);
 
         if (userExists)
         {
@@ -35,7 +35,7 @@ public sealed class UserRegisterCommandHandler : ICommandHandler<UserRegisterCom
 
         var user = new User
         {
-            UserName = command.UserName,
+            UserName = command.Username,
             Email = command.Email
         };
 

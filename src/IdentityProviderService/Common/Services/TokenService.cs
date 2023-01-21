@@ -26,14 +26,14 @@ public sealed class TokenService : ITokenService
         _logger = logger;
 
         var rsa = RSA.Create();
-        rsa.ImportRsaPrivateKeyFromFile(jwtOptions.Value.IssuerSigningPrivateKeyFile);
+        rsa.ImportKeyFromPemFile(jwtOptions.Value.IssuerSigningPrivateKeyFile);
         var rsaPrivateKey = new RsaSecurityKey(rsa);
         _signingCredentials = new SigningCredentials(
             key: rsaPrivateKey,
             algorithm: SecurityAlgorithms.RsaSha256);
         
-        rsa.Clear();
-        rsa.ImportRsaPublicKeyFromFile(jwtOptions.Value.IssuerSigningPublicKeyFile);
+        rsa = RSA.Create();
+        rsa.ImportKeyFromPemFile(jwtOptions.Value.IssuerSigningPublicKeyFile);
         var rsaPublicKey = new RsaSecurityKey(rsa);
 
         _validationParameters = new()

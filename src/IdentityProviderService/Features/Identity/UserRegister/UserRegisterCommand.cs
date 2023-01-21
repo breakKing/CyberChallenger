@@ -2,5 +2,5 @@
 
 namespace IdentityProviderService.Features.Identity.UserRegister;
 
-public sealed record UserRegisterCommand(string UserName, string Email, string Password, string PasswordRepeat, 
+public sealed record UserRegisterCommand(string Username, string Email, string Password, string PasswordRepeat, 
     string UserAgentFingerprint) : ICommand<UserRegisterResponse>;
