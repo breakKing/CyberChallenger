@@ -4,16 +4,16 @@ using TeamService.Persistence.Entities;
 
 namespace TeamService.Persistence.Configurations;
 
-public sealed class PlayerConfig : IEntityTypeConfiguration<Player>
+public sealed class ParticipantConfig : IEntityTypeConfiguration<Participant>
 {
     /// <inheritdoc />
-    public void Configure(EntityTypeBuilder<Player> builder)
+    public void Configure(EntityTypeBuilder<Participant> builder)
     {
-        builder.ToTable("players", "teams");
+        builder.ToTable("participants", "teams");
 
         builder.HasMany(p => p.Teams)
-            .WithMany(t => t.Players)
-            .UsingEntity<TeamPlayer>();
+            .WithMany(t => t.Participants)
+            .UsingEntity<TeamParticipant>();
 
         builder.HasIndex(p => p.Nickname)
             .IsUnique();

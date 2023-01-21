@@ -6,8 +6,8 @@ namespace TeamService.Persistence;
 public sealed class TeamContext : DbContext
 {
     public DbSet<Team> Teams => Set<Team>();
-    public DbSet<Player> Players => Set<Player>();
-    public DbSet<TeamPlayer> TeamPlayers => Set<TeamPlayer>();
+    public DbSet<Participant> Participants => Set<Participant>();
+    public DbSet<TeamParticipant> TeamParticipants => Set<TeamParticipant>();
     public DbSet<TeamRole> TeamsRoles => Set<TeamRole>();
     
     /// <inheritdoc />

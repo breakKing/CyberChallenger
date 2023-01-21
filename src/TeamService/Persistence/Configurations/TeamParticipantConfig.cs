@@ -4,14 +4,14 @@ using TeamService.Persistence.Entities;
 
 namespace TeamService.Persistence.Configurations;
 
-public sealed class TeamPlayerConfig : IEntityTypeConfiguration<TeamPlayer>
+public sealed class TeamParticipantConfig : IEntityTypeConfiguration<TeamParticipant>
 {
     /// <inheritdoc />
-    public void Configure(EntityTypeBuilder<TeamPlayer> builder)
+    public void Configure(EntityTypeBuilder<TeamParticipant> builder)
     {
-        builder.ToTable("teams_players", "teams");
+        builder.ToTable("teams_participants", "teams");
 
-        builder.HasKey(tp => new { tp.TeamId, tp.PlayerId });
+        builder.HasKey(tp => new { tp.TeamId, PlayerId = tp.ParticipantId });
 
         builder.HasOne(tp => tp.Team)
             .WithMany()
@@ -19,9 +19,9 @@ public sealed class TeamPlayerConfig : IEntityTypeConfiguration<TeamPlayer>
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
         
-        builder.HasOne(tp => tp.Player)
+        builder.HasOne(tp => tp.Participant)
             .WithMany()
-            .HasForeignKey(tp => tp.PlayerId)
+            .HasForeignKey(tp => tp.ParticipantId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 

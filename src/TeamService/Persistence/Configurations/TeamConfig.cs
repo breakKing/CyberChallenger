@@ -11,9 +11,9 @@ public sealed class TeamConfig : IEntityTypeConfiguration<Team>
     {
         builder.ToTable("teams", "teams");
 
-        builder.HasMany(t => t.Players)
+        builder.HasMany(t => t.Participants)
             .WithMany(p => p.Teams)
-            .UsingEntity<TeamPlayer>();
+            .UsingEntity<TeamParticipant>();
 
         builder.Property(t => t.GameId)
             .IsRequired();

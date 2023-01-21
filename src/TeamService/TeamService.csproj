@@ -42,9 +42,9 @@
       <Folder Include="Features\Crud\ReadMany" />
       <Folder Include="Features\Crud\ReadOne" />
       <Folder Include="Features\Crud\Update" />
-      <Folder Include="Features\Player\Create" />
-      <Folder Include="Features\Player\Delete" />
-      <Folder Include="Features\Player\Update" />
+      <Folder Include="Features\Participant\Create" />
+      <Folder Include="Features\Participant\Delete" />
+      <Folder Include="Features\Participant\Update" />
     </ItemGroup>
 
 </Project>

@@ -9,7 +9,7 @@ public sealed class Team : EntityBase
     public string Name { get; set; } = string.Empty;
     public Guid GameId { get; set; }
     
-    public ICollection<Player>? Players { get; set; }
+    public ICollection<Participant>? Participants { get; set; }
 
     public Team()
     {
