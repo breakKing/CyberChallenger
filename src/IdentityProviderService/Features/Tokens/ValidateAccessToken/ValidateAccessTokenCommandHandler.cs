@@ -41,6 +41,6 @@ public class ValidateAccessTokenCommandHandler : ICommandHandler<ValidateAccessT
             return new ValidateAccessTokenResponse(false);
         }
         
-        return new ValidateAccessTokenResponse(true);
+        return new ValidateAccessTokenResponse(true, userIdFromToken.ToString());
     }
 }

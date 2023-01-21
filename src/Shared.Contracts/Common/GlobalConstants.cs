@@ -2,5 +2,8 @@
 
 public static class GlobalConstants
 {
-    public const string UserIdHeader = "user_id";
+    /// <summary>
+    /// Header, содержащий UserId и использующийся ТОЛЬКО внутри системы
+    /// </summary>
+    public const string UserIdInternalHeader = "user_id";
 }

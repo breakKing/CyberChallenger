@@ -9,10 +9,7 @@ public sealed class CreateTeamEndpoint : EndpointBase<CreateTeamRequest, CreateT
     public override void Configure()
     {
         Post("teams");
-        
-        // TODO убрать после добавления авторизации
-        AllowAnonymous();
-        
+
         ConfigureSwaggerDescription(new CreateTeamEndpointSummary(),
             HttpStatusCode.Created, 
             HttpStatusCode.BadRequest, 

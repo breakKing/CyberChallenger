@@ -17,9 +17,9 @@ public sealed class CurrentUserService : ICurrentUserService
     /// <inheritdoc />
     public Guid? GetIdFromHttpContext()
     {
-        if (_httpContext?.Request.Headers.ContainsKey(GlobalConstants.UserIdHeader) ?? false)
+        if (_httpContext?.Request.Headers.ContainsKey(GlobalConstants.UserIdInternalHeader) ?? false)
         {
-            return Guid.Parse(_httpContext.Request.Headers[GlobalConstants.UserIdHeader]!);
+            return Guid.Parse(_httpContext.Request.Headers[GlobalConstants.UserIdInternalHeader]!);
         }
 
         return null;
@@ -28,7 +28,7 @@ public sealed class CurrentUserService : ICurrentUserService
     /// <inheritdoc />
     public Guid? GetIdFromGrpcContext(ServerCallContext context)
     {
-        var userId = context.RequestHeaders.FirstOrDefault(e => e.Key == GlobalConstants.UserIdHeader)?.Value ?? null;
+        var userId = context.RequestHeaders.FirstOrDefault(e => e.Key == GlobalConstants.UserIdInternalHeader)?.Value ?? null;
         
         if (!string.IsNullOrEmpty(userId))
         {

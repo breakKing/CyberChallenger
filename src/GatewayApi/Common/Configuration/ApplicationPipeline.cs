@@ -2,7 +2,7 @@
 using FastEndpoints.Swagger;
 using Shared.Contracts.GatewayApi.Base;
 
-namespace GatewayApi.Configuration;
+namespace GatewayApi.Common.Configuration;
 
 public static class ApplicationPipeline
 {
