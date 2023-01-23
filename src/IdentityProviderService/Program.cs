@@ -1,5 +1,4 @@
 using IdentityProviderService.Common.Configuration;
-using Shared.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,13 +9,11 @@ var configuration = builder.Configuration;
 
 services.AddMainServices();
 services.AddInfrastructure(configuration);
-services.AddFeatures();
 
 var app = builder.Build();
 
 // App pipeline
 
-app.MapGrpcServices();
-app.MapGet("/", () => "Grpc is running...");
+app.MapEndpoints();
 
 app.Run();

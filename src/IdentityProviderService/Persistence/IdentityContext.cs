@@ -6,8 +6,6 @@ namespace IdentityProviderService.Persistence;
 
 public sealed class IdentityContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
 {
-    public DbSet<Session> Sessions => Set<Session>();
-
     /// <inheritdoc />
     public IdentityContext(DbContextOptions options) : base(options)
     {

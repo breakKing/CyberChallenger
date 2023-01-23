@@ -8,7 +8,7 @@ var configuration = builder.Configuration;
 // Dependency injection
 
 services.AddMainServices();
-services.AddGrpcClients(configuration);
+services.AddProjectServices(configuration);
 services.AddAuth();
 
 var app = builder.Build();

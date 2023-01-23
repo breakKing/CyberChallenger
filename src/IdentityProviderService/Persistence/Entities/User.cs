@@ -12,6 +12,5 @@ public sealed class User : IdentityUser<Guid>
     
     public bool IsDeleted { get; set; }
     
-    public ICollection<Session>? Sessions { get; set; }
     public ICollection<Role>? Roles { get; set; }
 }

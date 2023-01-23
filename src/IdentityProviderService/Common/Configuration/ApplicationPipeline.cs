@@ -1,14 +1,12 @@
-﻿using IdentityProviderService.Features.Identity;
-using IdentityProviderService.Features.Tokens;
+﻿using FastEndpoints;
 
 namespace IdentityProviderService.Common.Configuration;
 
 public static class ApplicationPipeline
 {
-    public static WebApplication MapGrpcServices(this WebApplication app)
+    public static WebApplication MapEndpoints(this WebApplication app)
     {
-        app.MapGrpcService<IdentityManagerGrpcService>();
-        app.MapGrpcService<TokenManagerGrpcService>();
+        app.UseFastEndpoints();
 
         return app;
     }

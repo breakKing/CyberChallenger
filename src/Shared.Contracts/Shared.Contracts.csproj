@@ -98,4 +98,8 @@
         <PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="IdentityProviderService" />
+    </ItemGroup>
+
 </Project>
