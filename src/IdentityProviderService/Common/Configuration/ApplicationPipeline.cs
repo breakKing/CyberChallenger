@@ -1,12 +1,10 @@
-﻿using FastEndpoints;
-
-namespace IdentityProviderService.Common.Configuration;
+﻿namespace IdentityProviderService.Common.Configuration;
 
 public static class ApplicationPipeline
 {
     public static WebApplication MapEndpoints(this WebApplication app)
     {
-        app.UseFastEndpoints();
+        app.MapControllers();
 
         return app;
     }
