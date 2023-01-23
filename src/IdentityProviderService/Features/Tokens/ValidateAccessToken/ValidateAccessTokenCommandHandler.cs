@@ -26,10 +26,9 @@ public class ValidateAccessTokenCommandHandler : ICommandHandler<ValidateAccessT
             return new ValidateAccessTokenResponse(false);
         }
 
-        var userIdFromToken = _tokenService.GetUserIdFromToken(command.AccessToken);
-        var userId = _currentUserService.GetIdFromHttpContext();
+        var userId = _tokenService.GetUserIdFromToken(command.AccessToken);
 
-        if (userId is null || userId != userIdFromToken)
+        if (userId is null)
         {
             return new ValidateAccessTokenResponse(false);
         }
@@ -41,6 +40,6 @@ public class ValidateAccessTokenCommandHandler : ICommandHandler<ValidateAccessT
             return new ValidateAccessTokenResponse(false);
         }
         
-        return new ValidateAccessTokenResponse(true, userIdFromToken.ToString());
+        return new ValidateAccessTokenResponse(true, userId.ToString());
     }
 }

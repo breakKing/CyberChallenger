@@ -12,6 +12,7 @@ public static class DependencyInjection
     public static IServiceCollection AddMainServices(this IServiceCollection services)
     {
         services.AddFastEndpoints();
+        services.AddHttpContextAccessor();
 
         services.AddSwaggerDoc(settings =>
         {

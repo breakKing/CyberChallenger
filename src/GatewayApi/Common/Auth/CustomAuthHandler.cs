@@ -9,14 +9,14 @@ namespace GatewayApi.Common.Auth;
 
 public sealed class CustomAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
-    private readonly TokenManager.TokenManagerClient _client;
+    private readonly IServiceProvider _serviceProvider;
     
     /// <inheritdoc />
     public CustomAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger,
-        UrlEncoder encoder, ISystemClock clock, TokenManager.TokenManagerClient client) : 
+        UrlEncoder encoder, ISystemClock clock, IServiceProvider serviceProvider) : 
         base(options, logger, encoder, clock)
     {
-        _client = client;
+        _serviceProvider = serviceProvider;
     }
 
     /// <inheritdoc />
@@ -58,13 +58,16 @@ public sealed class CustomAuthHandler : AuthenticationHandler<AuthenticationSche
  
     private async Task<AuthenticateResult> ValidateTokenAsync(string accessToken, string userAgentFingerprint)
     {
+        var scope = _serviceProvider.CreateScope();
+        var client = scope.ServiceProvider.GetRequiredService<TokenManager.TokenManagerClient>();
+        
         var grpcRequest = new ValidateAccessTokenGrpcRequest
         {
             AccessToken = accessToken,
             UserAgentFingerprint = userAgentFingerprint
         };
 
-        var grpcResponse = await _client.ValidateAccessTokenAsync(grpcRequest);
+        var grpcResponse = await client.ValidateAccessTokenAsync(grpcRequest);
         
         if (!grpcResponse.Success)
         {
