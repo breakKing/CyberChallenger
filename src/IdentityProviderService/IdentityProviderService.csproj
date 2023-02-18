@@ -11,6 +11,11 @@
         <PackageReference Include="EFCore.NamingConventions" Version="7.0.2" />
         <PackageReference Include="Mapster" Version="7.3.0" />
         <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
+        <PackageReference Include="Mediator.Abstractions" Version="2.0.30" />
+        <PackageReference Include="Mediator.SourceGenerator" Version="2.0.30">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.2" />
         <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.2" />
@@ -45,7 +50,8 @@
     <ItemGroup>
       <Folder Include="Common\Interfaces" />
       <Folder Include="Common\Services" />
-      <Folder Include="Features\Connect\Token" />
+      <Folder Include="Features\Connect\Authorize" />
+      <Folder Include="Features\Connect\Logout" />
     </ItemGroup>
 
 </Project>

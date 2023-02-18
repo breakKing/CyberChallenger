@@ -9,6 +9,7 @@ var configuration = builder.Configuration;
 
 services.AddMainServices();
 services.AddInfrastructure(configuration);
+services.AddFeatures();
 
 var app = builder.Build();
 

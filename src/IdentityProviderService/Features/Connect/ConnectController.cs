@@ -1,7 +1,13 @@
 ﻿using System.Security.Claims;
+using IdentityProviderService.Common.Constants;
+using IdentityProviderService.Features.Connect.Login;
+using IdentityProviderService.Features.Connect.Refresh;
+using IdentityProviderService.Persistence.Entities;
+using Mediator;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
@@ -9,43 +15,67 @@ using OpenIddict.Server.AspNetCore;
 namespace IdentityProviderService.Features.Connect;
 
 [ApiController]
-[Route("connect")]
 public sealed class ConnectController : ControllerBase
 {
-    [HttpPost("token")]
-    public async Task<IActionResult> Exchange()
+    private readonly IMediator _mediator;
+
+    /// <inheritdoc />
+    public ConnectController(IMediator mediator)
     {
-        var request = HttpContext.GetOpenIddictServerRequest() ??
-                      throw new InvalidOperationException("The OpenID Connect request cannot be retrieved.");
-
-        var result = await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
-
-        if (!result.Succeeded || result.Principal is null)
-        {
-            throw new InvalidOperationException("The OpenID Connect request cannot be handled due to authentication failure.");
-        }
-
-        var claimsPrincipal = result.Principal;
-
-        if (request.IsPasswordGrantType())
-        {
-            // TODO логин по паролю
-        }
-
-        else if (request.IsRefreshTokenGrantType())
-        {
-            // TODO выдача refresh token'а
-        }
-
-        else
-        {
-            throw new InvalidOperationException("The specified grant type is not supported.");
-        }
-
-        return SignIn(claimsPrincipal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+        _mediator = mediator;
     }
 
-    [HttpPost("authorize")]
+    [HttpPost(OpenIdRoutes.Token)]
+    public async Task<IActionResult> Token(CancellationToken ct = default)
+    {
+        var oidcRequest = HttpContext.GetOpenIddictServerRequest();
+
+        if (oidcRequest is null)
+        {
+            return BadRequest(new OpenIddictResponse
+            {
+                Error = OpenIddictConstants.Errors.InvalidRequest,
+                ErrorDescription = "Request is not in the OAuth 2.0 form"
+            });
+        }
+
+        var oidcResult = new OidcResult();
+
+        if (oidcRequest.IsPasswordGrantType())
+        {
+            var loginCommand = new LoginCommand(
+                oidcRequest.Username ?? string.Empty,
+                oidcRequest.Password ?? string.Empty);
+
+            var loginResponse = await _mediator.Send(loginCommand, ct);
+            
+            oidcResult = loginResponse.Result;
+        }
+
+        if (oidcRequest.IsRefreshTokenGrantType())
+        {
+            var info = await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+            
+            var refreshCommand = new RefreshCommand(info.Principal!);
+
+            var refreshResponse = await _mediator.Send(refreshCommand, ct);
+            
+            oidcResult = refreshResponse.Result;
+        }
+
+        if (!oidcResult.Succeeded)
+        {
+            return BadRequest(new OpenIddictResponse
+            {
+                Error = oidcResult.Error,
+                ErrorDescription = oidcResult.ErrorDescription
+            });
+        }
+
+        return SignIn(oidcResult.Principal!, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+    }
+
+    [HttpPost(OpenIdRoutes.Authorize)]
     [IgnoreAntiforgeryToken]
     public async Task<IActionResult> Authorize()
     {
@@ -67,7 +97,7 @@ public sealed class ConnectController : ControllerBase
     }
     
     [Authorize(AuthenticationSchemes = OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)]
-    [HttpGet("userinfo")]
+    [HttpGet(OpenIdRoutes.UserInfo)]
     public async Task<IActionResult> Userinfo()
     {
         // TODO реализовать нормально
@@ -82,7 +112,7 @@ public sealed class ConnectController : ControllerBase
     }
 
     [Authorize(AuthenticationSchemes = OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)]
-    [HttpPost("logout")]
+    [HttpPost(OpenIdRoutes.Logout)]
     public async Task<IActionResult> Logout()
     {
         // TODO реализовать нормально
