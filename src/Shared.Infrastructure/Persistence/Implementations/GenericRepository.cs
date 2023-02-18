@@ -1,6 +1,8 @@
+using System.Linq.Expressions;
 using Ardalis.Specification.EntityFrameworkCore;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Shared.Infrastructure.Persistence.Entities;
 using Shared.Infrastructure.Persistence.Extensions;
 using Shared.Infrastructure.Persistence.Interfaces;
@@ -14,6 +16,7 @@ public sealed class GenericRepository<TEntity, TContext> : IGenericRepository<TE
     where TContext : DbContext
 {
     private readonly TContext _context;
+    
     private IQueryable<TEntity> BaseQuery => 
         _context.Set<TEntity>().AsExpandableEFCore().Where(e => !e.IsDeleted);
 
@@ -140,6 +143,16 @@ public sealed class GenericRepository<TEntity, TContext> : IGenericRepository<TE
     }
 
     /// <inheritdoc />
+    public async Task UpdateManyAsync(CustomSpecification<TEntity> specification,
+        Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> updateExpression,
+        CancellationToken ct = default)
+    {
+        var query = BuildQuery(specification, false);
+
+        await query.ExecuteUpdateAsync(updateExpression, ct);
+    }
+
+    /// <inheritdoc />
     public void RemoveOne(TEntity entity)
     {
         _context.Set<TEntity>().Remove(entity);
@@ -149,6 +162,13 @@ public sealed class GenericRepository<TEntity, TContext> : IGenericRepository<TE
     public void RemoveMany(IEnumerable<TEntity> entities)
     {
         _context.Set<TEntity>().RemoveRange(entities);
+    }
+
+    /// <inheritdoc />
+    public async Task RemoveManyAsync(CustomSpecification<TEntity> specification)
+    {
+        await UpdateManyAsync(specification, 
+            p => p.SetProperty(e => e.IsDeleted, _ => true));
     }
 
     /// <summary>

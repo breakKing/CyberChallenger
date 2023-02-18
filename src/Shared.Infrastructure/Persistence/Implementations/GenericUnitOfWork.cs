@@ -26,7 +26,12 @@ public sealed class GenericUnitOfWork<TContext> : IGenericUnitOfWork<TContext>
     /// <inheritdoc />
     public async Task StartTransactionAsync(CancellationToken ct = default)
     {
-        DbTransaction ??= await _context.Database.BeginTransactionAsync(ct);
+        if (DbTransaction is not null)
+        {
+            throw new InvalidOperationException("Transaction has already been started");
+        }
+        
+        DbTransaction = await _context.Database.BeginTransactionAsync(ct);
     }
 
     /// <inheritdoc />

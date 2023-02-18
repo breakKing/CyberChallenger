@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Query;
 using Shared.Infrastructure.Persistence.Entities;
 using Shared.Infrastructure.Persistence.Models.Dto;
 using Shared.Infrastructure.Persistence.Specifications;
@@ -131,6 +133,16 @@ public interface IGenericRepository<TEntity>
     void UpdateMany(IEnumerable<TEntity> entities);
 
     /// <summary>
+    /// Обновление сущностей, соответствующих спецификации
+    /// </summary>
+    /// <param name="specification"></param>
+    /// <param name="updateExpression"></param>
+    /// <param name="ct"></param>
+    Task UpdateManyAsync(CustomSpecification<TEntity> specification, 
+        Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> updateExpression, 
+        CancellationToken ct = default);
+
+    /// <summary>
     /// Удаление сущности
     /// </summary>
     /// <param name="entity"></param>
@@ -141,4 +153,10 @@ public interface IGenericRepository<TEntity>
     /// </summary>
     /// <param name="entities"></param>
     void RemoveMany(IEnumerable<TEntity> entities);
+    
+    /// <summary>
+    /// Удаление сущностей по спецификации
+    /// </summary>
+    /// <param name="specification"></param>
+    Task RemoveManyAsync(CustomSpecification<TEntity> specification);
 }

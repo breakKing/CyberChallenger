@@ -65,4 +65,66 @@ public static class SpecificationBuilderExtensions
 
         return query;
     }
+
+    /// <summary>
+    /// Добавить фильтр, если значение для фильтрации задано <br/>
+    /// Подходит для числовых фильтров, фильтров-гуидов и дат
+    /// </summary>
+    /// <param name="query">Билдер спецификации (см. <see cref="Specification{T,TResult}.Query"/>)</param>
+    /// <param name="filter">Значение для фильтрации</param>
+    /// <param name="expression">Условие для фильтрации</param>
+    /// <typeparam name="TEntity">Тип сущности</typeparam>
+    /// <typeparam name="TFilter">Тип фильтра</typeparam>
+    /// <returns></returns>
+    public static ISpecificationBuilder<TEntity> FilterIfPresented<TEntity, TFilter>(
+        this ISpecificationBuilder<TEntity> query, TFilter? filter, Expression<Func<TEntity, bool>> expression)
+        where TFilter : struct
+    {
+        return filter.HasValue ? query.Where(expression) : query;
+    }
+    
+    /// <summary>
+    /// Добавить фильтр, если строковое значение для фильтрации задано <br/>
+    /// </summary>
+    /// <param name="query">Билдер спецификации (см. <see cref="Specification{T,TResult}.Query"/>)</param>
+    /// <param name="filter">Строка для фильтрации</param>
+    /// <param name="expression">Условие для фильтрации</param>
+    /// <typeparam name="TEntity">Тип сущности</typeparam>
+    /// <returns></returns>
+    public static ISpecificationBuilder<TEntity> FilterIfPresented<TEntity>(
+        this ISpecificationBuilder<TEntity> query, string? filter, Expression<Func<TEntity, bool>> expression)
+    {
+        return !string.IsNullOrWhiteSpace(filter) ? query.Where(expression) : query;
+    }
+    
+    /// <summary>
+    /// Добавить фильтр, если список значений для фильтрации задан
+    /// </summary>
+    /// <param name="query">Билдер спецификации (см. <see cref="Specification{T,TResult}.Query"/>)</param>
+    /// <param name="filter">Список значений для фильтрации</param>
+    /// <param name="expression">Условие для фильтрации</param>
+    /// <typeparam name="TEntity">Тип сущности</typeparam>
+    /// <typeparam name="TValue">Тип элемента списка</typeparam>
+    /// <returns></returns>
+    public static ISpecificationBuilder<TEntity> FilterIfPresented<TEntity, TValue>(
+        this ISpecificationBuilder<TEntity> query, List<TValue>? filter, Expression<Func<TEntity, bool>> expression)
+    {
+        return filter is { Count: > 0 } ? query.Where(expression) : query;
+    }
+    
+    /// <summary>
+    /// Добавить фильтр, если список значений для фильтрации задан
+    /// </summary>
+    /// <param name="query">Билдер спецификации (см. <see cref="Specification{T,TResult}.Query"/>)</param>
+    /// <param name="filter">Список значений для фильтрации</param>
+    /// <param name="expression">Условие для фильтрации</param>
+    /// <typeparam name="TEntity">Тип сущности</typeparam>
+    /// <typeparam name="TValue">Тип элемента списка</typeparam>
+    /// <returns></returns>
+    public static ISpecificationBuilder<TEntity> FilterIfPresented<TEntity, TValue>(
+        this ISpecificationBuilder<TEntity> query, IEnumerable<TValue>? filter, 
+        Expression<Func<TEntity, bool>> expression)
+    {
+        return filter is not null && filter.Any() ? query.Where(expression) : query;
+    }
 }
