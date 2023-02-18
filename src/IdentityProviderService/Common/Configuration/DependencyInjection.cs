@@ -60,7 +60,8 @@ public static class DependencyInjection
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        var jwtOptions = configuration.GetValue<JwtOptions>(JwtOptions.SectionName)!;
+        var jwtOptions = new JwtOptions();
+        configuration.Bind(JwtOptions.SectionName, jwtOptions);
         
         services.AddOpenIddict()
             .AddCore(options =>

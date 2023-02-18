@@ -19,5 +19,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapEndpoints();
 
-app.BootstrapBeforeRun();
+await app.BootstrapBeforeRunAsync();
 app.Run();

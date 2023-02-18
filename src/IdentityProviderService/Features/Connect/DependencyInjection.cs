@@ -4,7 +4,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddOpenIdConnectFeatures(this IServiceCollection services)
     {
-        services.AddSingleton<IClaimsPrincipalService, ClaimsPrincipalService>();
+        services.AddScoped<IClaimsPrincipalService, ClaimsPrincipalService>();
         
         return services;
     }

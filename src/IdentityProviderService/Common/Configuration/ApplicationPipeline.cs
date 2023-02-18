@@ -11,10 +11,10 @@ public static class ApplicationPipeline
         return app;
     }
     
-    public static WebApplication BootstrapBeforeRun(this WebApplication app)
+    public static async Task<WebApplication> BootstrapBeforeRunAsync(this WebApplication app)
     {
         var bootstrapService = app.Services.GetRequiredService<IBootstrapService>();
-        bootstrapService.BootstrapAsync();
+        await bootstrapService.BootstrapAsync();
 
         return app;
     }
