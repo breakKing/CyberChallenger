@@ -15,6 +15,9 @@ var app = builder.Build();
 
 // App pipeline
 
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapEndpoints();
 
+app.BootstrapBeforeRun();
 app.Run();

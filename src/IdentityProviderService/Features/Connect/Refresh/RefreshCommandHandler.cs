@@ -31,7 +31,7 @@ public sealed class RefreshCommandHandler : ICommandHandler<RefreshCommand, Refr
         var principal = command.Principal;
         var user = await _userManager.GetUserAsync(principal);
         
-        if (user is  null)
+        if (user is null)
         {
             return new RefreshResponse(InvalidRefreshTokenResult);
         }

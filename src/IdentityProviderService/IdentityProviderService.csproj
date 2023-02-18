@@ -47,11 +47,4 @@
       <ProjectReference Include="..\Shared.Contracts\Shared.Contracts.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Common\Interfaces" />
-      <Folder Include="Common\Services" />
-      <Folder Include="Features\Connect\Authorize" />
-      <Folder Include="Features\Connect\Logout" />
-    </ItemGroup>
-
 </Project>

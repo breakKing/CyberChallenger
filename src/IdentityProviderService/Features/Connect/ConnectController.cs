@@ -31,11 +31,7 @@ public sealed class ConnectController : ControllerBase
 
         if (oidcRequest is null)
         {
-            return BadRequest(new OpenIddictResponse
-            {
-                Error = OpenIddictConstants.Errors.InvalidRequest,
-                ErrorDescription = "Request is not in the OAuth 2.0 form"
-            });
+            return BadOAuthRequest();
         }
 
         var oidcResult = new OidcResult();
@@ -47,71 +43,67 @@ public sealed class ConnectController : ControllerBase
                 oidcRequest.Password ?? string.Empty);
 
             var loginResponse = await _mediator.Send(loginCommand, ct);
-            
+
             oidcResult = loginResponse.Result;
         }
 
-        if (oidcRequest.IsRefreshTokenGrantType())
+        else if (oidcRequest.IsRefreshTokenGrantType())
         {
             var info = await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
-            
+
             var refreshCommand = new RefreshCommand(info.Principal!);
 
             var refreshResponse = await _mediator.Send(refreshCommand, ct);
-            
+
             oidcResult = refreshResponse.Result;
         }
 
         if (!oidcResult.Succeeded)
         {
-            return BadRequest(new OpenIddictResponse
-            {
-                Error = oidcResult.Error,
-                ErrorDescription = oidcResult.ErrorDescription
-            });
+            return ForbidFromOidcResult(oidcResult);
         }
 
         return SignIn(oidcResult.Principal!, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
     }
 
-    [HttpPost(OpenIdRoutes.Authorize)]
-    [IgnoreAntiforgeryToken]
-    public async Task<IActionResult> Authorize()
-    {
-        // TODO реализовать нормально
-        var request = HttpContext.GetOpenIddictServerRequest() ??
-                      throw new InvalidOperationException("The OpenID Connect request cannot be retrieved.");
-
-        var claims = new List<Claim>();
-        var identity = new ClaimsIdentity(claims, "OpenIddict");
-        var principal = new ClaimsPrincipal(identity);
-
-        // Create a new authentication ticket holding the user identity.
-        var ticket = new AuthenticationTicket(principal,
-            new AuthenticationProperties(), 
-            OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
-
-        // Returning a SignInResult will ask OpenIddict to issue the appropriate access/identity tokens.
-        return SignIn(ticket.Principal, ticket.Properties, ticket.AuthenticationScheme);
-    }
-    
-    [Authorize(AuthenticationSchemes = OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)]
+    [Authorize]
     [HttpGet(OpenIdRoutes.UserInfo)]
     public async Task<IActionResult> Userinfo(CancellationToken ct = default)
     {
-        var claimsPrincipal = (await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)).Principal!;
+        var claimsPrincipal =
+            (await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)).Principal!;
 
         var userInfoQuery = new GetUserInfoQuery(claimsPrincipal);
         var userInfo = await _mediator.Send(userInfoQuery, ct);
-        
+
         return Ok(userInfo);
     }
 
-    [Authorize(AuthenticationSchemes = OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)]
+    [Authorize]
     [HttpPost(OpenIdRoutes.Logout)]
     public async Task<IActionResult> Logout()
     {
-        // TODO реализовать нормально
-        throw new NotImplementedException();
+        return SignOut(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+    }
+
+    private IActionResult ForbidFromOidcResult(OidcResult result)
+    {
+        return Forbid(
+            authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
+            properties: new AuthenticationProperties(new Dictionary<string, string?>
+            {
+                [OpenIddictServerAspNetCoreConstants.Properties.Error] = result.Error,
+                [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] = result.ErrorDescription
+            }));
+    }
+
+    private IActionResult BadOAuthRequest()
+    {
+        return BadRequest(
+            new OpenIddictResponse
+            {
+                Error = OpenIddictConstants.Errors.InvalidRequest,
+                ErrorDescription = "Request is not in the OAuth 2.0 form"
+            });
     }
 }

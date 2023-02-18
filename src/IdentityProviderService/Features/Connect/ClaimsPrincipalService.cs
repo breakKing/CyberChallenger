@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Immutable;
+using System.Security.Claims;
 using IdentityProviderService.Features.Connect.UserInfo;
 using IdentityProviderService.Persistence.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -28,13 +29,11 @@ public sealed class ClaimsPrincipalService : IClaimsPrincipalService
             OpenIddictConstants.Claims.Name,
             OpenIddictConstants.Claims.Role);
 
-        identity.AddClaim(OpenIddictConstants.Claims.Subject, id, OpenIddictConstants.Destinations.AccessToken);
-        identity.AddClaim(OpenIddictConstants.Claims.Username, userName, OpenIddictConstants.Destinations.AccessToken);
+        identity.SetClaim(OpenIddictConstants.Claims.Subject, id);
+        identity.SetClaim(OpenIddictConstants.Claims.Name, userName);
+        identity.SetClaims(OpenIddictConstants.Claims.Role, roles.ToImmutableArray());
 
-        foreach (var userRole in roles)
-        {
-            identity.AddClaim(OpenIddictConstants.Claims.Role, userRole, OpenIddictConstants.Destinations.AccessToken);
-        }
+        identity.SetDestinations(GetDestinations);
 
         var claimsPrincipal = new ClaimsPrincipal(identity);
 
@@ -45,9 +44,31 @@ public sealed class ClaimsPrincipalService : IClaimsPrincipalService
     public UserInfoDto GetUserInfoFromPrincipal(ClaimsPrincipal principal)
     {
         var id = principal.GetClaim(OpenIddictConstants.Claims.Subject) ?? string.Empty;
-        var userName = principal.GetClaim(OpenIddictConstants.Claims.Username) ?? string.Empty;
+        var userName = principal.GetClaim(OpenIddictConstants.Claims.Name) ?? string.Empty;
         var roles = principal.GetClaims(OpenIddictConstants.Claims.Role).ToList();
         
         return new UserInfoDto(id, userName, roles);
+    }
+    private static IEnumerable<string> GetDestinations(Claim claim)
+    {
+        switch (claim.Type)
+        {
+            case OpenIddictConstants.Claims.Name:
+                yield return OpenIddictConstants.Destinations.AccessToken;
+                yield return OpenIddictConstants.Destinations.IdentityToken;
+                yield break;
+
+            case OpenIddictConstants.Claims.Role:
+                yield return OpenIddictConstants.Destinations.AccessToken;
+                yield return OpenIddictConstants.Destinations.IdentityToken;
+                yield break;
+            
+            case "AspNet.Identity.SecurityStamp": 
+                yield break;
+
+            default:
+                yield return OpenIddictConstants.Destinations.AccessToken;
+                yield break;
+        }
     }
 }

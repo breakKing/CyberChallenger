@@ -1,12 +1,15 @@
 ﻿using System.Reflection;
 using IdentityProviderService.Common.Constants;
 using IdentityProviderService.Common.Helpers;
+using IdentityProviderService.Common.Interfaces;
 using IdentityProviderService.Common.Models;
+using IdentityProviderService.Common.Services;
 using IdentityProviderService.Features.Connect;
 using IdentityProviderService.Persistence;
 using IdentityProviderService.Persistence.Entities;
 using Mapster;
 using MapsterMapper;
+using OpenIddict.Validation.AspNetCore;
 
 namespace IdentityProviderService.Common.Configuration;
 
@@ -25,6 +28,8 @@ public static class DependencyInjection
     {
         services.AddControllers();
         services.AddHttpContextAccessor();
+
+        services.AddSingleton<IBootstrapService, BootstrapService>();
 
         return services;
     }
@@ -45,6 +50,11 @@ public static class DependencyInjection
 
     private static IServiceCollection AddOpenIdInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddAuthentication(options =>
+        {
+            options.DefaultScheme = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;
+        });
+        
         services.AddOptions<JwtOptions>()
             .Bind(configuration.GetRequiredSection(JwtOptions.SectionName))
             .ValidateDataAnnotations()
@@ -61,25 +71,20 @@ public static class DependencyInjection
             })
             .AddServer(options =>
             {
-                options.SetTokenEndpointUris(OpenIdRoutes.Token);
-                options.SetAuthorizationEndpointUris(OpenIdRoutes.Authorize);
-                options.SetLogoutEndpointUris(OpenIdRoutes.Logout);
-                options.SetUserinfoEndpointUris(OpenIdRoutes.UserInfo);
+                options.SetTokenEndpointUris(OpenIdRoutes.Token)
+                    .SetLogoutEndpointUris(OpenIdRoutes.Logout)
+                    .SetUserinfoEndpointUris(OpenIdRoutes.UserInfo);
                 
                 options.AddSigningKey(RsaHelper.ImportKeyFromPemFile(jwtOptions.IssuerSigningPrivateKeyFile));
                 options.DisableAccessTokenEncryption();
 
-                options.UseReferenceAccessTokens();
-                options.UseReferenceRefreshTokens();
-
-                options.AllowPasswordFlow();
-                options.AllowRefreshTokenFlow();
+                options.AllowPasswordFlow()
+                    .AllowRefreshTokenFlow();
 
                 options.DisableScopeValidation();
                 
                 options.UseAspNetCore()
                     .EnableTokenEndpointPassthrough()
-                    .EnableAuthorizationEndpointPassthrough()
                     .EnableLogoutEndpointPassthrough()
                     .EnableUserinfoEndpointPassthrough();
             })
@@ -113,7 +118,7 @@ public static class DependencyInjection
         var typeAdapterConfig = TypeAdapterConfig.GlobalSettings;
         typeAdapterConfig.Scan(assemblies);
         
-        var mapper= new Mapper(typeAdapterConfig);
+        var mapper = new Mapper(typeAdapterConfig);
         services.AddSingleton<IMapper>(mapper);
         
         return services;
