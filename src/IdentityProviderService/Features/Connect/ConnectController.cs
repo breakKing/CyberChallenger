@@ -2,12 +2,11 @@
 using IdentityProviderService.Common.Constants;
 using IdentityProviderService.Features.Connect.Login;
 using IdentityProviderService.Features.Connect.Refresh;
-using IdentityProviderService.Persistence.Entities;
+using IdentityProviderService.Features.Connect.UserInfo;
 using Mediator;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
@@ -98,17 +97,14 @@ public sealed class ConnectController : ControllerBase
     
     [Authorize(AuthenticationSchemes = OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)]
     [HttpGet(OpenIdRoutes.UserInfo)]
-    public async Task<IActionResult> Userinfo()
+    public async Task<IActionResult> Userinfo(CancellationToken ct = default)
     {
-        // TODO реализовать нормально
         var claimsPrincipal = (await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)).Principal!;
 
-        return Ok(new
-        {
-            Name = claimsPrincipal.GetClaim(OpenIddictConstants.Claims.Subject),
-            Occupation = "Developer",
-            Age = 43
-        });
+        var userInfoQuery = new GetUserInfoQuery(claimsPrincipal);
+        var userInfo = await _mediator.Send(userInfoQuery, ct);
+        
+        return Ok(userInfo);
     }
 
     [Authorize(AuthenticationSchemes = OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)]

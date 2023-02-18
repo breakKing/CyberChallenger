@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using IdentityProviderService.Features.Connect.UserInfo;
 using IdentityProviderService.Persistence.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -38,5 +39,15 @@ public sealed class ClaimsPrincipalService : IClaimsPrincipalService
         var claimsPrincipal = new ClaimsPrincipal(identity);
 
         return claimsPrincipal;
+    }
+
+    /// <inheritdoc />
+    public UserInfoDto GetUserInfoFromPrincipal(ClaimsPrincipal principal)
+    {
+        var id = principal.GetClaim(OpenIddictConstants.Claims.Subject) ?? string.Empty;
+        var userName = principal.GetClaim(OpenIddictConstants.Claims.Username) ?? string.Empty;
+        var roles = principal.GetClaims(OpenIddictConstants.Claims.Role).ToList();
+        
+        return new UserInfoDto(id, userName, roles);
     }
 }
