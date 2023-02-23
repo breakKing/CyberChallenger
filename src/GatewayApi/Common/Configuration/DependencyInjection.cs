@@ -1,5 +1,7 @@
 ﻿using FastEndpoints.Swagger;
 using GatewayApi.Common.Grpc;
+using GatewayApi.Common.Options;
+using OpenIddict.Validation.AspNetCore;
 
 namespace GatewayApi.Common.Configuration;
 
@@ -14,42 +16,53 @@ public static class DependencyInjection
         {
             settings.Title = "CyberChallenger API";
             settings.Version = "v1";
-
-            // settings.AddAuth(AuthConstants.JwtDisplayName, new()
-            // {
-            //     Type = OpenApiSecuritySchemeType.ApiKey,
-            //     Description = "Введите JWT-токен (без префикса Bearer)",
-            //     Name = AuthConstants.JwtTokenHeader,
-            //     In = OpenApiSecurityApiKeyLocation.Header,
-            // });
-            //
-            // settings.AddAuth(AuthConstants.FingerprintDisplayName, new()
-            // {
-            //     Type = OpenApiSecuritySchemeType.ApiKey,
-            //     Description = "Введите fingerprint (уникально идентифицирующий клиента)",
-            //     Name = AuthConstants.UserAgentFingerprintHeader,
-            //     In = OpenApiSecurityApiKeyLocation.Header,
-            // });
-            
-        }, addJWTBearerAuth: false);
+        });
         
         return services;
     }
 
     public static IServiceCollection AddProjectServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<ServicesOptions>(configuration.GetSection(ServicesOptions.SectionName));
+        services.AddOptions<ServicesOptions>()
+            .Bind(configuration.GetRequiredSection(ServicesOptions.SectionName))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+        
         var servicesOptions = new ServicesOptions();
         configuration.Bind(ServicesOptions.SectionName, servicesOptions);
-        
-        
 
         return services;
     }
 
-    public static IServiceCollection AddAuth(this IServiceCollection services)
+    public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddOptions<AuthOptions>()
+            .Bind(configuration.GetRequiredSection(AuthOptions.SectionName))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
         
+        var authOptions = new AuthOptions();
+        configuration.Bind(AuthOptions.SectionName, authOptions);
+        
+        var servicesOptions = new ServicesOptions();
+        configuration.Bind(ServicesOptions.SectionName, servicesOptions);
+        
+        services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
+        
+        services.AddOpenIddict()
+            .AddValidation(options =>
+            {
+                options.SetIssuer(servicesOptions.IdentityProviderService);
+                options.AddAudiences(authOptions.Audience);
+                
+                options.UseIntrospection()
+                    .SetClientId(authOptions.ClientId)
+                    .SetClientSecret(authOptions.ClientSecret);
+                
+                options.UseSystemNetHttp();
+                
+                options.UseAspNetCore();
+            });
         
         return services;
     }

@@ -76,7 +76,8 @@ public static class DependencyInjection
             {
                 options.SetTokenEndpointUris(OpenIdRoutes.Token)
                     .SetRevocationEndpointUris(OpenIdRoutes.Revocation)
-                    .SetUserinfoEndpointUris(OpenIdRoutes.UserInfo);
+                    .SetUserinfoEndpointUris(OpenIdRoutes.UserInfo)
+                    .SetIntrospectionEndpointUris(OpenIdRoutes.Introspection);
                 
                 options.AddSigningKey(RsaHelper.ImportKeyFromPemFile(jwtOptions.IssuerSigningPrivateKeyFile));
                 options.AddEncryptionKey(RsaHelper.ImportKeyFromPemFile(jwtOptions.IssuerEncryptionPrivateKeyFile));

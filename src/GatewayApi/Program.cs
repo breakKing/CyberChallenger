@@ -9,7 +9,7 @@ var configuration = builder.Configuration;
 
 services.AddMainServices();
 services.AddProjectServices(configuration);
-services.AddAuth();
+services.AddAuth(configuration);
 
 var app = builder.Build();
 
