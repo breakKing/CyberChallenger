@@ -77,7 +77,7 @@ public static class DependencyInjection
                     .SetUserinfoEndpointUris(OpenIdRoutes.UserInfo);
                 
                 options.AddSigningKey(RsaHelper.ImportKeyFromPemFile(jwtOptions.IssuerSigningPrivateKeyFile));
-                options.DisableAccessTokenEncryption();
+                options.AddEncryptionKey(RsaHelper.ImportKeyFromPemFile(jwtOptions.IssuerEncryptionPrivateKeyFile));
 
                 options.AllowPasswordFlow()
                     .AllowRefreshTokenFlow();
@@ -88,6 +88,21 @@ public static class DependencyInjection
                     .EnableTokenEndpointPassthrough()
                     .EnableLogoutEndpointPassthrough()
                     .EnableUserinfoEndpointPassthrough();
+                
+                options.Configure(cfg =>
+                {
+                    cfg.AccessTokenLifetime = TimeSpan.FromMinutes(jwtOptions.AccessTokenExpirationTimeInMinutes);
+                    cfg.RefreshTokenLifetime = TimeSpan.FromMinutes(jwtOptions.RefreshTokenExpirationTimeInMinutes);
+                    cfg.TokenValidationParameters.ValidAudience = jwtOptions.ValidAudience;
+                    cfg.TokenValidationParameters.ValidIssuer = jwtOptions.ValidIssuer;
+                    cfg.TokenValidationParameters.ValidateLifetime = jwtOptions.ValidateLifetime;
+                    cfg.TokenValidationParameters.ValidateAudience = jwtOptions.ValidateAudience;
+                    cfg.TokenValidationParameters.ValidateIssuer = jwtOptions.ValidateIssuer;
+                    cfg.TokenValidationParameters.RequireAudience = jwtOptions.RequireAudience;
+                    cfg.TokenValidationParameters.RequireExpirationTime = jwtOptions.RequireExpirationTime;
+                    cfg.TokenValidationParameters.RequireSignedTokens = jwtOptions.RequireSignedTokens;
+                    cfg.TokenValidationParameters.ValidateIssuerSigningKey = jwtOptions.ValidateIssuerSigningKey;
+                });
             })
             .AddValidation(options =>
             {

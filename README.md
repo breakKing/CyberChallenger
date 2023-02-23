@@ -30,7 +30,11 @@ _TournamentService_ - 5005 (http), 7005 (https).
    ```
    Вместо _private.pem_ и _public.pem_ использовать названия файлов в соответствии с _appsettings.Development.json_ сервиса _IdentityProviderService_.
 
-4. Полученные ключи перетащить в папку _/src/IdentityProviderService/RsaKeys_.
+4. По аналогии с пунктом 3 сгенерировать RSA-ключи для шифрования JWT-токенов. 
+
+5. Обе пары ключей перетащить в папку _/src/IdentityProviderService/RsaKeys_.
+
+6. Публичные ключи также перетащить в папку _/src/GatewayApi/RsaKeys_.
 
 ### Production
 

@@ -9,6 +9,7 @@ public sealed class BootstrapService : IBootstrapService
     private readonly ILogger<BootstrapService> _logger;
 
     private const string OpenIdClientId = "cyber_challenger";
+    private const string OpenIdClientSecret = "cyber_challenger_secret";
     private const string OpenIdClientName = "CyberChallenger";
     
     public BootstrapService(IServiceScopeFactory serviceScopeFactory)
@@ -42,6 +43,7 @@ public sealed class BootstrapService : IBootstrapService
         var appDescriptor = new OpenIddictApplicationDescriptor
         {
             ClientId = OpenIdClientId,
+            ClientSecret = OpenIdClientSecret,
             DisplayName = OpenIdClientName,
             Permissions =
             {

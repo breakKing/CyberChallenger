@@ -6,6 +6,8 @@ public sealed class JwtOptions
 
     public string IssuerSigningPublicKeyFile { get; set; } = string.Empty;
     public string IssuerSigningPrivateKeyFile { get; set; } = string.Empty;
+    public string IssuerEncryptionPrivateKeyFile { get; set; } = string.Empty;
+    public string IssuerEncryptionPublicKeyFile { get; set; } = string.Empty;
     public string ValidAudience { get; set; } = string.Empty;
     public string ValidIssuer { get; set; } = string.Empty;
     public long AccessTokenExpirationTimeInMinutes { get; set; }
