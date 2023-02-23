@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using IdentityProviderService.Common.Constants;
+﻿using IdentityProviderService.Common.Constants;
 using IdentityProviderService.Features.Connect.Login;
 using IdentityProviderService.Features.Connect.Refresh;
 using IdentityProviderService.Features.Connect.UserInfo;

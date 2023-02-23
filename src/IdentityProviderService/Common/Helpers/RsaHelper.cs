@@ -8,7 +8,7 @@ public static class RsaHelper
     public static RsaSecurityKey ImportKeyFromPemFile(string pathToFile)
     {
         var rsa = RSA.Create();
-        var keyBytes = File.ReadAllText(pathToFile);
+        var keyBytes = File.ReadAllText(pathToFile).ToCharArray();
         rsa.ImportFromPem(keyBytes);
 
         return new RsaSecurityKey(rsa);

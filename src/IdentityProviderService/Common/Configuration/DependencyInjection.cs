@@ -9,6 +9,8 @@ using IdentityProviderService.Persistence;
 using IdentityProviderService.Persistence.Entities;
 using Mapster;
 using MapsterMapper;
+using Microsoft.AspNetCore.Identity;
+using OpenIddict.Abstractions;
 using OpenIddict.Validation.AspNetCore;
 
 namespace IdentityProviderService.Common.Configuration;
@@ -19,7 +21,7 @@ public static class DependencyInjection
     {
         services.AddPersistence(configuration.GetConnectionString("Database")!);
         services.AddOpenIdInfrastructure(configuration);
-        services.AddIdentity(configuration);
+        services.AddIdentity();
 
         return services;
     }
@@ -116,7 +118,7 @@ public static class DependencyInjection
         return services;
     }
     
-    private static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddIdentity(this IServiceCollection services)
     {
         services.AddIdentity<User, Role>(o =>
             {
@@ -126,6 +128,11 @@ public static class DependencyInjection
                 
                 o.Password.RequiredLength = 8;
                 o.Password.RequireNonAlphanumeric = false;
+                
+                o.ClaimsIdentity.UserIdClaimType = OpenIddictConstants.Claims.Subject;
+                o.ClaimsIdentity.UserNameClaimType = OpenIddictConstants.Claims.Name;
+                o.ClaimsIdentity.RoleClaimType = OpenIddictConstants.Claims.Role;
+                o.ClaimsIdentity.EmailClaimType = OpenIddictConstants.Claims.Email;
             })
             .AddEntityFrameworkStores<IdentityContext>();
 

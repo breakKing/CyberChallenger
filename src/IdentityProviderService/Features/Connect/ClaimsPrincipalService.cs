@@ -1,8 +1,10 @@
 ﻿using System.Collections.Immutable;
 using System.Security.Claims;
+using IdentityProviderService.Common.Models;
 using IdentityProviderService.Features.Connect.UserInfo;
 using IdentityProviderService.Persistence.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using OpenIddict.Abstractions;
 
@@ -11,10 +13,12 @@ namespace IdentityProviderService.Features.Connect;
 public sealed class ClaimsPrincipalService : IClaimsPrincipalService
 {
     private readonly UserManager<User> _userManager;
+    private readonly IOptions<JwtOptions> _jwtOptions;
 
-    public ClaimsPrincipalService(UserManager<User> userManager)
+    public ClaimsPrincipalService(UserManager<User> userManager, IOptions<JwtOptions> jwtOptions)
     {
         _userManager = userManager;
+        _jwtOptions = jwtOptions;
     }
 
     /// <inheritdoc />
@@ -32,10 +36,15 @@ public sealed class ClaimsPrincipalService : IClaimsPrincipalService
         identity.SetClaim(OpenIddictConstants.Claims.Subject, id);
         identity.SetClaim(OpenIddictConstants.Claims.Name, userName);
         identity.SetClaims(OpenIddictConstants.Claims.Role, roles.ToImmutableArray());
+        identity.SetClaim(OpenIddictConstants.Claims.Audience, _jwtOptions.Value.ValidAudience);
 
         identity.SetDestinations(GetDestinations);
 
         var claimsPrincipal = new ClaimsPrincipal(identity);
+        claimsPrincipal.SetScopes(
+            OpenIddictConstants.Scopes.Roles, 
+            OpenIddictConstants.Scopes.OfflineAccess,
+            OpenIddictConstants.Scopes.Profile);
 
         return claimsPrincipal;
     }
