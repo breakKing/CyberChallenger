@@ -75,7 +75,7 @@ public static class DependencyInjection
             .AddServer(options =>
             {
                 options.SetTokenEndpointUris(OpenIdRoutes.Token)
-                    .SetLogoutEndpointUris(OpenIdRoutes.Logout)
+                    .SetRevocationEndpointUris(OpenIdRoutes.Revocation)
                     .SetUserinfoEndpointUris(OpenIdRoutes.UserInfo);
                 
                 options.AddSigningKey(RsaHelper.ImportKeyFromPemFile(jwtOptions.IssuerSigningPrivateKeyFile));
@@ -84,11 +84,13 @@ public static class DependencyInjection
                 options.AllowPasswordFlow()
                     .AllowRefreshTokenFlow();
 
+                options.UseReferenceAccessTokens()
+                    .UseReferenceRefreshTokens();
+
                 options.DisableScopeValidation();
                 
                 options.UseAspNetCore()
                     .EnableTokenEndpointPassthrough()
-                    .EnableLogoutEndpointPassthrough()
                     .EnableUserinfoEndpointPassthrough();
                 
                 options.Configure(cfg =>
@@ -112,7 +114,6 @@ public static class DependencyInjection
                 options.UseAspNetCore();
 
                 options.EnableAuthorizationEntryValidation();
-                options.EnableTokenEntryValidation();
             });
 
         return services;

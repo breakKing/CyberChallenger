@@ -78,13 +78,6 @@ public sealed class ConnectController : ControllerBase
         return Ok(userInfo);
     }
 
-    [Authorize]
-    [HttpPost(OpenIdRoutes.Logout)]
-    public async Task<IActionResult> Logout()
-    {
-        return SignOut(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
-    }
-
     private IActionResult ForbidFromOidcResult(OidcResult result)
     {
         return Forbid(
