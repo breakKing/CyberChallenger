@@ -9,6 +9,11 @@ public sealed class User : IdentityUser<Guid>
     {
         Id = NewId.NextGuid();
     }
+
+    internal User(Guid id, string userName) : base(userName)
+    {
+        Id = id;
+    }
     
     public bool IsDeleted { get; set; }
     

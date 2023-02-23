@@ -121,8 +121,11 @@ public static class DependencyInjection
         services.AddIdentity<User, Role>(o =>
             {
                 o.SignIn.RequireConfirmedAccount = false;
+                
                 o.User.RequireUniqueEmail = true;
+                
                 o.Password.RequiredLength = 8;
+                o.Password.RequireNonAlphanumeric = false;
             })
             .AddEntityFrameworkStores<IdentityContext>();
 
