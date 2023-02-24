@@ -9,7 +9,6 @@ using IdentityProviderService.Persistence;
 using IdentityProviderService.Persistence.Entities;
 using Mapster;
 using MapsterMapper;
-using Microsoft.AspNetCore.Identity;
 using OpenIddict.Abstractions;
 using OpenIddict.Validation.AspNetCore;
 

@@ -20,12 +20,28 @@ public abstract class EndpointBase<TRequest, TResponse> : Endpoint<TRequest, Api
         await SendAsync(apiResponse, (int)statusCode, ct);
     }
 
-    protected void ConfigureSwaggerDescription(EndpointSummaryBase summary, params HttpStatusCode[] statusCodes)
+    protected virtual void ConfigureSwaggerDescription(EndpointSummaryBase summary, params HttpStatusCode[] statusCodes)
     {
         Description(desc =>
         {
             desc.Accepts<TRequest>("application/json");
             
+            foreach (var code in statusCodes)
+            {
+                desc.Produces<ApiResponse<TResponse>>((int)code);
+            }
+        }, clearDefaults: true);
+        
+        Summary(summary);
+    }
+}
+
+public abstract class EndpointWithoutRequestBase<TResponse> : EndpointBase<EmptyRequest, TResponse>
+{
+    protected override void ConfigureSwaggerDescription(EndpointSummaryBase summary, params HttpStatusCode[] statusCodes)
+    {
+        Description(desc =>
+        {
             foreach (var code in statusCodes)
             {
                 desc.Produces<ApiResponse<TResponse>>((int)code);

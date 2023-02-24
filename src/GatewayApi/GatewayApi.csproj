@@ -33,7 +33,6 @@
 
     <ItemGroup>
       <Folder Include="Endpoints\Auth\Logout" />
-      <Folder Include="Endpoints\Auth\Refresh" />
     </ItemGroup>
 
 </Project>

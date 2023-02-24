@@ -7,13 +7,13 @@ namespace GatewayApi.Endpoints.Auth.Login;
 
 public sealed class LoginEndpoint : EndpointBase<LoginRequest, LoginResponse>
 {
-    private readonly IOpenIdClient _openIdClient;
+    private readonly IAuthService _authService;
     private readonly IMapper _mapper;
 
     /// <inheritdoc />
-    public LoginEndpoint(IOpenIdClient openIdClient, IMapper mapper)
+    public LoginEndpoint(IAuthService authService, IMapper mapper)
     {
-        _openIdClient = openIdClient;
+        _authService = authService;
         _mapper = mapper;
     }
 
@@ -24,7 +24,7 @@ public sealed class LoginEndpoint : EndpointBase<LoginRequest, LoginResponse>
         
         Group<LoginGroup>();
         
-        AllowAnonymous();
+        AllowAnonymous(Http.POST);
 
         ConfigureSwaggerDescription(new LoginEndpointSummary(),
             HttpStatusCode.OK, 
@@ -35,7 +35,7 @@ public sealed class LoginEndpoint : EndpointBase<LoginRequest, LoginResponse>
     /// <inheritdoc />
     public override async Task HandleAsync(LoginRequest req, CancellationToken ct)
     {
-        var result = await _openIdClient.LoginAsync(req.Login, req.Password, ct);
+        var result = await _authService.LoginAsync(req.Login, req.Password, ct);
 
         var task = result.Match<Task>(
             success =>

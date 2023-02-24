@@ -78,7 +78,7 @@ public static class DependencyInjection
             client.BaseAddress = new Uri(servicesOptions.IdentityProviderService);
         });
         
-        services.AddScoped<IOpenIdClient, OpenIdClient>();
+        services.AddScoped<IAuthService, AuthService>();
 
         return services;
     }
