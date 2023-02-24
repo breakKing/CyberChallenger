@@ -57,7 +57,7 @@ public sealed class OpenIdClient : IOpenIdClient
 
         var accessToken = openIdResponse.AccessToken!;
         var refreshToken = openIdResponse.RefreshToken!;
-        var expiresInMinutes = openIdResponse.ExpiresIn / 60;
+        var expiresIn = openIdResponse.ExpiresIn;
 
         var userInfoRequest = new UserInfoRequest
         {
@@ -81,12 +81,10 @@ public sealed class OpenIdClient : IOpenIdClient
             return new LoginFail(openIdResponse.ErrorDescription);
         }
 
-        var userId = userInfoResponse.Claims
-            .FirstOrDefault(c => c.Type == OpenIddictConstants.Claims.Subject)
-            ?.Value!;
+        var userId = userInfoResponse.Claims.FirstOrDefault(c => c.Type == "id")?.Value!;
 
         await _refreshTokenService.StoreRefreshTokenAsync(refreshToken, accessToken, ct);
 
-        return new LoginSuccess(userId, accessToken, refreshToken, expiresInMinutes);
+        return new LoginSuccess(userId, accessToken, refreshToken, expiresIn);
     }
 }

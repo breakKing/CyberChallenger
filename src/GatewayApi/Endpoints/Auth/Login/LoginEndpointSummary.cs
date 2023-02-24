@@ -13,7 +13,7 @@ public sealed class LoginEndpointSummary : EndpointSummaryBase
         Summary = "Логин в системе";
         Description = "Логин в системе";
         
-        AddSuccessResponseExample(HttpStatusCode.Created, _successResponseExample);
+        AddSuccessResponseExample(HttpStatusCode.OK, _successResponseExample);
         AddFailResponseExamples(HttpStatusCode.BadRequest, HttpStatusCode.InternalServerError);
     }
 }

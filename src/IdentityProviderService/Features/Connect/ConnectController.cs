@@ -64,18 +64,17 @@ public sealed class ConnectController : ControllerBase
 
         return SignIn(oidcResult.Principal!, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
     }
-
-    [Authorize]
+    
     [HttpGet(OpenIdRoutes.UserInfo)]
     public async Task<IActionResult> Userinfo(CancellationToken ct = default)
     {
         var claimsPrincipal =
-            (await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)).Principal!;
+            (await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)).Principal;
 
         var userInfoQuery = new GetUserInfoQuery(claimsPrincipal);
         var userInfo = await _mediator.Send(userInfoQuery, ct);
 
-        return Ok(userInfo);
+        return Ok(userInfo.Data);
     }
 
     private IActionResult ForbidFromOidcResult(OidcResult result)

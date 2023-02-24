@@ -15,6 +15,12 @@ public sealed class GetUserInfoQueryHandler : IQueryHandler<GetUserInfoQuery, Ge
     public ValueTask<GetUserInfoResponse> Handle(GetUserInfoQuery query, CancellationToken ct)
     {
         var claimsPrincipal = query.Principal;
+
+        if (claimsPrincipal is null)
+        {
+            return ValueTask.FromResult(new GetUserInfoResponse(null));
+        }
+        
         var userInfo = _claimsPrincipalService.GetUserInfoFromPrincipal(claimsPrincipal);
 
         return ValueTask.FromResult(new GetUserInfoResponse(userInfo));

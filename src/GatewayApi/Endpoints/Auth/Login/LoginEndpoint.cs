@@ -27,7 +27,7 @@ public sealed class LoginEndpoint : EndpointBase<LoginRequest, LoginResponse>
         AllowAnonymous();
 
         ConfigureSwaggerDescription(new LoginEndpointSummary(),
-            HttpStatusCode.Created, 
+            HttpStatusCode.OK, 
             HttpStatusCode.BadRequest, 
             HttpStatusCode.InternalServerError);
     }

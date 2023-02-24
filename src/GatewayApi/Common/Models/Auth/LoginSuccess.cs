@@ -4,4 +4,4 @@ public sealed record LoginSuccess(
     string UserId,
     string AccessToken,
     string RefreshToken,
-    long ExpiresInMinutes);
+    long ExpiresIn);
