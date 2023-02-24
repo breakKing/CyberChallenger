@@ -9,6 +9,8 @@ public sealed class CreateTeamEndpoint : EndpointBase<CreateTeamRequest, CreateT
     public override void Configure()
     {
         Post("teams");
+        
+        Roles("superadmin");
 
         ConfigureSwaggerDescription(new CreateTeamEndpointSummary(),
             HttpStatusCode.Created, 

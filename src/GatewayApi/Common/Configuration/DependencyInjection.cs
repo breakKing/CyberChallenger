@@ -1,6 +1,5 @@
 ﻿using FastEndpoints.Swagger;
-using GatewayApi.Common.Grpc;
-using GatewayApi.Common.Options;
+using GatewayApi.Common.Models;
 using OpenIddict.Validation.AspNetCore;
 
 namespace GatewayApi.Common.Configuration;
@@ -58,7 +57,7 @@ public static class DependencyInjection
                 options.UseIntrospection()
                     .SetClientId(authOptions.ClientId)
                     .SetClientSecret(authOptions.ClientSecret);
-                
+
                 options.UseSystemNetHttp();
                 
                 options.UseAspNetCore();

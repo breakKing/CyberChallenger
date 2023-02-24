@@ -1,6 +1,6 @@
-﻿using FastEndpoints.Security;
-using Grpc.Core;
+﻿using Grpc.Core;
 using Grpc.Core.Interceptors;
+using OpenIddict.Abstractions;
 using Shared.Contracts.Common;
 
 namespace GatewayApi.Common.Grpc;
@@ -19,7 +19,10 @@ public sealed class AuthGrpcInterceptor : Interceptor
     public override AsyncUnaryCall<TResponse> AsyncUnaryCall<TRequest, TResponse>(TRequest request,
         ClientInterceptorContext<TRequest, TResponse> context, AsyncUnaryCallContinuation<TRequest, TResponse> continuation)
     {
-        var userId = _httpContext?.User.ClaimValue(GlobalConstants.UserIdInternalHeader);
+        var userId = _httpContext?.User.Claims.
+            FirstOrDefault(c => c.Type == OpenIddictConstants.Claims.Subject)
+            ?.Value;
+        
         var updatedContext = UpdateHeaders(context, userId);
         
         return base.AsyncUnaryCall(request, updatedContext, continuation);

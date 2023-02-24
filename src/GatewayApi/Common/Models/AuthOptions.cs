@@ -1,4 +1,4 @@
-﻿namespace GatewayApi.Common.Options;
+﻿namespace GatewayApi.Common.Models;
 
 public sealed class AuthOptions
 {

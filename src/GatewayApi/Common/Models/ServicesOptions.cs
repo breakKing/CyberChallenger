@@ -1,4 +1,4 @@
-﻿namespace GatewayApi.Common.Grpc;
+﻿namespace GatewayApi.Common.Models;
 
 public sealed class ServicesOptions
 {
