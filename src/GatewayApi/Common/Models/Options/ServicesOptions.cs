@@ -1,4 +1,4 @@
-﻿namespace GatewayApi.Common.Models;
+﻿namespace GatewayApi.Common.Models.Options;
 
 public sealed class ServicesOptions
 {

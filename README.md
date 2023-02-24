@@ -34,8 +34,6 @@ _TournamentService_ - 5005 (http), 7005 (https).
 
 5. Обе пары ключей перетащить в папку _/src/IdentityProviderService/RsaKeys_.
 
-6. Публичные ключи также перетащить в папку _/src/GatewayApi/RsaKeys_.
-
 ### Production
 
 TODO - продумать, когда это будет нужно и составить инструкцию.  

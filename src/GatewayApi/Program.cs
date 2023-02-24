@@ -8,8 +8,9 @@ var configuration = builder.Configuration;
 // Dependency injection
 
 services.AddMainServices();
-services.AddProjectServices(configuration);
+services.AddMicroservices(configuration);
 services.AddAuth(configuration);
+services.AddRedisCache(configuration);
 
 var app = builder.Build();
 

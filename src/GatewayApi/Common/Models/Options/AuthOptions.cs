@@ -1,4 +1,4 @@
-﻿namespace GatewayApi.Common.Models;
+﻿namespace GatewayApi.Common.Models.Options;
 
 public sealed class AuthOptions
 {
@@ -7,4 +7,5 @@ public sealed class AuthOptions
     public string ClientId { get; set; } = string.Empty;
     public string ClientSecret { get; set; } = string.Empty;
     public string Audience { get; set; } = string.Empty;
+    public int RefreshTokenStoreTimeInMinutes { get; set; }
 }

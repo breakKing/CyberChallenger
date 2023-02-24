@@ -1,5 +1,11 @@
-﻿using FastEndpoints.Swagger;
-using GatewayApi.Common.Models;
+﻿using System.Reflection;
+using FastEndpoints.Swagger;
+using GatewayApi.Common.Constants;
+using GatewayApi.Common.Models.Options;
+using GatewayApi.Services.Implementations;
+using GatewayApi.Services.Interfaces;
+using Mapster;
+using MapsterMapper;
 using OpenIddict.Validation.AspNetCore;
 
 namespace GatewayApi.Common.Configuration;
@@ -10,17 +16,18 @@ public static class DependencyInjection
     {
         services.AddFastEndpoints();
         services.AddHttpContextAccessor();
+        services.AddMapping(Assembly.GetExecutingAssembly());
 
         services.AddSwaggerDoc(settings =>
         {
             settings.Title = "CyberChallenger API";
             settings.Version = "v1";
         });
-        
+
         return services;
     }
 
-    public static IServiceCollection AddProjectServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddMicroservices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddOptions<ServicesOptions>()
             .Bind(configuration.GetRequiredSection(ServicesOptions.SectionName))
@@ -47,6 +54,7 @@ public static class DependencyInjection
         configuration.Bind(ServicesOptions.SectionName, servicesOptions);
         
         services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
+        services.AddAuthorization();
         
         services.AddOpenIddict()
             .AddValidation(options =>
@@ -62,6 +70,39 @@ public static class DependencyInjection
                 
                 options.UseAspNetCore();
             });
+
+        services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+
+        services.AddHttpClient(HttpClientNames.IdentityProviderService, client =>
+        {
+            client.BaseAddress = new Uri(servicesOptions.IdentityProviderService);
+        });
+        
+        services.AddScoped<IOpenIdClient, OpenIdClient>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddRedisCache(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddStackExchangeRedisCache(redis =>
+        {
+            redis.Configuration = configuration["Redis:Host"];
+            redis.InstanceName = configuration["Redis:Instance"];
+        });
+
+        services.AddScoped<IRedisCacheService, RedisCacheService>();
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddMapping(this IServiceCollection services, params Assembly[] assemblies)
+    {
+        var typeAdapterConfig = TypeAdapterConfig.GlobalSettings;
+        typeAdapterConfig.Scan(assemblies);
+        
+        var mapper= new Mapper(typeAdapterConfig);
+        services.AddSingleton<MapsterMapper.IMapper>(mapper);
         
         return services;
     }
