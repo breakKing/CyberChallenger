@@ -171,6 +171,35 @@ public sealed class AuthService : IAuthService
         return new RefreshSuccess(newAccessToken, expiresIn);
     }
 
+    /// <inheritdoc />
+    public async Task<OneOf<LogoutSuccess, OperationFail>> LogoutAsync(string accessToken, CancellationToken ct = default)
+    {
+        var openIdClient = _httpClientFactory.CreateClient(HttpClientNames.IdentityProviderService);
+        openIdClient.SetBearerToken(accessToken);
+        
+        var refreshToken = await _refreshTokenService.GetRefreshTokenByAccessTokenAsync(accessToken, ct);
+
+        if (string.IsNullOrWhiteSpace(refreshToken))
+        {
+            _logger.LogWarning("Attempt to get a refresh token failed due to its absence in the cache");
+            return new OperationFail("Failed to refresh access token");
+        }
+
+        try
+        {
+            await RevokeTokenAsync(openIdClient, refreshToken, ct);
+            await RevokeTokenAsync(openIdClient, accessToken, ct);
+            await _refreshTokenService.RemoveRefreshTokenAsync(refreshToken, accessToken, ct);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Exception was thrown while logout: {@Message}", e.Message);
+            return new OperationFail("Unexpected error has occurred during logout");
+        }
+
+        return new LogoutSuccess();
+    }
+
     private async Task<UserInfoResponse?> GetUserInfoAsync(HttpClient openIdClient, string accessToken, 
         CancellationToken ct = default)
     {

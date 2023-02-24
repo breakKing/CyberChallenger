@@ -31,8 +31,4 @@
       <ProjectReference Include="..\Shared.Contracts\Shared.Contracts.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Endpoints\Auth\Logout" />
-    </ItemGroup>
-
 </Project>

@@ -22,7 +22,7 @@ public sealed class LoginEndpoint : EndpointBase<LoginRequest, LoginResponse>
     {
         Post("login");
         
-        Group<LoginGroup>();
+        Group<AuthGroup>();
         
         AllowAnonymous(Http.POST);
 

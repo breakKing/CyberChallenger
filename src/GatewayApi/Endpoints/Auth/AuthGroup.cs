@@ -1,8 +1,8 @@
 ﻿namespace GatewayApi.Endpoints.Auth;
 
-public sealed class LoginGroup : Group
+public sealed class AuthGroup : Group
 {
-    public LoginGroup()
+    public AuthGroup()
     {
         Configure("auth", ep => ep.Tags("Auth"));
     }

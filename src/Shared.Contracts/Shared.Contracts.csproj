@@ -99,7 +99,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="GatewayApi\Auth\Logout" />
       <Folder Include="IdentityProviderService" />
     </ItemGroup>
 

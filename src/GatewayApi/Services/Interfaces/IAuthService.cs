@@ -22,4 +22,12 @@ public interface IAuthService
     /// <param name="ct"></param>
     /// <returns></returns>
     Task<OneOf<RefreshSuccess, OperationFail>> RefreshAsync(string accessToken, CancellationToken ct = default);
+
+    /// <summary>
+    /// Отзыв access и рефреш токенов пользователя
+    /// </summary>
+    /// <param name="accessToken"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task<OneOf<LogoutSuccess, OperationFail>> LogoutAsync(string accessToken, CancellationToken ct = default);
 }
