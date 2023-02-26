@@ -32,7 +32,7 @@ public interface IGenericRepository<TEntity>
         CancellationToken ct = default);
 
     /// <summary>
-    /// Получение списка сущностей, удовлетворяющих спецификации, с учётом пагинации
+    /// Получение списка сущностей, удовлетворяющих спецификации, с учётом классической пагинации
     /// </summary>
     /// <param name="spec"></param>
     /// <param name="pageNumber"></param>
@@ -40,11 +40,11 @@ public interface IGenericRepository<TEntity>
     /// <param name="forReadOnly"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<DbPaginatedData<TEntity>> GetManyPaginatedAsync(CustomSpecification<TEntity> spec, int pageNumber = 1,
+    Task<DbOffsetPaginatedData<TEntity>> GetManyOffsetPaginatedAsync(CustomSpecification<TEntity> spec, int pageNumber = 1,
         int pageSize = 20, bool forReadOnly = true, CancellationToken ct = default);
 
     /// <summary>
-    /// Получение списка сущностей, удовлетворяющих спецификации, с учётом пагинации
+    /// Получение списка сущностей, удовлетворяющих спецификации, с учётом классической пагинации
     /// </summary>
     /// <param name="spec"></param>
     /// <param name="pageNumber"></param>
@@ -53,9 +53,42 @@ public interface IGenericRepository<TEntity>
     /// <param name="ct"></param>
     /// <typeparam name="TProjection"></typeparam>
     /// <returns></returns>
-    Task<DbPaginatedData<TProjection>> GetManyPaginatedAsync<TProjection>(CustomSpecification<TEntity, TProjection> spec,
-        int pageNumber = 1,
-        int pageSize = 20, bool forReadOnly = true, CancellationToken ct = default);
+    Task<DbOffsetPaginatedData<TProjection>> GetManyOffsetPaginatedAsync<TProjection>(
+        CustomSpecification<TEntity, TProjection> spec, int pageNumber = 1, int pageSize = 20, bool forReadOnly = true, 
+        CancellationToken ct = default);
+
+    /// <summary>
+    /// Получение списка сущностей, удовлетворяющих спецификации, с учётом классической пагинации
+    /// </summary>
+    /// <param name="spec"></param>
+    /// <param name="cursorSelector"></param>
+    /// <param name="startingCursor"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="forReadOnly"></param>
+    /// <param name="ct"></param>
+    /// <typeparam name="TCursor"></typeparam>
+    /// <returns></returns>
+    Task<DbCursorPaginatedData<TEntity>> GetManyCursorPaginatedAsync<TCursor>(CustomSpecification<TEntity> spec, 
+        Func<TEntity, TCursor> cursorSelector, TCursor startingCursor, int pageSize = 20, bool forReadOnly = true, 
+        CancellationToken ct = default)
+        where TCursor : IComparable<TCursor>;
+
+    /// <summary>
+    /// Получение списка сущностей, удовлетворяющих спецификации, с учётом классической пагинации
+    /// </summary>
+    /// <param name="spec"></param>
+    /// <param name="cursorSelector"></param>
+    /// <param name="startingCursor"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="forReadOnly"></param>
+    /// <param name="ct"></param>
+    /// <typeparam name="TProjection"></typeparam>
+    /// <typeparam name="TCursor"></typeparam>
+    /// <returns></returns>
+    Task<DbCursorPaginatedData<TProjection>> GetManyCursorPaginatedAsync<TProjection, TCursor>(
+        CustomSpecification<TEntity, TProjection> spec, Func<TProjection, TCursor> cursorSelector, 
+        TCursor startingCursor, int pageSize = 20, bool forReadOnly = true, CancellationToken ct = default)
+        where TCursor : IComparable<TCursor>;
 
     /// <summary>
     /// Получение одной сущности, удовлетворяющей спецификации (или ни одной, если её нет)

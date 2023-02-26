@@ -5,14 +5,14 @@ using Shared.Infrastructure.Persistence.Interfaces;
 
 namespace Shared.Infrastructure.Persistence.Implementations;
 
-public sealed class GenericUnitOfWork<TContext> : IGenericUnitOfWork<TContext>
+public sealed class EntityFrameworkCoreUnitOfWork<TContext> : IGenericUnitOfWork
     where TContext : DbContext
 {
     private readonly TContext _context;
     
     private IDbContextTransaction? DbTransaction { get; set; }
 
-    public GenericUnitOfWork(TContext context)
+    public EntityFrameworkCoreUnitOfWork(TContext context)
     {
         _context = context;
     }
@@ -20,7 +20,7 @@ public sealed class GenericUnitOfWork<TContext> : IGenericUnitOfWork<TContext>
     /// <inheritdoc />
     public IGenericRepository<TEntity> Repository<TEntity>() where TEntity : EntityBase
     {
-        return new GenericRepository<TEntity, TContext>(_context);
+        return new EntityFrameworkCoreRepository<TEntity, TContext>(_context);
     }
 
     /// <inheritdoc />

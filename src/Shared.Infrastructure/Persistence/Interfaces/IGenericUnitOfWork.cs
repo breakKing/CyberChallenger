@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Shared.Infrastructure.Persistence.Entities;
 
 namespace Shared.Infrastructure.Persistence.Interfaces;
@@ -6,9 +5,7 @@ namespace Shared.Infrastructure.Persistence.Interfaces;
 /// <summary>
 /// Работа с БД через репозитории
 /// </summary>
-/// <typeparam name="TContext">EF Core контекст</typeparam>
-public interface IGenericUnitOfWork<TContext> : IDisposable
-    where TContext : DbContext
+public interface IGenericUnitOfWork : IDisposable
 {
     /// <summary>
     /// Акцессор для репозиториев

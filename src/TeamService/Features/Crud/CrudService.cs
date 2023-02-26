@@ -1,14 +1,13 @@
 ﻿using Shared.Infrastructure.Persistence.Interfaces;
-using TeamService.Persistence;
 using TeamService.Persistence.Entities;
 
 namespace TeamService.Features.Crud;
 
 public sealed class CrudService : ICrudService
 {
-    private readonly IGenericUnitOfWork<TeamContext> _unitOfWork;
+    private readonly IGenericUnitOfWork _unitOfWork;
 
-    public CrudService(IGenericUnitOfWork<TeamContext> unitOfWork)
+    public CrudService(IGenericUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }

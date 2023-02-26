@@ -21,6 +21,6 @@ public sealed class CreateTeamCommandHandler : ICommandHandler<CreateTeamCommand
 
         await _crudService.CreateTeamAsync(team, ct);
 
-        return new();
+        return new(team.Id);
     }
 }

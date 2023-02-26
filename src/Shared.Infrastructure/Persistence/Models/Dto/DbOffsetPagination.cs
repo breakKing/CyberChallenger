@@ -1,15 +1,15 @@
 namespace Shared.Infrastructure.Persistence.Models.Dto;
 
 /// <summary>
-/// Пагинация для получения пагинированных данных
+/// Пагинация по оффсету (классическая пагинация)
 /// </summary>
-public class DbPagination
+public sealed class DbOffsetPagination
 {
     public long TotalCount { get; set; }
     public int PageNumber { get; set; }
     public int PageSize { get; set; }
 
-    public DbPagination(long totalCount, int pageNumber, int pageSize)
+    public DbOffsetPagination(long totalCount, int pageNumber, int pageSize)
     {
         TotalCount = totalCount;
         PageNumber = pageNumber;

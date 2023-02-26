@@ -35,7 +35,7 @@ public static class ServiceCollectionExtensions
             optionsAction?.Invoke(contextOptions);
         });
         
-        services.AddScoped<IGenericUnitOfWork<TContext>, GenericUnitOfWork<TContext>>();
+        services.AddScoped<IGenericUnitOfWork, EntityFrameworkCoreUnitOfWork<TContext>>();
 
         return services;
     }

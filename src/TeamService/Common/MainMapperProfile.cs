@@ -9,7 +9,7 @@ public sealed class MainMapperProfile : IRegister
     /// <inheritdoc />
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<PaginationGrpcRequest, Pagination>();
-        config.NewConfig<PaginationData, PaginationGrpcResponse>();
+        config.NewConfig<OffsetPaginationGrpcRequest, OffsetPagination>();
+        config.NewConfig<OffsetPaginationData, OffsetPaginationGrpcResponse>();
     }
 }
