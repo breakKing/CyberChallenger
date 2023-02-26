@@ -3,3 +3,37 @@
 option csharp_namespace = "Shared.Contracts.TeamService";
 
 import "google/protobuf/wrappers.proto";
+
+// Краткая информация по команде
+message TeamShortGrpcDto {
+  string id = 1;
+  string name = 2;
+  string game_id = 3;
+}
+
+// Расширенная информация по команде
+message TeamFullGrpcDto {
+  string id = 1;
+  string name = 2;
+  GameGrpcDto game = 3;
+  repeated TeamParticipantGrpcDto participants = 4;
+}
+
+// Расширенная информация об участнике команды
+message TeamParticipantGrpcDto {
+  string id = 1;
+  string nickname = 2;
+  TeamRoleGrpcDto role = 3;
+}
+
+// Информация о роли в команде
+message TeamRoleGrpcDto {
+  int32 id = 1;
+  string name = 2;
+}
+
+// Информация об игре
+message GameGrpcDto {
+  string id = 1;
+  string name = 2;
+}
