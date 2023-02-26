@@ -39,7 +39,8 @@
       <Folder Include="Features\Assignment\LeaveTeam" />
       <Folder Include="Features\Assignment\SetTeamRole" />
       <Folder Include="Features\Crud\Delete" />
-      <Folder Include="Features\Crud\ReadMany" />
+      <Folder Include="Features\Crud\ReadManyCursor" />
+      <Folder Include="Features\Crud\ReadManyOffset" />
       <Folder Include="Features\Crud\ReadOne" />
       <Folder Include="Features\Crud\Update" />
       <Folder Include="Features\Participant\Create" />

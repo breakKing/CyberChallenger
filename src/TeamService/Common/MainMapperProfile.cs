@@ -11,5 +11,8 @@ public sealed class MainMapperProfile : IRegister
     {
         config.NewConfig<OffsetPaginationGrpcRequest, OffsetPagination>();
         config.NewConfig<OffsetPaginationData, OffsetPaginationGrpcResponse>();
+        
+        config.NewConfig<CursorPaginationGrpcRequest, CursorPagination>();
+        config.NewConfig<CursorPaginationData, CursorPaginationGrpcResponse>();
     }
 }
