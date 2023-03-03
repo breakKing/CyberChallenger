@@ -2,11 +2,11 @@
 using KafkaFlow.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Shared.Infrastructure.Kafka.Extensions;
+namespace Shared.Infrastructure.EventSourcing.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddKafkaEventLogging(this IServiceCollection services,
+    public static IServiceCollection AddEventSourcingWithKafka(this IServiceCollection services,
         Action<IClusterConfigurationBuilder> builderAction)
     {
         services.AddKafka(kafka =>

@@ -34,4 +34,11 @@ public interface IGenericUnitOfWork : IDisposable
     /// <param name="ct"></param>
     /// <returns></returns>
     Task RollbackAsync(CancellationToken ct = default);
+    
+    /// <summary>
+    /// Сохранение в БД без транзакции
+    /// </summary>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task SaveWithoutTransactionAsync(CancellationToken ct = default);
 }

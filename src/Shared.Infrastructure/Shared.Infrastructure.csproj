@@ -8,21 +8,23 @@
 
     <ItemGroup>
       <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="6.1.0" />
-      <PackageReference Include="EFCore.NamingConventions" Version="7.0.0" />
-      <PackageReference Include="KafkaFlow" Version="2.2.14" />
-      <PackageReference Include="KafkaFlow.LogHandler.Microsoft" Version="2.2.14" />
-      <PackageReference Include="KafkaFlow.Microsoft.DependencyInjection" Version="2.2.14" />
-      <PackageReference Include="KafkaFlow.Retry" Version="1.0.6" />
-      <PackageReference Include="KafkaFlow.Retry.MongoDb" Version="1.0.6" />
-      <PackageReference Include="KafkaFlow.SchemaRegistry" Version="2.2.14" />
-      <PackageReference Include="KafkaFlow.Serializer" Version="2.2.14" />
-      <PackageReference Include="KafkaFlow.Serializer.SchemaRegistry.ConfluentProtobuf" Version="2.2.14" />
-      <PackageReference Include="KafkaFlow.TypedHandler" Version="2.2.14" />
+      <PackageReference Include="EFCore.NamingConventions" Version="7.0.2" />
+      <PackageReference Include="KafkaFlow" Version="2.2.15" />
+      <PackageReference Include="KafkaFlow.LogHandler.Microsoft" Version="2.2.15" />
+      <PackageReference Include="KafkaFlow.Microsoft.DependencyInjection" Version="2.2.15" />
+      <PackageReference Include="KafkaFlow.Retry" Version="2.0.0" />
+      <PackageReference Include="KafkaFlow.Retry.MongoDb" Version="2.0.0" />
+      <PackageReference Include="KafkaFlow.SchemaRegistry" Version="2.2.15" />
+      <PackageReference Include="KafkaFlow.Serializer" Version="2.2.15" />
+      <PackageReference Include="KafkaFlow.Serializer.SchemaRegistry.ConfluentProtobuf" Version="2.2.15" />
+      <PackageReference Include="KafkaFlow.TypedHandler" Version="2.2.15" />
       <PackageReference Include="LinqKit.Microsoft.EntityFrameworkCore" Version="7.1.3" />
       <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.1" />
-      <PackageReference Include="NewId" Version="3.0.3" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.3" />
+      <PackageReference Include="NewId" Version="4.0.1" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
+      <PackageReference Include="Quartz" Version="3.6.2" />
+      <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.6.2" />
     </ItemGroup>
 
     <ItemGroup>

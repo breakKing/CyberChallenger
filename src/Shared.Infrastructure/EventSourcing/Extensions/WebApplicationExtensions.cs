@@ -1,7 +1,7 @@
 ﻿using KafkaFlow;
 using Microsoft.AspNetCore.Builder;
 
-namespace Shared.Infrastructure.Kafka.Extensions;
+namespace Shared.Infrastructure.EventSourcing.Extensions;
 
 public static class WebApplicationExtensions
 {
