@@ -12,8 +12,6 @@
       <PackageReference Include="KafkaFlow" Version="2.2.15" />
       <PackageReference Include="KafkaFlow.LogHandler.Microsoft" Version="2.2.15" />
       <PackageReference Include="KafkaFlow.Microsoft.DependencyInjection" Version="2.2.15" />
-      <PackageReference Include="KafkaFlow.Retry" Version="2.0.0" />
-      <PackageReference Include="KafkaFlow.Retry.MongoDb" Version="2.0.0" />
       <PackageReference Include="KafkaFlow.SchemaRegistry" Version="2.2.15" />
       <PackageReference Include="KafkaFlow.Serializer" Version="2.2.15" />
       <PackageReference Include="KafkaFlow.Serializer.SchemaRegistry.ConfluentProtobuf" Version="2.2.15" />
@@ -29,11 +27,6 @@
 
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="EventSourcing\Kafka\Serializers" />
-      <Folder Include="EventSourcing\Services" />
     </ItemGroup>
 
 </Project>
