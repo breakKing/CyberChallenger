@@ -1,12 +1,8 @@
-﻿using Shared.Infrastructure.Persistence.Entities;
+﻿using Shared.Infrastructure.EventSourcing.Base;
 
 namespace Shared.Infrastructure.EventSourcing.Entities;
 
-public sealed class ProducerMessageHeader : EntityBase
+public sealed class ProducerMessageHeader : MessageHeaderEntityBase
 {
-    public Guid MessageId { get; set; }
-    public string Key { get; set; } = string.Empty;
-    public byte[] Value { get; set; } = Array.Empty<byte>();
-    
     public ProducerMessage? Message { get; set; }
 }

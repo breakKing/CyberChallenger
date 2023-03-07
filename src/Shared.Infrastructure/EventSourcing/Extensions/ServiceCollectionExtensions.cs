@@ -1,6 +1,8 @@
 ﻿using KafkaFlow;
 using KafkaFlow.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Infrastructure.EventSourcing.Implementations;
+using Shared.Infrastructure.EventSourcing.Interfaces;
 
 namespace Shared.Infrastructure.EventSourcing.Extensions;
 
@@ -14,6 +16,8 @@ public static class ServiceCollectionExtensions
             kafka.UseMicrosoftLog();
             kafka.AddCluster(builderAction);
         });
+
+        services.AddScoped<IEventProducer, EventProducer>();
         
         return services;
     }

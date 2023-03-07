@@ -83,8 +83,9 @@ public sealed class SendMessagesFromOutboxJob : IJob
         }
             
         message.StatusId = MessageStatusesDefinition.Produced;
+        await _unitOfWork.StartTransactionAsync(ct);
         _unitOfWork.Repository<ProducerMessage>().UpdateOne(message);
-        await _unitOfWork.SaveWithoutTransactionAsync(ct);
+        await _unitOfWork.CommitAsync(ct);
             
         _logger.LogInformation("Message with id {MessageId} has been successfully produced", message.Id);
     }

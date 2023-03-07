@@ -10,7 +10,7 @@ public sealed class MessageStatusConfig : IEntityTypeConfiguration<MessageStatus
     /// <inheritdoc />
     public void Configure(EntityTypeBuilder<MessageStatus> builder)
     {
-        builder.ToTable("message_statuses", "outbox");
+        builder.ToTable("message_statuses", "event_sourcing");
 
         builder.HasData(MessageStatusesDefinition.List);
     }

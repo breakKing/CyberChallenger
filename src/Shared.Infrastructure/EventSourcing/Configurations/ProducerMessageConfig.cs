@@ -9,7 +9,7 @@ public sealed class ProducerMessageConfig : IEntityTypeConfiguration<ProducerMes
     /// <inheritdoc />
     public void Configure(EntityTypeBuilder<ProducerMessage> builder)
     {
-        builder.ToTable("produced_messages", "outbox");
+        builder.ToTable("outbox", "event_sourcing");
         
         builder.HasIndex(o => o.ProducerName);
 

@@ -9,13 +9,13 @@ public sealed class ConsumerMessageConfig : IEntityTypeConfiguration<ConsumerMes
     /// <inheritdoc />
     public void Configure(EntityTypeBuilder<ConsumerMessage> builder)
     {
-        builder.ToTable("consumed_messages", "outbox");
+        builder.ToTable("inbox", "event_sourcing");
 
-        builder.HasIndex(o => o.ConsumerName);
+        builder.HasIndex(i => i.ConsumerName);
 
-        builder.HasOne(o => o.Status)
+        builder.HasOne(i => i.Status)
             .WithMany()
-            .HasForeignKey(o => o.StatusId)
+            .HasForeignKey(i => i.StatusId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
     }

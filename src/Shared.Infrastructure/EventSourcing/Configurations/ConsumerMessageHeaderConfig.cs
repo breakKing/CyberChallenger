@@ -4,12 +4,12 @@ using Shared.Infrastructure.EventSourcing.Entities;
 
 namespace Shared.Infrastructure.EventSourcing.Configurations;
 
-public sealed class ProducerMessageHeaderConfig : IEntityTypeConfiguration<ProducerMessageHeader>
+public sealed class ConsumerMessageHeaderConfig : IEntityTypeConfiguration<ConsumerMessageHeader>
 {
     /// <inheritdoc />
-    public void Configure(EntityTypeBuilder<ProducerMessageHeader> builder)
+    public void Configure(EntityTypeBuilder<ConsumerMessageHeader> builder)
     {
-        builder.ToTable("outbox_message_headers", "event_sourcing");
+        builder.ToTable("inbox_message_headers", "event_sourcing");
 
         builder.HasKey(h => new { h.MessageId, h.Key });
 
