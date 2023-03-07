@@ -1,10 +1,10 @@
 ﻿using KafkaFlow;
 using KafkaFlow.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Infrastructure.EventSourcing.Implementations;
-using Shared.Infrastructure.EventSourcing.Interfaces;
+using Shared.Infrastructure.EventSourcing.Services.Implementations;
+using Shared.Infrastructure.EventSourcing.Services.Interfaces;
 
-namespace Shared.Infrastructure.EventSourcing.Extensions;
+namespace Shared.Infrastructure.EventSourcing.Kafka.Extensions;
 
 public static class ServiceCollectionExtensions
 {

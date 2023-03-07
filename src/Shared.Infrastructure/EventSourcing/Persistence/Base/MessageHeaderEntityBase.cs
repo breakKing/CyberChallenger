@@ -1,6 +1,6 @@
 ﻿using Shared.Infrastructure.Persistence.Entities;
 
-namespace Shared.Infrastructure.EventSourcing.Base;
+namespace Shared.Infrastructure.EventSourcing.Persistence.Base;
 
 public abstract class MessageHeaderEntityBase : EntityBase
 {

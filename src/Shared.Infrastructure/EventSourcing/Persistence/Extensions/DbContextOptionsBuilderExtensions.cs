@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Shared.Infrastructure.EventSourcing.Configurations;
+using Shared.Infrastructure.EventSourcing.Persistence.Configurations;
 
-namespace Shared.Infrastructure.EventSourcing.Extensions;
+namespace Shared.Infrastructure.EventSourcing.Persistence.Extensions;
 
 public static class DbContextOptionsBuilderExtensions
 {

@@ -1,6 +1,6 @@
-﻿using Shared.Infrastructure.EventSourcing.Base;
+﻿using Shared.Infrastructure.EventSourcing.Persistence.Base;
 
-namespace Shared.Infrastructure.EventSourcing.Entities;
+namespace Shared.Infrastructure.EventSourcing.Persistence.Entities;
 
 public sealed class ConsumerMessage : MessageEntityBase
 {

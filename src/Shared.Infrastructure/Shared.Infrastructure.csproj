@@ -31,4 +31,9 @@
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="EventSourcing\Kafka\Serializers" />
+      <Folder Include="EventSourcing\Services" />
+    </ItemGroup>
+
 </Project>

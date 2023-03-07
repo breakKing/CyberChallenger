@@ -1,4 +1,4 @@
-﻿namespace Shared.Infrastructure.EventSourcing.Interfaces;
+﻿namespace Shared.Infrastructure.EventSourcing.Services.Interfaces;
 
 public interface IEventProducer
 {

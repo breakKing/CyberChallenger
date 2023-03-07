@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
 using MassTransit;
-using Shared.Infrastructure.EventSourcing.Entities;
+using Shared.Infrastructure.EventSourcing.Persistence.Entities;
 using Shared.Infrastructure.Persistence.Entities;
 
-namespace Shared.Infrastructure.EventSourcing.Base;
+namespace Shared.Infrastructure.EventSourcing.Persistence.Base;
 
 public abstract class MessageEntityBase : EntityBase
 {

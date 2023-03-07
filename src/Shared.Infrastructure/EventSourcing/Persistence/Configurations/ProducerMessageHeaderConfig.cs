@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Infrastructure.EventSourcing.Entities;
+using Shared.Infrastructure.EventSourcing.Persistence.Entities;
 
-namespace Shared.Infrastructure.EventSourcing.Configurations;
+namespace Shared.Infrastructure.EventSourcing.Persistence.Configurations;
 
-public sealed class ConsumerMessageHeaderConfig : IEntityTypeConfiguration<ConsumerMessageHeader>
+public sealed class ProducerMessageHeaderConfig : IEntityTypeConfiguration<ProducerMessageHeader>
 {
     /// <inheritdoc />
-    public void Configure(EntityTypeBuilder<ConsumerMessageHeader> builder)
+    public void Configure(EntityTypeBuilder<ProducerMessageHeader> builder)
     {
-        builder.ToTable("inbox_message_headers", "event_sourcing");
+        builder.ToTable("outbox_message_headers", "event_sourcing");
 
         builder.HasKey(h => new { h.MessageId, h.Key });
 

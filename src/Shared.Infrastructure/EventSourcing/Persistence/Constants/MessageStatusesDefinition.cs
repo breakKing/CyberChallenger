@@ -1,6 +1,6 @@
-﻿using Shared.Infrastructure.EventSourcing.Entities;
+﻿using Shared.Infrastructure.EventSourcing.Persistence.Entities;
 
-namespace Shared.Infrastructure.EventSourcing.Constants;
+namespace Shared.Infrastructure.EventSourcing.Persistence.Constants;
 
 public static class MessageStatusesDefinition
 {

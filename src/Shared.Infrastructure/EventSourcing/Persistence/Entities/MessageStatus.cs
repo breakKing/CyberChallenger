@@ -1,6 +1,6 @@
 ﻿using Shared.Infrastructure.Persistence.Entities;
 
-namespace Shared.Infrastructure.EventSourcing.Entities;
+namespace Shared.Infrastructure.EventSourcing.Persistence.Entities;
 
 public sealed class MessageStatus : EntityBase
 {

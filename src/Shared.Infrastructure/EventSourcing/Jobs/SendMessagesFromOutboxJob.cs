@@ -4,9 +4,9 @@ using KafkaFlow.Producers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Quartz;
-using Shared.Infrastructure.EventSourcing.Constants;
-using Shared.Infrastructure.EventSourcing.Entities;
-using Shared.Infrastructure.EventSourcing.Specifications;
+using Shared.Infrastructure.EventSourcing.Persistence.Constants;
+using Shared.Infrastructure.EventSourcing.Persistence.Entities;
+using Shared.Infrastructure.EventSourcing.Persistence.Specifications;
 using Shared.Infrastructure.Persistence.Interfaces;
 
 namespace Shared.Infrastructure.EventSourcing.Jobs;

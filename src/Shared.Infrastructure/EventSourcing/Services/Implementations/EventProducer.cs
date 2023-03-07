@@ -1,10 +1,10 @@
 ﻿using System.Text.Json;
-using Shared.Infrastructure.EventSourcing.Constants;
-using Shared.Infrastructure.EventSourcing.Entities;
-using Shared.Infrastructure.EventSourcing.Interfaces;
+using Shared.Infrastructure.EventSourcing.Persistence.Constants;
+using Shared.Infrastructure.EventSourcing.Persistence.Entities;
+using Shared.Infrastructure.EventSourcing.Services.Interfaces;
 using Shared.Infrastructure.Persistence.Interfaces;
 
-namespace Shared.Infrastructure.EventSourcing.Implementations;
+namespace Shared.Infrastructure.EventSourcing.Services.Implementations;
 
 public sealed class EventProducer : IEventProducer
 {

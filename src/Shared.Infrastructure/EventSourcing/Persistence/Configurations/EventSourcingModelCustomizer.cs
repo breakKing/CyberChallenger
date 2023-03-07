@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Shared.Infrastructure.EventSourcing.Configurations;
+namespace Shared.Infrastructure.EventSourcing.Persistence.Configurations;
 
 public sealed class EventSourcingModelCustomizer : RelationalModelCustomizer
 {
