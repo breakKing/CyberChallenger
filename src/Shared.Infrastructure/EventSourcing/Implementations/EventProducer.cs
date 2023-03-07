@@ -37,9 +37,7 @@ public sealed class EventProducer : IEventProducer
                 MessageId = messageToProduce.Id
             }).ToList();
         }
-
-        await _unitOfWork.StartTransactionAsync(ct);
+        
         _unitOfWork.Repository<ProducerMessage>().AddOne(messageToProduce);
-        await _unitOfWork.CommitAsync(ct);
     }
 }
