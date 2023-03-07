@@ -1,13 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Shared.Infrastructure.EventSourcing.Configurations;
 
-namespace Shared.Infrastructure.EventSourcing.Helpers;
+namespace Shared.Infrastructure.EventSourcing.Configurations;
 
-public sealed class EventSourcingModeCustomizer : RelationalModelCustomizer
+public sealed class EventSourcingModelCustomizer : RelationalModelCustomizer
 {
     /// <inheritdoc />
-    public EventSourcingModeCustomizer(ModelCustomizerDependencies dependencies) : base(dependencies)
+    public EventSourcingModelCustomizer(ModelCustomizerDependencies dependencies) : base(dependencies)
     {
     }
     
