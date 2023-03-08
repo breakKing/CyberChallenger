@@ -9,7 +9,7 @@ public sealed class GetMessagesForProduceSpec : CustomSpecification<ProducerMess
 {
     private GetMessagesForProduceSpec()
     {
-        Query.Where(o => o.Status != null && o.Status.Id == MessageStatusesDefinition.ReadyToBeProduced);
+        Query.Where(o => o.Status != null && o.Status.Id == MessageStatusDefinitions.ReadyToBeProduced);
 
         Query.OrderBy(o => o.ProducerName);
 

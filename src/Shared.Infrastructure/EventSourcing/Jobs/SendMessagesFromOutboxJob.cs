@@ -82,7 +82,7 @@ public sealed class SendMessagesFromOutboxJob : IJob
             return;
         }
             
-        message.StatusId = MessageStatusesDefinition.Produced;
+        message.StatusId = MessageStatusDefinitions.Produced;
         await _unitOfWork.StartTransactionAsync(ct);
         _unitOfWork.Repository<ProducerMessage>().UpdateOne(message);
         await _unitOfWork.CommitAsync(ct);

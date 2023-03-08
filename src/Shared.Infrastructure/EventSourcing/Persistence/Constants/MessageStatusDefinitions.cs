@@ -2,7 +2,7 @@
 
 namespace Shared.Infrastructure.EventSourcing.Persistence.Constants;
 
-public static class MessageStatusesDefinition
+public static class MessageStatusDefinitions
 {
     public const int Undefined = 0;
     public const int ReadyToBeProduced = 1;

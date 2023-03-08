@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Globalization;
+using System.Text;
+using System.Text.Json;
 using Shared.Infrastructure.EventSourcing.Persistence.Constants;
 using Shared.Infrastructure.EventSourcing.Persistence.Entities;
 using Shared.Infrastructure.EventSourcing.Services.Interfaces;
@@ -24,20 +26,32 @@ public sealed class EventProducer : IEventProducer
             Key = key,
             Body = JsonSerializer.SerializeToDocument(message),
             TopicName = topic,
-            StatusId = MessageStatusesDefinition.ReadyToBeProduced,
+            StatusId = MessageStatusDefinitions.ReadyToBeProduced,
             ProducerName = producerName,
+        };
+
+        var headersList = new List<ProducerMessageHeader>()
+        {
+            new()
+            {
+                Key = HeaderDefinitions.ProducedAt,
+                Value = Encoding.UTF8.GetBytes(DateTime.Now.ToString(CultureInfo.InvariantCulture)),
+                MessageId = messageToProduce.Id
+            }
         };
 
         if (headers is not null)
         {
-            messageToProduce.Headers = headers.Select(h => new ProducerMessageHeader
+            headersList.AddRange(headers.Select(h => new ProducerMessageHeader
             {
                 Key = h.Key,
                 Value = h.Value,
                 MessageId = messageToProduce.Id
-            }).ToList();
+            }));
         }
-        
+
+        messageToProduce.Headers = headersList;
+
         _unitOfWork.Repository<ProducerMessage>().AddOne(messageToProduce);
     }
 }
