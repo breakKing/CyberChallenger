@@ -1,4 +1,5 @@
-﻿using Confluent.Kafka;
+﻿using System.Text;
+using Confluent.Kafka;
 using KafkaFlow;
 using KafkaFlow.Producers;
 using Microsoft.Extensions.DependencyInjection;
@@ -73,7 +74,7 @@ public sealed class SendMessagesFromOutboxJob : IJob
         var result = await producer.ProduceAsync(
             message.TopicName,
             message.Key,
-            message.Body,
+            message.Value,
             headers);
 
         if (result.Status != PersistenceStatus.Persisted)
@@ -101,7 +102,7 @@ public sealed class SendMessagesFromOutboxJob : IJob
 
         foreach (var header in message.Headers)
         {
-            headers.Add(header.Key, header.Value);
+            headers.Add(header.Key, Encoding.Unicode.GetBytes(header.Value));
         }
         
         return headers;
