@@ -30,9 +30,3 @@ message CursorPaginationGrpcResponse {
   google.protobuf.StringValue next_cursor = 1;
   bool more_data_available = 2;
 }
-
-// Статус обработки сообщения (использовать вместо того, чтобы выкидывать исключения)
-message HandlingStatusGrpcResponse {
-  bool failed = 1;
-  repeated string errors = 2;
-}

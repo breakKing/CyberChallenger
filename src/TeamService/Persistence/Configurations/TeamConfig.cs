@@ -11,6 +11,12 @@ public sealed class TeamConfig : IEntityTypeConfiguration<Team>
     {
         builder.ToTable("teams", "teams");
 
+        builder.HasOne(t => t.Game)
+            .WithMany()
+            .HasForeignKey(t => t.GameId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+
         builder.HasMany(t => t.Participants)
             .WithMany(p => p.Teams)
             .UsingEntity<TeamParticipant>();

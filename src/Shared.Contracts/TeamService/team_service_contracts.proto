@@ -18,7 +18,6 @@ message ReadManyTeamsByOffsetGrpcRequest {
 message ReadManyTeamsByOffsetGrpcResponse {
   repeated TeamShortGrpcDto items = 1;
   OffsetPaginationGrpcResponse pagination_response = 2;
-  HandlingStatusGrpcResponse status_response = 3;
 }
 
 // Запрос на получение команд по фильтрам (используя курсорную пагинацию)
@@ -33,7 +32,6 @@ message ReadManyTeamsByCursorGrpcRequest {
 message ReadManyTeamsByCursorGrpcResponse {
   repeated TeamShortGrpcDto items = 1;
   CursorPaginationGrpcResponse pagination_response = 2;
-  HandlingStatusGrpcResponse status_response = 3;
 }
 
 // Запрос на получение команды по id
@@ -44,7 +42,6 @@ message ReadOneTeamByIdGrpcRequest {
 // Ответ с командой, полученной по id
 message ReadOneTeamByIdGrpcResponse {
   TeamFullGrpcDto data = 1;
-  HandlingStatusGrpcResponse status_response = 2;
 }
 
 // Запрос для создания команды
@@ -56,7 +53,6 @@ message CreateTeamGrpcRequest {
 // Ответ с информацией о созданной команде
 message CreateTeamGrpcResponse {
   google.protobuf.StringValue id = 1;
-  HandlingStatusGrpcResponse status_response = 2;
 }
 
 // Запрос для редактирования команды
@@ -67,7 +63,6 @@ message UpdateTeamGrpcRequest {
 
 // Ответ после редактирования команды
 message UpdateTeamGrpcResponse {
-  HandlingStatusGrpcResponse status_response = 1;
 }
 
 // Запрос для удаления команды
@@ -77,5 +72,4 @@ message DeleteTeamGrpcRequest {
 
 // Ответ после удаления команды
 message DeleteTeamGrpcResponse {
-  HandlingStatusGrpcResponse status_response = 1;
 }
