@@ -9,7 +9,7 @@ using Shared.Infrastructure.EventSourcing.Kafka.Resolvers;
 
 namespace Shared.Infrastructure.EventSourcing.Kafka.Configuration.Implementations;
 
-public sealed class KafkaFlowConsumerConfigBuilder : IKafkaConsumerConfigBuilder,
+internal sealed class KafkaFlowConsumerConfigBuilder : IKafkaConsumerConfigBuilder,
     IConfigBuilder<Action<IClusterConfigurationBuilder>>
 {
     private string? _name;

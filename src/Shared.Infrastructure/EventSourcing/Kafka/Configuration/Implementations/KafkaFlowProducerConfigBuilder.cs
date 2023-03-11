@@ -7,7 +7,7 @@ using Shared.Infrastructure.EventSourcing.Kafka.Resolvers;
 
 namespace Shared.Infrastructure.EventSourcing.Kafka.Configuration.Implementations;
 
-public sealed class KafkaFlowProducerConfigBuilder : IKafkaProducerConfigBuilder,
+internal sealed class KafkaFlowProducerConfigBuilder : IKafkaProducerConfigBuilder,
     IConfigBuilder<Action<IClusterConfigurationBuilder>>
 {
     private string? _name;

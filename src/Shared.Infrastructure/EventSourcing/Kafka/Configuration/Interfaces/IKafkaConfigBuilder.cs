@@ -1,11 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace Shared.Infrastructure.EventSourcing.Kafka.Configuration.Interfaces;
+﻿namespace Shared.Infrastructure.EventSourcing.Kafka.Configuration.Interfaces;
 
 public interface IKafkaConfigBuilder
 {
-    IServiceCollection Services { get; set; }
-
     /// <summary>
     /// Задание адресов брокеров
     /// </summary>
@@ -16,9 +12,9 @@ public interface IKafkaConfigBuilder
     /// <summary>
     /// Добавление Schema Registry
     /// </summary>
-    /// <param name="schemaRegistryName">Адрес Schema Registry с указанием протокола (http и https)</param>
+    /// <param name="schemaRegistry">Адрес Schema Registry с указанием протокола (http и https)</param>
     /// <returns></returns>
-    IKafkaConfigBuilder UseSchemaRegistry(string schemaRegistryName);
+    IKafkaConfigBuilder UseSchemaRegistry(string schemaRegistry);
     
     /// <summary>
     /// Регистрация консумера с нужным конфигом
