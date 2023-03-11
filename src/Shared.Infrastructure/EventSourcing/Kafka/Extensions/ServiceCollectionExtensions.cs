@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shared.Infrastructure.EventSourcing.Kafka.Configuration.Implementations;
 using Shared.Infrastructure.EventSourcing.Kafka.Configuration.Interfaces;
-using Shared.Infrastructure.EventSourcing.Services.Implementations;
-using Shared.Infrastructure.EventSourcing.Services.Interfaces;
 
 namespace Shared.Infrastructure.EventSourcing.Kafka.Extensions;
 
@@ -22,9 +20,7 @@ public static class ServiceCollectionExtensions
 
         var servicesConfiguratorAction = kafkaBuilder.Build();
         servicesConfiguratorAction.Invoke(services);
-        
-        services.AddScoped<IEventProducer, EventProducer>();
-        
+
         return services;
     }
 }

@@ -15,6 +15,15 @@ public interface IKafkaConfigBuilder
     /// <param name="schemaRegistry">Адрес Schema Registry с указанием протокола (http и https)</param>
     /// <returns></returns>
     IKafkaConfigBuilder UseSchemaRegistry(string schemaRegistry);
+
+    /// <summary>
+    /// Создание топика с заданной конфигурацией, если его ещё не существует
+    /// </summary>
+    /// <param name="topicName">Название топика</param>
+    /// <param name="partitionCount">Количество партиций</param>
+    /// <param name="replicationFactor">Фактор репликации (на скольких брокерах хранить)</param>
+    /// <returns></returns>
+    IKafkaConfigBuilder DefineTopic(string topicName, int partitionCount, short replicationFactor);
     
     /// <summary>
     /// Регистрация консумера с нужным конфигом

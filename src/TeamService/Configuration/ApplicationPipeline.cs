@@ -1,6 +1,6 @@
 ﻿using TeamService.Features.Crud;
 
-namespace TeamService.Common.Configuration;
+namespace TeamService.Configuration;
 
 public static class ApplicationPipeline
 {

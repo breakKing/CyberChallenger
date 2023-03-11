@@ -3,9 +3,10 @@ using KafkaFlow;
 
 namespace Shared.Infrastructure.EventSourcing.Kafka.Resolvers;
 
+[Obsolete("Отказ от резолвера в пользу полноценной интеграции SchemaRegistry")]
 public sealed class CustomTypeKafkaResolver : IMessageTypeResolver
 {
-    private const string MessageType = "MessageType";
+    private const string MessageType = "message_type";
     
     /// <inheritdoc />
     public Type OnConsume(IMessageContext context)

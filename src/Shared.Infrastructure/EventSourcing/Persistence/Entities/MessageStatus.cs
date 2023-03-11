@@ -12,5 +12,10 @@ public sealed class MessageStatus : EntityBase
     {
         Id = id;
         Name = name;
+        
+        var now = DateTimeOffset.UtcNow;
+        CreatedAt = now;
+        UpdatedAt = now;
+        DeletedAt = null;
     }
 }

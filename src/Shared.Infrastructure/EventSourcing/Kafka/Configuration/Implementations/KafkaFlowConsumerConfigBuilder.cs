@@ -1,11 +1,12 @@
-﻿using KafkaFlow;
+﻿using Confluent.SchemaRegistry;
+using Confluent.SchemaRegistry.Serdes;
+using KafkaFlow;
 using KafkaFlow.Configuration;
 using KafkaFlow.Consumers.DistributionStrategies;
 using KafkaFlow.Serializer.SchemaRegistry;
 using KafkaFlow.TypedHandler;
 using Shared.Infrastructure.EventSourcing.Kafka.Configuration.Interfaces;
 using Shared.Infrastructure.EventSourcing.Kafka.Middlewares;
-using Shared.Infrastructure.EventSourcing.Kafka.Resolvers;
 
 namespace Shared.Infrastructure.EventSourcing.Kafka.Configuration.Implementations;
 
@@ -14,10 +15,10 @@ internal sealed class KafkaFlowConsumerConfigBuilder : IKafkaConsumerConfigBuild
 {
     private string? _name;
     private string? _group;
-    private string[] _topics = Array.Empty<string>();
+    private readonly List<string> _topics = new();
     private bool _preserveMessageOrder = true;
     private int _workersCount = 1;
-    private List<Type> _handlers = new();
+    private readonly List<Type> _handlers = new();
     
     /// <inheritdoc />
     public IKafkaConsumerConfigBuilder SetName(string name)
@@ -36,7 +37,7 @@ internal sealed class KafkaFlowConsumerConfigBuilder : IKafkaConsumerConfigBuild
     /// <inheritdoc />
     public IKafkaConsumerConfigBuilder SubscribeToTopics(params string[] topics)
     {
-        _topics = topics;
+        _topics.AddRange(topics);
         return this;
     }
 
@@ -69,7 +70,7 @@ internal sealed class KafkaFlowConsumerConfigBuilder : IKafkaConsumerConfigBuild
             throw new InvalidOperationException("Consumer name was not specified");
         }
 
-        if (_topics.Length == 0)
+        if (_topics.Count == 0)
         {
             throw new InvalidOperationException("No topics were specified");
         }
@@ -84,8 +85,9 @@ internal sealed class KafkaFlowConsumerConfigBuilder : IKafkaConsumerConfigBuild
             cluster.AddConsumer(consumer =>
             {
                 consumer.WithName(_name);
-                consumer.Topics(_topics);
+                consumer.Topics(_topics.Distinct());
                 consumer.WithWorkersCount(_workersCount);
+                consumer.WithBufferSize(100);
 
                 if (!string.IsNullOrWhiteSpace(_group))
                 {
@@ -105,7 +107,15 @@ internal sealed class KafkaFlowConsumerConfigBuilder : IKafkaConsumerConfigBuild
                 {
                     mw.AddAtBeginning<ExceptionHandlerKafkaMiddleware>();
                     mw.Add<InboxKafkaMiddleware>();
-                    mw.AddSerializer<ConfluentProtobufSerializer, CustomTypeKafkaResolver>();
+                    
+                    mw.AddSerializer(resolver => new ConfluentProtobufSerializer(resolver, new ProtobufSerializerConfig
+                    {
+                        AutoRegisterSchemas = true,
+                        SubjectNameStrategy = SubjectNameStrategy.Record,
+                        ReferenceSubjectNameStrategy = ReferenceSubjectNameStrategy.ReferenceName
+                    }));
+                    
+                    //mw.AddSerializer<ConfluentProtobufSerializer, CustomTypeKafkaResolver>();
                     mw.AddTypedHandlers(h =>
                     {
                         h.WithHandlerLifetime(InstanceLifetime.Scoped);

@@ -4,12 +4,12 @@ namespace Shared.Infrastructure.EventSourcing.Persistence.Constants;
 
 public static class MessageStatusDefinitions
 {
-    public const int Undefined = 0;
-    public const int ReadyToBeProduced = 1;
-    public const int Produced = 2;
-    public const int Consumed = 3;
+    public const int Undefined = 1;
+    public const int ReadyToBeProduced = 2;
+    public const int Produced = 3;
+    public const int Consumed = 4;
 
-    public static MessageStatus[] List = 
+    public static readonly MessageStatus[] List = 
     {
         new(Undefined, "Не задан"),
         new(ReadyToBeProduced, "Подготовлено к отправке в топик"),

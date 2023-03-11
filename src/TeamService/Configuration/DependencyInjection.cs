@@ -1,16 +1,18 @@
 ﻿using System.Reflection;
 using Mapster;
 using MapsterMapper;
+using TeamService.EventSourcing;
 using TeamService.Features.Crud;
 using TeamService.Persistence;
 
-namespace TeamService.Common.Configuration;
+namespace TeamService.Configuration;
 
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddPersistence(configuration);
+        services.AddEventSourcing(configuration);
         
         return services;
     }

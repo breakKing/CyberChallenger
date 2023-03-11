@@ -1,5 +1,6 @@
 using Shared.Grpc;
-using TeamService.Common.Configuration;
+using Shared.Infrastructure.EventSourcing.Kafka.Extensions;
+using TeamService.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ var app = builder.Build();
 
 // App pipeline
 
+app.UseKafkaBus();
 app.MapGrpcServices();
 app.MapGet("/", () => "Grpc is running...");
 

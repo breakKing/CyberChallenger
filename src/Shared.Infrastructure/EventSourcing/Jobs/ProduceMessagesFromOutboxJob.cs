@@ -12,19 +12,19 @@ using Shared.Infrastructure.Persistence.Interfaces;
 
 namespace Shared.Infrastructure.EventSourcing.Jobs;
 
-public sealed class SendMessagesFromOutboxJob : IJob
+public sealed class ProduceMessagesFromOutboxJob : IJob
 {
     private readonly IGenericUnitOfWork _unitOfWork;
     private readonly IProducerAccessor _producerAccessor;
-    private readonly ILogger<SendMessagesFromOutboxJob> _logger;
+    private readonly ILogger<ProduceMessagesFromOutboxJob> _logger;
 
-    public SendMessagesFromOutboxJob(IServiceScopeFactory serviceScopeFactory)
+    public ProduceMessagesFromOutboxJob(IServiceScopeFactory serviceScopeFactory)
     {
         var scope = serviceScopeFactory.CreateScope();
 
         _unitOfWork = scope.ServiceProvider.GetRequiredService<IGenericUnitOfWork>();
         _producerAccessor = scope.ServiceProvider.GetRequiredService<IProducerAccessor>();
-        _logger = scope.ServiceProvider.GetRequiredService<ILogger<SendMessagesFromOutboxJob>>();
+        _logger = scope.ServiceProvider.GetRequiredService<ILogger<ProduceMessagesFromOutboxJob>>();
     }
 
     /// <inheritdoc />

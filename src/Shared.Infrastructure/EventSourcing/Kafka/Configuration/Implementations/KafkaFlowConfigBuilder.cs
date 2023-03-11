@@ -1,20 +1,27 @@
 ﻿using KafkaFlow;
 using KafkaFlow.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
+using Shared.Infrastructure.EventSourcing.Jobs;
 using Shared.Infrastructure.EventSourcing.Kafka.Configuration.Interfaces;
+using Shared.Infrastructure.EventSourcing.Services.Implementations;
+using Shared.Infrastructure.EventSourcing.Services.Interfaces;
 
 namespace Shared.Infrastructure.EventSourcing.Kafka.Configuration.Implementations;
 
 internal sealed class KafkaFlowConfigBuilder : IKafkaConfigBuilder, IConfigBuilder<Action<IServiceCollection>>
 {
-    private string[] _brokers = Array.Empty<string>();
+    private readonly List<string> _brokers = new();
     private string? _schemaRegistry;
-    private List<Action<IClusterConfigurationBuilder>> _configActions = new();
+    private readonly List<Action<IClusterConfigurationBuilder>> _configActions = new();
+    private readonly Dictionary<string, (int partitionCount, short replicationFactor)> _topics = new();
+
+    private bool _shouldRegisterProducerJob;
 
     /// <inheritdoc />
     public IKafkaConfigBuilder UseBrokers(params string[] brokerAddresses)
     {
-        _brokers = brokerAddresses;
+        _brokers.AddRange(brokerAddresses);
         return this;
     }
 
@@ -22,6 +29,31 @@ internal sealed class KafkaFlowConfigBuilder : IKafkaConfigBuilder, IConfigBuild
     public IKafkaConfigBuilder UseSchemaRegistry(string schemaRegistry)
     {
         _schemaRegistry = schemaRegistry;
+        return this;
+    }
+
+    /// <inheritdoc />
+    public IKafkaConfigBuilder DefineTopic(string topicName, int partitionCount, short replicationFactor)
+    {
+        if (partitionCount <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(partitionCount), "Partition count must be at least 1");
+        }
+
+        if (replicationFactor <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(replicationFactor), "Replication factor must be at least 1");
+        }
+
+        if (_topics.ContainsKey(topicName))
+        {
+            _topics[topicName] = new ValueTuple<int, short>(partitionCount, replicationFactor);
+        }
+        else
+        {
+            _topics.Add(topicName, new ValueTuple<int, short>(partitionCount, replicationFactor));
+        }
+        
         return this;
     }
 
@@ -47,6 +79,7 @@ internal sealed class KafkaFlowConfigBuilder : IKafkaConfigBuilder, IConfigBuild
         var additionalAction = producerBuilder.Build();
         
         _configActions.Add(additionalAction);
+        _shouldRegisterProducerJob = true;
         
         return this;
     }
@@ -54,14 +87,14 @@ internal sealed class KafkaFlowConfigBuilder : IKafkaConfigBuilder, IConfigBuild
     /// <inheritdoc />
     public Action<IServiceCollection> Build()
     {
-        if (_brokers.Length == 0)
+        if (_brokers.Count == 0)
         {
             throw new InvalidOperationException("No brokers were specified");
         }
 
         Action<IClusterConfigurationBuilder> configAction = config =>
         {
-            config.WithBrokers(_brokers);
+            config.WithBrokers(_brokers.Distinct());
 
             if (!string.IsNullOrWhiteSpace(_schemaRegistry))
             {
@@ -69,6 +102,11 @@ internal sealed class KafkaFlowConfigBuilder : IKafkaConfigBuilder, IConfigBuild
                 {
                     sr.Url = _schemaRegistry;
                 });
+            }
+
+            foreach (var topic in _topics)
+            {
+                config.CreateTopicIfNotExists(topic.Key, topic.Value.partitionCount, topic.Value.replicationFactor);
             }
 
             foreach (var action in _configActions)
@@ -84,8 +122,39 @@ internal sealed class KafkaFlowConfigBuilder : IKafkaConfigBuilder, IConfigBuild
                 kafka.UseMicrosoftLog();
                 kafka.AddCluster(configAction);
             });
+
+            if (_shouldRegisterProducerJob)
+            {
+                AddProducerJobToServices(services);
+                services.AddScoped<IEventProducer, EventProducer>();
+            }
         };
 
         return servicesConfig;
+    }
+
+    private static IServiceCollection AddProducerJobToServices(IServiceCollection services)
+    {
+        services.AddQuartz(config =>
+        {
+            config.AddJob<ProduceMessagesFromOutboxJob>(job =>
+            {
+                job.DisallowConcurrentExecution();
+                job.WithIdentity("outbox_producer");
+            });
+
+            config.AddTrigger(trigger =>
+            {
+                trigger.WithIdentity("outbox_producer_trigger");
+                trigger.ForJob("outbox_producer");
+
+                trigger.StartNow();
+                trigger.WithSchedule(DailyTimeIntervalScheduleBuilder
+                    .Create()
+                    .WithIntervalInMinutes(5));
+            });
+        });
+
+        return services;
     }
 }

@@ -1,9 +1,10 @@
-﻿using KafkaFlow;
+﻿using Confluent.SchemaRegistry;
+using Confluent.SchemaRegistry.Serdes;
+using KafkaFlow;
 using KafkaFlow.Configuration;
 using KafkaFlow.Serializer.SchemaRegistry;
 using Shared.Infrastructure.EventSourcing.Kafka.Configuration.Interfaces;
 using Shared.Infrastructure.EventSourcing.Kafka.Middlewares;
-using Shared.Infrastructure.EventSourcing.Kafka.Resolvers;
 
 namespace Shared.Infrastructure.EventSourcing.Kafka.Configuration.Implementations;
 
@@ -47,7 +48,15 @@ internal sealed class KafkaFlowProducerConfigBuilder : IKafkaProducerConfigBuild
                 producer.AddMiddlewares(mw =>
                 {
                     mw.AddAtBeginning<ExceptionHandlerKafkaMiddleware>();
-                    mw.AddSerializer<ConfluentProtobufSerializer, CustomTypeKafkaResolver>();
+                    
+                    mw.AddSerializer(resolver => new ConfluentProtobufSerializer(resolver, new ProtobufSerializerConfig
+                    {
+                        AutoRegisterSchemas = true,
+                        SubjectNameStrategy = SubjectNameStrategy.Record,
+                        ReferenceSubjectNameStrategy = ReferenceSubjectNameStrategy.ReferenceName
+                    }));
+                    
+                    //.AddSerializer<ConfluentProtobufSerializer, CustomTypeKafkaResolver>();
                 });
             });
         };
