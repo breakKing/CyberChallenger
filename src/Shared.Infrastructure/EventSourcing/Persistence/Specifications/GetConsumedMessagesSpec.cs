@@ -8,11 +8,13 @@ namespace Shared.Infrastructure.EventSourcing.Persistence.Specifications;
 
 public sealed class GetConsumedMessagesSpec : CustomSpecification<ConsumerMessage>
 {
-    private GetConsumedMessagesSpec(string consumerName, string topicName, string messageKey, string messageValue,
+    private GetConsumedMessagesSpec(string consumerName, string topicName, string messageType, string messageKey, string 
+    messageValue,
         DateTimeOffset producedAt)
     {
         Query.Where(m => m.ConsumerName == consumerName
                          && m.TopicName == topicName
+                         && m.Type == messageType
                          && m.Key == messageKey
                          && m.Value == messageValue
                          && m.Status != null
@@ -24,8 +26,10 @@ public sealed class GetConsumedMessagesSpec : CustomSpecification<ConsumerMessag
         Query.OrderByDescending(m => m.UpdatedAt);
 
         Query.Include(m => m.Headers);
+
+        Query.Select(m => m);
     }
 
-    public static GetConsumedMessagesSpec Build(string consumerName, string topicName, string messageKey,
-        string messageValue, DateTimeOffset producedAt) => new (consumerName, topicName, messageKey, messageValue, producedAt);
+    public static GetConsumedMessagesSpec Build(string consumerName, string topicName, string messageType, string messageKey,
+        string messageValue, DateTimeOffset producedAt) => new (consumerName, topicName, messageType, messageKey, messageValue, producedAt);
 }

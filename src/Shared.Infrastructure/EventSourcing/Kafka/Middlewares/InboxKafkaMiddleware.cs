@@ -39,11 +39,22 @@ public sealed class InboxKafkaMiddleware : IMessageMiddleware
     private async Task<bool> MessageWasConsumedEarlierAsync(IMessageContext context)
     {
         var producedAtHeader = context.Headers.GetString(HeaderDefinitions.ProducedAt);
+        var messageTypeHeader = context.Headers.GetString(HeaderDefinitions.MessageType);
 
         if (string.IsNullOrWhiteSpace(producedAtHeader))
         {
             _logger.LogWarning(
                 "There has been a message without 'produced_at' header: {@Message}", context.Message);
+            
+            return true;
+        }
+        
+        if (string.IsNullOrWhiteSpace(messageTypeHeader))
+        {
+            _logger.LogWarning(
+                "There has been a message without 'message_type' header: {@Message}", context.Message);
+            
+            return true;
         }
 
         var producedAt = DateTimeOffset.Parse(producedAtHeader, CultureInfo.InvariantCulture);
@@ -51,6 +62,7 @@ public sealed class InboxKafkaMiddleware : IMessageMiddleware
         var spec = GetConsumedMessagesSpec.Build(
             context.ConsumerContext.ConsumerName,
             context.ConsumerContext.Topic,
+            messageTypeHeader,
             context.GetMessageKey(),
             context.GetMessageValue(),
             producedAt);
@@ -64,6 +76,7 @@ public sealed class InboxKafkaMiddleware : IMessageMiddleware
     {
         var message = new ConsumerMessage
         {
+            Type = context.Headers.GetString(HeaderDefinitions.MessageType)!,
             Key = context.GetMessageKey(),
             Value = context.GetMessageValue(),
             TopicName = context.ConsumerContext.Topic,
@@ -74,7 +87,7 @@ public sealed class InboxKafkaMiddleware : IMessageMiddleware
         message.Headers = context.Headers.Select(h => new ConsumerMessageHeader
         {
             Key = h.Key,
-            Value = Encoding.Unicode.GetString(h.Value),
+            Value = Encoding.Default.GetString(h.Value),
             MessageId = message.Id
         }).ToList();
 

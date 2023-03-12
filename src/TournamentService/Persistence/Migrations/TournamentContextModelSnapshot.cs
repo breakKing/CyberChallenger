@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using TeamService.Persistence;
+using TournamentService.Persistence;
 
 #nullable disable
 
-namespace TeamService.Persistence.Migrations
+namespace TournamentService.Persistence.Migrations
 {
-    [DbContext(typeof(TeamContext))]
-    partial class TeamContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(TournamentContext))]
+    partial class TournamentContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -180,37 +180,37 @@ namespace TeamService.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 44, 52, 900, DateTimeKind.Unspecified).AddTicks(5371), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(2470), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             Name = "Не задан",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 44, 52, 900, DateTimeKind.Unspecified).AddTicks(5371), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(2470), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0u
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 44, 52, 900, DateTimeKind.Unspecified).AddTicks(6144), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(3312), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             Name = "Подготовлено к отправке в топик",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 44, 52, 900, DateTimeKind.Unspecified).AddTicks(6144), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(3312), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0u
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 44, 52, 900, DateTimeKind.Unspecified).AddTicks(6146), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(3314), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             Name = "Успешно отправлено в топик",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 44, 52, 900, DateTimeKind.Unspecified).AddTicks(6146), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(3314), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0u
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 44, 52, 900, DateTimeKind.Unspecified).AddTicks(6147), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(3315), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             Name = "Успешно обработано",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 44, 52, 900, DateTimeKind.Unspecified).AddTicks(6147), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(3315), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0u
                         });
                 });
@@ -328,269 +328,6 @@ namespace TeamService.Persistence.Migrations
                     b.ToTable("outbox_message_headers", "event_sourcing");
                 });
 
-            modelBuilder.Entity("TeamService.Persistence.Entities.Game", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTimeOffset?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<uint>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("xid")
-                        .HasColumnName("xmin");
-
-                    b.HasKey("Id")
-                        .HasName("pk_games");
-
-                    b.HasIndex("Name")
-                        .IsUnique()
-                        .HasDatabaseName("ix_games_name");
-
-                    b.ToTable("games", "games");
-                });
-
-            modelBuilder.Entity("TeamService.Persistence.Entities.Participant", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTimeOffset?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
-
-                    b.Property<string>("Nickname")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("nickname");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<uint>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("xid")
-                        .HasColumnName("xmin");
-
-                    b.HasKey("Id")
-                        .HasName("pk_participants");
-
-                    b.HasIndex("Nickname")
-                        .IsUnique()
-                        .HasDatabaseName("ix_participants_nickname");
-
-                    b.ToTable("participants", "teams");
-                });
-
-            modelBuilder.Entity("TeamService.Persistence.Entities.Team", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTimeOffset?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<Guid>("GameId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("game_id");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<uint>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("xid")
-                        .HasColumnName("xmin");
-
-                    b.HasKey("Id")
-                        .HasName("pk_teams");
-
-                    b.HasIndex("GameId")
-                        .HasDatabaseName("ix_teams_game_id");
-
-                    b.ToTable("teams", "teams");
-                });
-
-            modelBuilder.Entity("TeamService.Persistence.Entities.TeamParticipant", b =>
-                {
-                    b.Property<Guid>("TeamId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("team_id");
-
-                    b.Property<Guid>("ParticipantId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("participant_id");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTimeOffset?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
-
-                    b.Property<int>("TeamRoleId")
-                        .HasColumnType("integer")
-                        .HasColumnName("team_role_id");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<uint>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("xid")
-                        .HasColumnName("xmin");
-
-                    b.HasKey("TeamId", "ParticipantId")
-                        .HasName("pk_teams_participants");
-
-                    b.HasIndex("ParticipantId")
-                        .HasDatabaseName("ix_teams_participants_participant_id");
-
-                    b.HasIndex("TeamRoleId")
-                        .HasDatabaseName("ix_teams_participants_team_role_id");
-
-                    b.ToTable("teams_participants", "teams");
-                });
-
-            modelBuilder.Entity("TeamService.Persistence.Entities.TeamRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTimeOffset?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<uint>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("xid")
-                        .HasColumnName("xmin");
-
-                    b.HasKey("Id")
-                        .HasName("pk_team_roles");
-
-                    b.ToTable("team_roles", "teams");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            IsDeleted = false,
-                            Name = "Игрок",
-                            UpdatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            Version = 0u
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            IsDeleted = false,
-                            Name = "Капитан",
-                            UpdatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            Version = 0u
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            IsDeleted = false,
-                            Name = "Тренер",
-                            UpdatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            Version = 0u
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            IsDeleted = false,
-                            Name = "Менеджер",
-                            UpdatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            Version = 0u
-                        });
-                });
-
             modelBuilder.Entity("Shared.Infrastructure.EventSourcing.Persistence.Entities.ConsumerMessage", b =>
                 {
                     b.HasOne("Shared.Infrastructure.EventSourcing.Persistence.Entities.MessageStatus", "Status")
@@ -637,48 +374,6 @@ namespace TeamService.Persistence.Migrations
                         .HasConstraintName("fk_outbox_message_headers_outbox_message_id");
 
                     b.Navigation("Message");
-                });
-
-            modelBuilder.Entity("TeamService.Persistence.Entities.Team", b =>
-                {
-                    b.HasOne("TeamService.Persistence.Entities.Game", "Game")
-                        .WithMany()
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_teams_game_game_id");
-
-                    b.Navigation("Game");
-                });
-
-            modelBuilder.Entity("TeamService.Persistence.Entities.TeamParticipant", b =>
-                {
-                    b.HasOne("TeamService.Persistence.Entities.Participant", "Participant")
-                        .WithMany()
-                        .HasForeignKey("ParticipantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_teams_participants_participants_participant_id");
-
-                    b.HasOne("TeamService.Persistence.Entities.Team", "Team")
-                        .WithMany()
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_teams_participants_teams_team_id");
-
-                    b.HasOne("TeamService.Persistence.Entities.TeamRole", "TeamRole")
-                        .WithMany()
-                        .HasForeignKey("TeamRoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_teams_participants_teams_roles_team_role_id");
-
-                    b.Navigation("Participant");
-
-                    b.Navigation("Team");
-
-                    b.Navigation("TeamRole");
                 });
 
             modelBuilder.Entity("Shared.Infrastructure.EventSourcing.Persistence.Entities.ConsumerMessage", b =>

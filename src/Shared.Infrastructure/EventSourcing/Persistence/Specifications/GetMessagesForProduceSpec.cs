@@ -14,6 +14,8 @@ public sealed class GetMessagesForProduceSpec : CustomSpecification<ProducerMess
         Query.OrderBy(o => o.ProducerName);
 
         Query.Include(m => m.Headers);
+        
+        Query.Select(m => m);
     }
 
     public static GetMessagesForProduceSpec Build() => new();

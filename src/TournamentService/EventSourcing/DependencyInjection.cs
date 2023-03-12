@@ -9,7 +9,7 @@ public static class DependencyInjection
     {
         services.AddEventSourcingWithKafka(config =>
         {
-            config.UseBrokers("kafka:9092");
+            config.UseBrokers("localhost:9092");
             config.UseSchemaRegistry("http://localhost:8081");
             config.DefineTopic("team", 5, 1);
 

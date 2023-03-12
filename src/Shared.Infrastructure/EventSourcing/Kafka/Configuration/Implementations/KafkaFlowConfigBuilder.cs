@@ -16,7 +16,7 @@ internal sealed class KafkaFlowConfigBuilder : IKafkaConfigBuilder, IConfigBuild
     private readonly List<Action<IClusterConfigurationBuilder>> _configActions = new();
     private readonly Dictionary<string, (int partitionCount, short replicationFactor)> _topics = new();
 
-    private bool _shouldRegisterProducerJob;
+    private bool _shouldRegisterProducerAdditionalServices;
 
     /// <inheritdoc />
     public IKafkaConfigBuilder UseBrokers(params string[] brokerAddresses)
@@ -79,7 +79,7 @@ internal sealed class KafkaFlowConfigBuilder : IKafkaConfigBuilder, IConfigBuild
         var additionalAction = producerBuilder.Build();
         
         _configActions.Add(additionalAction);
-        _shouldRegisterProducerJob = true;
+        _shouldRegisterProducerAdditionalServices = true;
         
         return this;
     }
@@ -123,7 +123,7 @@ internal sealed class KafkaFlowConfigBuilder : IKafkaConfigBuilder, IConfigBuild
                 kafka.AddCluster(configAction);
             });
 
-            if (_shouldRegisterProducerJob)
+            if (_shouldRegisterProducerAdditionalServices)
             {
                 AddProducerJobToServices(services);
                 services.AddScoped<IEventProducer, EventProducer>();
@@ -137,6 +137,8 @@ internal sealed class KafkaFlowConfigBuilder : IKafkaConfigBuilder, IConfigBuild
     {
         services.AddQuartz(config =>
         {
+            config.UseMicrosoftDependencyInjectionJobFactory();
+            
             config.AddJob<ProduceMessagesFromOutboxJob>(job =>
             {
                 job.DisallowConcurrentExecution();
@@ -145,15 +147,15 @@ internal sealed class KafkaFlowConfigBuilder : IKafkaConfigBuilder, IConfigBuild
 
             config.AddTrigger(trigger =>
             {
-                trigger.WithIdentity("outbox_producer_trigger");
                 trigger.ForJob("outbox_producer");
-
+                trigger.WithIdentity("outbox_producer_trigger");
+                
                 trigger.StartNow();
-                trigger.WithSchedule(DailyTimeIntervalScheduleBuilder
-                    .Create()
-                    .WithIntervalInMinutes(5));
+                trigger.WithSimpleSchedule(sc => sc.WithIntervalInMinutes(1).RepeatForever());
             });
         });
+        
+        services.AddQuartzHostedService(c => c.WaitForJobsToComplete = true);
 
         return services;
     }

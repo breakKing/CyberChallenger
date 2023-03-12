@@ -20,8 +20,11 @@ public sealed class EventProducer : IEventProducer
     public Task ProduceAsync<TMessage>(string producerName, string topic, string key, TMessage message,
         IDictionary<string, byte[]>? headers = null, CancellationToken ct = default)
     {
+        var messageType = typeof(TMessage).AssemblyQualifiedName!;
+        
         var messageToProduce = new ProducerMessage
         {
+            Type = messageType,
             Key = key,
             Value = JsonSerializer.Serialize(message),
             TopicName = topic,
@@ -35,6 +38,12 @@ public sealed class EventProducer : IEventProducer
             {
                 Key = HeaderDefinitions.ProducedAt,
                 Value = DateTimeOffset.UtcNow.ToString(CultureInfo.InvariantCulture),
+                MessageId = messageToProduce.Id
+            },
+            new()
+            {
+                Key = HeaderDefinitions.MessageType,
+                Value = messageType,
                 MessageId = messageToProduce.Id
             }
         };

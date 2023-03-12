@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json;
 using Confluent.Kafka;
 using KafkaFlow;
 using KafkaFlow.Producers;
@@ -69,15 +70,17 @@ public sealed class ProduceMessagesFromOutboxJob : IJob
             return;
         }
 
+        var messageType = Type.GetType(message.Type)!;
+        var messageValue = JsonSerializer.Deserialize(message.Value, messageType)!;
         var headers = GetMessageHeaders(message);
 
         var result = await producer.ProduceAsync(
             message.TopicName,
             message.Key,
-            message.Value,
+            messageValue,
             headers);
 
-        if (result.Status != PersistenceStatus.Persisted)
+        if (result?.Status != PersistenceStatus.Persisted)
         {
             _logger.LogWarning("Failed to produce message with id {MessageId}", message.Id);
             return;
@@ -102,7 +105,7 @@ public sealed class ProduceMessagesFromOutboxJob : IJob
 
         foreach (var header in message.Headers)
         {
-            headers.Add(header.Key, Encoding.Unicode.GetBytes(header.Value));
+            headers.Add(header.Key, Encoding.Default.GetBytes(header.Value));
         }
         
         return headers;
