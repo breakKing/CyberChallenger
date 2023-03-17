@@ -69,9 +69,9 @@ namespace TournamentService.Persistence.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
 
-                    b.Property<string>("Value")
+                    b.Property<byte[]>("Value")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("bytea")
                         .HasColumnName("value");
 
                     b.Property<uint>("Version")
@@ -180,37 +180,37 @@ namespace TournamentService.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(2470), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 17, 11, 20, 24, 573, DateTimeKind.Unspecified).AddTicks(1369), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             Name = "Не задан",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(2470), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 17, 11, 20, 24, 573, DateTimeKind.Unspecified).AddTicks(1369), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0u
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(3312), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 17, 11, 20, 24, 573, DateTimeKind.Unspecified).AddTicks(2234), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             Name = "Подготовлено к отправке в топик",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(3312), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 17, 11, 20, 24, 573, DateTimeKind.Unspecified).AddTicks(2234), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0u
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(3314), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 17, 11, 20, 24, 573, DateTimeKind.Unspecified).AddTicks(2235), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             Name = "Успешно отправлено в топик",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(3314), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 17, 11, 20, 24, 573, DateTimeKind.Unspecified).AddTicks(2235), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0u
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(3315), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2023, 3, 17, 11, 20, 24, 573, DateTimeKind.Unspecified).AddTicks(2236), new TimeSpan(0, 0, 0, 0, 0)),
                             IsDeleted = false,
                             Name = "Успешно обработано",
-                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 12, 19, 42, 39, 763, DateTimeKind.Unspecified).AddTicks(3315), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2023, 3, 17, 11, 20, 24, 573, DateTimeKind.Unspecified).AddTicks(2236), new TimeSpan(0, 0, 0, 0, 0)),
                             Version = 0u
                         });
                 });
@@ -262,9 +262,9 @@ namespace TournamentService.Persistence.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
 
-                    b.Property<string>("Value")
+                    b.Property<byte[]>("Value")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("bytea")
                         .HasColumnName("value");
 
                     b.Property<uint>("Version")
