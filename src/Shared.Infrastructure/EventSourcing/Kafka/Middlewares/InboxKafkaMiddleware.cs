@@ -64,7 +64,7 @@ public sealed class InboxKafkaMiddleware : IMessageMiddleware
             context.ConsumerContext.Topic,
             messageTypeHeader,
             context.GetMessageKey(),
-            context.GetMessageValue(),
+            (byte[])context.Message.Value,
             producedAt);
 
         var alreadyConsumed = await _unitOfWork.Repository<ConsumerMessage>().HasAnyAsync(spec);
@@ -78,7 +78,7 @@ public sealed class InboxKafkaMiddleware : IMessageMiddleware
         {
             Type = context.Headers.GetString(HeaderDefinitions.MessageType)!,
             Key = context.GetMessageKey(),
-            Value = context.GetMessageValue(),
+            Value = (byte[])context.Message.Value,
             TopicName = context.ConsumerContext.Topic,
             StatusId = MessageStatusDefinitions.Consumed,
             ConsumerName = context.ConsumerContext.ConsumerName

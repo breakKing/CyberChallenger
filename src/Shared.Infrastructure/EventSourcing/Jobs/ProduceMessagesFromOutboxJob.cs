@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 using Confluent.Kafka;
+using Google.Protobuf;
 using KafkaFlow;
 using KafkaFlow.Producers;
 using Microsoft.Extensions.DependencyInjection;
@@ -71,7 +72,20 @@ public sealed class ProduceMessagesFromOutboxJob : IJob
         }
 
         var messageType = Type.GetType(message.Type)!;
-        var messageValue = JsonSerializer.Deserialize(message.Value, messageType)!;
+        object messageValue;
+
+        if (messageType.IsAssignableTo(typeof(IMessage)))
+        {
+            var protobufMessage = Activator.CreateInstance(messageType)!;
+            ((IMessage)protobufMessage).MergeFrom(message.Value);
+            messageValue = protobufMessage;
+        }
+        else
+        {
+            var jsonString = Encoding.Default.GetString(message.Value);
+            messageValue = JsonSerializer.Deserialize(jsonString, messageType)!;
+        }
+        
         var headers = GetMessageHeaders(message);
 
         var result = await producer.ProduceAsync(

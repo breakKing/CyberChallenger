@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
+using System.Text;
 using System.Text.Json;
+using Google.Protobuf;
 using Shared.Infrastructure.EventSourcing.Persistence.Constants;
 using Shared.Infrastructure.EventSourcing.Persistence.Entities;
 using Shared.Infrastructure.EventSourcing.Services.Interfaces;
@@ -21,12 +23,24 @@ public sealed class EventProducer : IEventProducer
         IDictionary<string, byte[]>? headers = null, CancellationToken ct = default)
     {
         var messageType = typeof(TMessage).AssemblyQualifiedName!;
-        
+
+        byte[] messageAsBytes;
+
+        if (message is IMessage protobufMessage)
+        {
+            messageAsBytes = protobufMessage.ToByteArray();
+        }
+        else
+        {
+            var serializedMessage = JsonSerializer.Serialize(message);
+            messageAsBytes = Encoding.Default.GetBytes(serializedMessage);
+        }
+
         var messageToProduce = new ProducerMessage
         {
             Type = messageType,
             Key = key,
-            Value = JsonSerializer.Serialize(message),
+            Value = messageAsBytes,
             TopicName = topic,
             StatusId = MessageStatusDefinitions.ReadyToBeProduced,
             ProducerName = producerName,
