@@ -52,12 +52,6 @@ public sealed class EntityFrameworkCoreUnitOfWork<TContext> : IGenericUnitOfWork
     }
 
     /// <inheritdoc />
-    public async Task SaveWithoutTransactionAsync(CancellationToken ct = default)
-    {
-        await _context.SaveChangesAsync(ct);
-    }
-
-    /// <inheritdoc />
     public void Dispose()
     {
         _context.Dispose();
