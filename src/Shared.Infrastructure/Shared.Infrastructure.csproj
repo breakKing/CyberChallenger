@@ -9,6 +9,9 @@
     <ItemGroup>
       <PackageReference Include="Ardalis.Specification" Version="6.1.0" />
       <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="6.1.0" />
+      <PackageReference Include="DotNetCore.CAP" Version="7.1.2" />
+      <PackageReference Include="DotNetCore.CAP.Kafka" Version="7.1.2" />
+      <PackageReference Include="DotNetCore.CAP.PostgreSql" Version="7.1.2" />
       <PackageReference Include="EFCore.NamingConventions" Version="7.0.2" />
       <PackageReference Include="LinqKit.Microsoft.EntityFrameworkCore" Version="7.1.4" />
       <PackageReference Include="Marten" Version="5.11.0" />
@@ -25,6 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="EventSourcing\" />
       <Folder Include="Logging" />
       <Folder Include="RelationalDatabase\" />
     </ItemGroup>
