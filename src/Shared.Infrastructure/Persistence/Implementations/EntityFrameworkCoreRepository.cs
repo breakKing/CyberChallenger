@@ -1,8 +1,6 @@
-using System.Linq.Expressions;
 using Ardalis.Specification.EntityFrameworkCore;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using Shared.Infrastructure.Persistence.Entities;
 using Shared.Infrastructure.Persistence.Extensions;
 using Shared.Infrastructure.Persistence.Interfaces;
@@ -26,7 +24,9 @@ public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericR
     }
 
     /// <inheritdoc />
-    public async Task<List<TEntity>> GetManyAsync(CustomSpecification<TEntity> spec, bool forReadOnly = true,
+    public async Task<List<TEntity>> GetManyAsync(
+        CustomSpecification<TEntity> spec, 
+        bool forReadOnly = true,
         CancellationToken ct = default)
     {
         var query = BuildQuery(spec, forReadOnly);
@@ -35,8 +35,10 @@ public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericR
     }
 
     /// <inheritdoc />
-    public async Task<List<TProjection>> GetManyAsync<TProjection>(CustomSpecification<TEntity, TProjection> spec,
-        bool forReadOnly = true, CancellationToken ct = default)
+    public async Task<List<TProjection>> GetManyAsync<TProjection>(
+        CustomSpecification<TEntity, TProjection> spec,
+        bool forReadOnly = true, 
+        CancellationToken ct = default)
     {
         var query = BuildQuery(spec, forReadOnly);
 
@@ -44,8 +46,12 @@ public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericR
     }
 
     /// <inheritdoc />
-    public async Task<DbOffsetPaginatedData<TEntity>> GetManyOffsetPaginatedAsync(CustomSpecification<TEntity> spec,
-        int pageNumber = 1, int pageSize = 20, bool forReadOnly = true, CancellationToken ct = default)
+    public async Task<DbOffsetPaginatedData<TEntity>> GetManyOffsetPaginatedAsync(
+        CustomSpecification<TEntity> spec,
+        int pageNumber = 1, 
+        int pageSize = 20, 
+        bool forReadOnly = true, 
+        CancellationToken ct = default)
     {
         var query = BuildQuery(spec, forReadOnly);
 
@@ -59,8 +65,11 @@ public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericR
 
     /// <inheritdoc />
     public async Task<DbOffsetPaginatedData<TProjection>> GetManyOffsetPaginatedAsync<TProjection>(
-        CustomSpecification<TEntity, TProjection> spec, int pageNumber = 1,
-        int pageSize = 20, bool forReadOnly = true, CancellationToken ct = default)
+        CustomSpecification<TEntity, TProjection> spec, 
+        int pageNumber = 1,
+        int pageSize = 20, 
+        bool forReadOnly = true, 
+        CancellationToken ct = default)
     {
         var query = BuildQuery(spec, forReadOnly);
 
@@ -74,14 +83,19 @@ public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericR
 
     /// <inheritdoc />
     public async Task<DbCursorPaginatedData<TEntity>> GetManyCursorPaginatedAsync<TCursor>(
-        CustomSpecification<TEntity> spec, Func<TEntity, TCursor> cursorSelector, TCursor startingCursor,
-        int pageSize = 20, bool forReadOnly = true, CancellationToken ct = default)
+        CustomSpecification<TEntity> spec, 
+        Func<TEntity, TCursor> cursorSelector, 
+        TCursor startingCursor,
+        int pageSize = 20, 
+        bool forReadOnly = true, 
+        CancellationToken ct = default)
         where TCursor : IComparable<TCursor>
     {
         var query = BuildQuery(spec, forReadOnly);
 
         var cursorFilter = PredicateBuilder.New<TEntity>();
-        cursorFilter.And(e => cursorSelector.Invoke(e)
+        cursorFilter.And(e => cursorSelector
+            .Invoke(e)
             .CompareTo(startingCursor) >= 0);
         
         var extendedData = await query.ToCursorPaginatedListAsync(cursorFilter, pageSize, ct);
@@ -106,8 +120,12 @@ public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericR
 
     /// <inheritdoc />
     public async Task<DbCursorPaginatedData<TProjection>> GetManyCursorPaginatedAsync<TProjection, TCursor>(
-        CustomSpecification<TEntity, TProjection> spec, Func<TProjection, TCursor> cursorSelector,
-        TCursor startingCursor, int pageSize = 20, bool forReadOnly = true, CancellationToken ct = default)
+        CustomSpecification<TEntity, TProjection> spec, 
+        Func<TProjection, TCursor> cursorSelector,
+        TCursor startingCursor, 
+        int pageSize = 20, 
+        bool forReadOnly = true, 
+        CancellationToken ct = default)
         where TCursor : IComparable<TCursor>
     {
         var query = BuildQuery(spec, forReadOnly);
@@ -137,7 +155,9 @@ public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericR
     }
 
     /// <inheritdoc />
-    public async Task<TEntity?> GetOneAsync(CustomSpecification<TEntity> spec, bool forReadOnly = true,
+    public async Task<TEntity?> GetOneAsync(
+        CustomSpecification<TEntity> spec, 
+        bool forReadOnly = true,
         CancellationToken ct = default)
     {
         var query = BuildQuery(spec, forReadOnly);
@@ -146,8 +166,10 @@ public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericR
     }
 
     /// <inheritdoc />
-    public async Task<TProjection?> GetOneAsync<TProjection>(CustomSpecification<TEntity, TProjection> spec,
-        bool forReadOnly = true, CancellationToken ct = default)
+    public async Task<TProjection?> GetOneAsync<TProjection>(
+        CustomSpecification<TEntity, TProjection> spec,
+        bool forReadOnly = true, 
+        CancellationToken ct = default)
     {
         var query = BuildQuery(spec, forReadOnly);
 
@@ -155,7 +177,9 @@ public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericR
     }
 
     /// <inheritdoc />
-    public async Task<long> GetCountAsync(CustomSpecification<TEntity> spec, CancellationToken ct = default)
+    public async Task<long> GetCountAsync(
+        CustomSpecification<TEntity> spec, 
+        CancellationToken ct = default)
     {
         var query = BuildQuery(spec);
 
@@ -169,7 +193,9 @@ public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericR
     }
 
     /// <inheritdoc />
-    public async Task<bool> HasAnyAsync(CustomSpecification<TEntity> spec, CancellationToken ct = default)
+    public async Task<bool> HasAnyAsync(
+        CustomSpecification<TEntity> spec, 
+        CancellationToken ct = default)
     {
         var query = BuildQuery(spec);
 
@@ -207,16 +233,6 @@ public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericR
     }
 
     /// <inheritdoc />
-    public async Task UpdateManyAsync(CustomSpecification<TEntity> specification,
-        Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> updateExpression,
-        CancellationToken ct = default)
-    {
-        var query = BuildQuery(specification, false);
-
-        await query.ExecuteUpdateAsync(updateExpression, ct);
-    }
-
-    /// <inheritdoc />
     public void RemoveOne(TEntity entity)
     {
         _context.Set<TEntity>().Remove(entity);
@@ -228,20 +244,15 @@ public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericR
         _context.Set<TEntity>().RemoveRange(entities);
     }
 
-    /// <inheritdoc />
-    public async Task RemoveManyAsync(CustomSpecification<TEntity> specification)
-    {
-        await UpdateManyAsync(specification, 
-            p => p.SetProperty(e => e.IsDeleted, _ => true));
-    }
-
     /// <summary>
     /// Генерация запроса из спецификации
     /// </summary>
     /// <param name="spec">Спецификация для построения запроса</param>
     /// <param name="forReadOnly">Включать ли в запрос AsNoTrackingWithIdentityResolution</param>
     /// <returns></returns>
-    private IQueryable<TEntity> BuildQuery(CustomSpecification<TEntity> spec, bool forReadOnly = true)
+    private IQueryable<TEntity> BuildQuery(
+        CustomSpecification<TEntity> spec, 
+        bool forReadOnly = true)
     {
         var query = BaseQuery;
 
@@ -260,7 +271,8 @@ public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericR
     /// <param name="forReadOnly">Включать ли в запрос AsNoTrackingWithIdentityResolution</param>
     /// <typeparam name="TProjection"></typeparam>
     /// <returns></returns>
-    private IQueryable<TProjection> BuildQuery<TProjection>(CustomSpecification<TEntity, TProjection> spec,
+    private IQueryable<TProjection> BuildQuery<TProjection>(
+        CustomSpecification<TEntity, TProjection> spec,
         bool forReadOnly = true)
     {
         var query = BaseQuery;

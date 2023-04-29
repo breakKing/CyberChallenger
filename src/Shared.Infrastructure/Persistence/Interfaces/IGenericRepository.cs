@@ -1,5 +1,4 @@
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore.Query;
 using Shared.Infrastructure.Persistence.Entities;
 using Shared.Infrastructure.Persistence.Models.Dto;
 using Shared.Infrastructure.Persistence.Specifications;
@@ -16,7 +15,9 @@ public interface IGenericRepository<TEntity>
     /// <param name="forReadOnly"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<List<TEntity>> GetManyAsync(CustomSpecification<TEntity> spec, bool forReadOnly = true,
+    Task<List<TEntity>> GetManyAsync(
+        CustomSpecification<TEntity> spec, 
+        bool forReadOnly = true,
         CancellationToken ct = default);
 
     /// <summary>
@@ -27,7 +28,8 @@ public interface IGenericRepository<TEntity>
     /// <param name="ct"></param>
     /// <typeparam name="TProjection"></typeparam>
     /// <returns></returns>
-    Task<List<TProjection>> GetManyAsync<TProjection>(CustomSpecification<TEntity, TProjection> spec,
+    Task<List<TProjection>> GetManyAsync<TProjection>(
+        CustomSpecification<TEntity, TProjection> spec,
         bool forReadOnly = true,
         CancellationToken ct = default);
 
@@ -40,8 +42,12 @@ public interface IGenericRepository<TEntity>
     /// <param name="forReadOnly"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<DbOffsetPaginatedData<TEntity>> GetManyOffsetPaginatedAsync(CustomSpecification<TEntity> spec, int pageNumber = 1,
-        int pageSize = 20, bool forReadOnly = true, CancellationToken ct = default);
+    Task<DbOffsetPaginatedData<TEntity>> GetManyOffsetPaginatedAsync(
+        CustomSpecification<TEntity> spec, 
+        int pageNumber = 1,
+        int pageSize = 20, 
+        bool forReadOnly = true, 
+        CancellationToken ct = default);
 
     /// <summary>
     /// Получение списка сущностей, удовлетворяющих спецификации, с учётом классической пагинации
@@ -54,11 +60,14 @@ public interface IGenericRepository<TEntity>
     /// <typeparam name="TProjection"></typeparam>
     /// <returns></returns>
     Task<DbOffsetPaginatedData<TProjection>> GetManyOffsetPaginatedAsync<TProjection>(
-        CustomSpecification<TEntity, TProjection> spec, int pageNumber = 1, int pageSize = 20, bool forReadOnly = true, 
+        CustomSpecification<TEntity, TProjection> spec, 
+        int pageNumber = 1, 
+        int pageSize = 20, 
+        bool forReadOnly = true, 
         CancellationToken ct = default);
 
     /// <summary>
-    /// Получение списка сущностей, удовлетворяющих спецификации, с учётом классической пагинации
+    /// Получение списка сущностей, удовлетворяющих спецификации, с учётом курсорной пагинации
     /// </summary>
     /// <param name="spec"></param>
     /// <param name="cursorSelector"></param>
@@ -68,8 +77,12 @@ public interface IGenericRepository<TEntity>
     /// <param name="ct"></param>
     /// <typeparam name="TCursor"></typeparam>
     /// <returns></returns>
-    Task<DbCursorPaginatedData<TEntity>> GetManyCursorPaginatedAsync<TCursor>(CustomSpecification<TEntity> spec, 
-        Func<TEntity, TCursor> cursorSelector, TCursor startingCursor, int pageSize = 20, bool forReadOnly = true, 
+    Task<DbCursorPaginatedData<TEntity>> GetManyCursorPaginatedAsync<TCursor>(
+        CustomSpecification<TEntity> spec, 
+        Func<TEntity, TCursor> cursorSelector, 
+        TCursor startingCursor, 
+        int pageSize = 20, 
+        bool forReadOnly = true, 
         CancellationToken ct = default)
         where TCursor : IComparable<TCursor>;
 
@@ -86,8 +99,12 @@ public interface IGenericRepository<TEntity>
     /// <typeparam name="TCursor"></typeparam>
     /// <returns></returns>
     Task<DbCursorPaginatedData<TProjection>> GetManyCursorPaginatedAsync<TProjection, TCursor>(
-        CustomSpecification<TEntity, TProjection> spec, Func<TProjection, TCursor> cursorSelector, 
-        TCursor startingCursor, int pageSize = 20, bool forReadOnly = true, CancellationToken ct = default)
+        CustomSpecification<TEntity, TProjection> spec, 
+        Func<TProjection, TCursor> cursorSelector, 
+        TCursor startingCursor, 
+        int pageSize = 20, 
+        bool forReadOnly = true, 
+        CancellationToken ct = default)
         where TCursor : IComparable<TCursor>;
 
     /// <summary>
@@ -97,7 +114,9 @@ public interface IGenericRepository<TEntity>
     /// <param name="forReadOnly"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<TEntity?> GetOneAsync(CustomSpecification<TEntity> spec, bool forReadOnly = true,
+    Task<TEntity?> GetOneAsync(
+        CustomSpecification<TEntity> spec, 
+        bool forReadOnly = true,
         CancellationToken ct = default);
 
     /// <summary>
@@ -108,8 +127,10 @@ public interface IGenericRepository<TEntity>
     /// <param name="ct"></param>
     /// <typeparam name="TProjection"></typeparam>
     /// <returns></returns>
-    Task<TProjection?> GetOneAsync<TProjection>(CustomSpecification<TEntity, TProjection> spec,
-        bool forReadOnly = true, CancellationToken ct = default);
+    Task<TProjection?> GetOneAsync<TProjection>(
+        CustomSpecification<TEntity, TProjection> spec,
+        bool forReadOnly = true, 
+        CancellationToken ct = default);
 
     /// <summary>
     /// Получение количества сущностей, удовлетворяющих спецификации
@@ -166,16 +187,6 @@ public interface IGenericRepository<TEntity>
     void UpdateMany(IEnumerable<TEntity> entities);
 
     /// <summary>
-    /// Обновление сущностей, соответствующих спецификации
-    /// </summary>
-    /// <param name="specification"></param>
-    /// <param name="updateExpression"></param>
-    /// <param name="ct"></param>
-    Task UpdateManyAsync(CustomSpecification<TEntity> specification, 
-        Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> updateExpression, 
-        CancellationToken ct = default);
-
-    /// <summary>
     /// Удаление сущности
     /// </summary>
     /// <param name="entity"></param>
@@ -186,10 +197,4 @@ public interface IGenericRepository<TEntity>
     /// </summary>
     /// <param name="entities"></param>
     void RemoveMany(IEnumerable<TEntity> entities);
-    
-    /// <summary>
-    /// Удаление сущностей по спецификации
-    /// </summary>
-    /// <param name="specification"></param>
-    Task RemoveManyAsync(CustomSpecification<TEntity> specification);
 }

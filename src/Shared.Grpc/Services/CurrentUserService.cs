@@ -28,7 +28,7 @@ public sealed class CurrentUserService : ICurrentUserService
     /// <inheritdoc />
     public Guid? GetIdFromGrpcContext(ServerCallContext context)
     {
-        var userId = context.RequestHeaders.FirstOrDefault(e => e.Key == GlobalConstants.UserIdInternalHeader)?.Value ?? null;
+        var userId = context.RequestHeaders.FirstOrDefault(e => e.Key == GlobalConstants.UserIdInternalHeader)?.Value;
         
         if (!string.IsNullOrEmpty(userId))
         {

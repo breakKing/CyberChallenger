@@ -1,4 +1,3 @@
-using Shared.Infrastructure.EventSourcing.Kafka.Extensions;
 using TournamentService.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +15,6 @@ var app = builder.Build();
 
 // App pipeline
 
-app.UseKafkaBus();
 // app.MapGrpcServices();
 app.MapGet("/", () => "Grpc is running...");
 

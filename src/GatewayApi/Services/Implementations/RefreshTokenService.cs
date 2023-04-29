@@ -1,4 +1,6 @@
-﻿using GatewayApi.Common.Models.Options;
+﻿using System.Security.Cryptography;
+using System.Text;
+using GatewayApi.Common.Models.Options;
 using GatewayApi.Services.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
@@ -47,6 +49,11 @@ public sealed class RefreshTokenService : IRefreshTokenService
     
     private static string GenerateCacheKey(string accessToken)
     {
-        return $"token-{accessToken}";
+        var bytes = Encoding.Default.GetBytes(accessToken);
+        var hashBytes = SHA512.HashData(bytes);
+
+        var hashString = Encoding.Default.GetString(hashBytes);
+
+        return hashString;
     }
 }
