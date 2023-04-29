@@ -43,9 +43,6 @@
       <Folder Include="Features\Crud\ReadManyOffset" />
       <Folder Include="Features\Crud\ReadOne" />
       <Folder Include="Features\Crud\Update" />
-      <Folder Include="Features\Participant\Create" />
-      <Folder Include="Features\Participant\Delete" />
-      <Folder Include="Features\Participant\Update" />
     </ItemGroup>
 
 </Project>
