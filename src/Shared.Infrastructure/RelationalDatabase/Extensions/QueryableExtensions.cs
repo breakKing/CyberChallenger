@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
-namespace Shared.Infrastructure.Persistence.Extensions;
+namespace Shared.Infrastructure.RelationalDatabase.Extensions;
 
 public static class QueryableExtensions
 {

@@ -1,6 +1,6 @@
 using Ardalis.Specification;
 
-namespace Shared.Infrastructure.Persistence.Specifications;
+namespace Shared.Infrastructure.RelationalDatabase.Specifications;
 
 public abstract class CustomSpecification<TEntity> : Specification<TEntity, TEntity>
 {

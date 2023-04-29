@@ -1,9 +1,9 @@
 using System.Linq.Expressions;
-using Shared.Infrastructure.Persistence.Entities;
-using Shared.Infrastructure.Persistence.Models.Dto;
-using Shared.Infrastructure.Persistence.Specifications;
+using Shared.Infrastructure.RelationalDatabase.Entities;
+using Shared.Infrastructure.RelationalDatabase.Models.Dto;
+using Shared.Infrastructure.RelationalDatabase.Specifications;
 
-namespace Shared.Infrastructure.Persistence.Interfaces;
+namespace Shared.Infrastructure.RelationalDatabase.Interfaces;
 
 public interface IGenericRepository<TEntity>
     where TEntity : EntityBase

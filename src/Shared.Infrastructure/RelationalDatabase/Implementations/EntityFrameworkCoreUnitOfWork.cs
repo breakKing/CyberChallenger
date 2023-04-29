@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Shared.Infrastructure.Persistence.Entities;
-using Shared.Infrastructure.Persistence.Interfaces;
+using Shared.Infrastructure.RelationalDatabase.Entities;
+using Shared.Infrastructure.RelationalDatabase.Interfaces;
 
-namespace Shared.Infrastructure.Persistence.Implementations;
+namespace Shared.Infrastructure.RelationalDatabase.Implementations;
 
 public sealed class EntityFrameworkCoreUnitOfWork<TContext> : IGenericUnitOfWork
     where TContext : DbContext

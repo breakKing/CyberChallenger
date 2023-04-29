@@ -1,4 +1,4 @@
-﻿using Shared.Infrastructure.Persistence.Interfaces;
+﻿using Shared.Infrastructure.RelationalDatabase.Interfaces;
 using TeamService.Persistence.Entities;
 
 namespace TeamService.Features.Crud;

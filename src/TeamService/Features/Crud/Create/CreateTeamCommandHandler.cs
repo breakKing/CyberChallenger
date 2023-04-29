@@ -1,5 +1,5 @@
 ﻿using Mediator;
-using Shared.Infrastructure.Persistence.Interfaces;
+using Shared.Infrastructure.RelationalDatabase.Interfaces;
 using TeamService.Persistence;
 using TeamService.Persistence.Entities;
 

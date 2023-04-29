@@ -1,4 +1,4 @@
-﻿using Shared.Infrastructure.Persistence.Entities;
+﻿using Shared.Infrastructure.RelationalDatabase.Entities;
 
 namespace TeamService.Persistence.Entities;
 

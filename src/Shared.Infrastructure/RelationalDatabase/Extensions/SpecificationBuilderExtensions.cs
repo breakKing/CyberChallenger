@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using Ardalis.Specification;
 using LinqKit;
 
-namespace Shared.Infrastructure.Persistence.Extensions;
+namespace Shared.Infrastructure.RelationalDatabase.Extensions;
 
 public static class SpecificationBuilderExtensions
 {

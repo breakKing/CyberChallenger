@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Infrastructure.Persistence.Implementations;
-using Shared.Infrastructure.Persistence.Interceptors;
-using Shared.Infrastructure.Persistence.Interfaces;
+using Shared.Infrastructure.RelationalDatabase.Implementations;
+using Shared.Infrastructure.RelationalDatabase.Interceptors;
+using Shared.Infrastructure.RelationalDatabase.Interfaces;
 
-namespace Shared.Infrastructure.Persistence.Extensions;
+namespace Shared.Infrastructure.RelationalDatabase.Extensions;
 
 public static class ServiceCollectionExtensions
 {

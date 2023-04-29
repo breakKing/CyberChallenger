@@ -1,4 +1,4 @@
-﻿using Shared.Infrastructure.Persistence.Extensions;
+﻿using Shared.Infrastructure.RelationalDatabase.Extensions;
 
 namespace TeamService.Persistence;
 

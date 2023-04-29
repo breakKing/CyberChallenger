@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shared.Infrastructure.Persistence.Entities;
+namespace Shared.Infrastructure.RelationalDatabase.Entities;
 
 public abstract class EntityBase
 {

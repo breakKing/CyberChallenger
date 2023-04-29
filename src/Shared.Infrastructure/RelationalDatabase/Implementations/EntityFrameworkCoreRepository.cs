@@ -1,13 +1,13 @@
 using Ardalis.Specification.EntityFrameworkCore;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using Shared.Infrastructure.Persistence.Entities;
-using Shared.Infrastructure.Persistence.Extensions;
-using Shared.Infrastructure.Persistence.Interfaces;
-using Shared.Infrastructure.Persistence.Models.Dto;
-using Shared.Infrastructure.Persistence.Specifications;
+using Shared.Infrastructure.RelationalDatabase.Extensions;
+using Shared.Infrastructure.RelationalDatabase.Entities;
+using Shared.Infrastructure.RelationalDatabase.Interfaces;
+using Shared.Infrastructure.RelationalDatabase.Models.Dto;
+using Shared.Infrastructure.RelationalDatabase.Specifications;
 
-namespace Shared.Infrastructure.Persistence.Implementations;
+namespace Shared.Infrastructure.RelationalDatabase.Implementations;
 
 public sealed class EntityFrameworkCoreRepository<TEntity, TContext> : IGenericRepository<TEntity>
     where TEntity : EntityBase

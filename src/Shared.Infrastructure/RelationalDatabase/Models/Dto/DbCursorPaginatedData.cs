@@ -1,4 +1,4 @@
-﻿namespace Shared.Infrastructure.Persistence.Models.Dto;
+﻿namespace Shared.Infrastructure.RelationalDatabase.Models.Dto;
 
 /// <summary>
 /// Данные, полученные с пагинацией по курсору

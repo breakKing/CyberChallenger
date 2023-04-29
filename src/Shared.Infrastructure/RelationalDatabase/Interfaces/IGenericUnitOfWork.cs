@@ -1,6 +1,6 @@
-using Shared.Infrastructure.Persistence.Entities;
+using Shared.Infrastructure.RelationalDatabase.Entities;
 
-namespace Shared.Infrastructure.Persistence.Interfaces;
+namespace Shared.Infrastructure.RelationalDatabase.Interfaces;
 
 /// <summary>
 /// Работа с БД через репозитории
