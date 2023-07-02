@@ -7,12 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="PipelineBehaviors\" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.5.2" />
       <PackageReference Include="LanguageExt.Core" Version="4.4.3" />
       <PackageReference Include="MediatR" Version="12.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
     </ItemGroup>
 
 </Project>
