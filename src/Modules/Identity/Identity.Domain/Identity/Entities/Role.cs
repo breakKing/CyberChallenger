@@ -17,7 +17,7 @@ public sealed class Role : IdentityRole<Guid>
         Name = name;
     }
 
-    internal Role(Guid id, string name) : this(name)
+    public Role(Guid id, string name) : this(name)
     {
         Id = id;
     }

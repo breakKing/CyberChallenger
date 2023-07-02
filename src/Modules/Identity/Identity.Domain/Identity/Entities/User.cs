@@ -12,10 +12,20 @@ public sealed class User : IdentityUser<Guid>
         Id = NewId.NextGuid();
     }
 
-    internal User(Guid id, string userName) : base(userName)
+    public User(Guid id, string userName) : base(userName)
     {
         Id = id;
     }
 
     public IReadOnlyCollection<Role> Roles => _roles.AsReadOnly();
+
+    public void AddRole(Role role)
+    {
+        if (_roles.Exists(r => r.Id == role.Id))
+        {
+            return;
+        }
+        
+        _roles.Add(role);
+    }
 }
