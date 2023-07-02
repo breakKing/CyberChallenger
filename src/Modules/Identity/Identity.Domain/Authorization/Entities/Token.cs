@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using OpenIddict.EntityFrameworkCore.Models;
 
-namespace Identity.Domain.Authorization;
+namespace Identity.Domain.Authorization.Entities;
 
 public sealed class Token : OpenIddictEntityFrameworkCoreToken<Guid, Application, Authorization>
 {

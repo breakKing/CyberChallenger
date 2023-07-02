@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Identity;
 
-namespace Identity.Domain.Identity;
+namespace Identity.Domain.Identity.Entities;
 
 public sealed class Role : IdentityRole<Guid>
 {
