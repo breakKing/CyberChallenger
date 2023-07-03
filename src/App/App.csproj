@@ -20,6 +20,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Common\Common.Presentation\Common.Presentation.csproj" />
+      <ProjectReference Include="..\Modules\Identity\Identity.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,26 +1,12 @@
 ﻿using System.Text.Json;
-using Common.Presentation.Contracts;
+using Common.Presentation.Primitives;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 
 namespace App;
 
-public static class Extensions
+public static class PipelineConfiguration
 {
-    public static void Configure(this WebApplicationBuilder builder)
-    {
-        builder.Services.AddFastEndpoints();
-
-        builder.Services.SwaggerDocument(settings =>
-        {
-            settings.DocumentSettings = documentSettings =>
-            {
-                documentSettings.Title = "CyberChallenger API";
-                documentSettings.Version = "v1";
-            };
-        });
-    }
-
     public static void Configure(this WebApplication app)
     {
         app.UseHttpsRedirection();

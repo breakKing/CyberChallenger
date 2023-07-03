@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using Common.Presentation.Contracts;
+using Common.Presentation.Primitives;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http;
 

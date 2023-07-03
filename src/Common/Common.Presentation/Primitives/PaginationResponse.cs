@@ -1,4 +1,4 @@
-﻿namespace Common.Presentation.Contracts;
+﻿namespace Common.Presentation.Primitives;
 
 public sealed record PaginationResponse(
     long ItemsCount, 

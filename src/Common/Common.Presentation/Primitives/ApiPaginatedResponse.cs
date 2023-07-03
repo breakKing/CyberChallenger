@@ -1,4 +1,4 @@
-﻿namespace Common.Presentation.Contracts;
+﻿namespace Common.Presentation.Primitives;
 
 public record ApiPaginatedResponse<TData>(
         PaginatedData<TData> Data,
