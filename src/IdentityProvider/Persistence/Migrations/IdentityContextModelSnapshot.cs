@@ -3,7 +3,6 @@ using System;
 using IdentityProviderService.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,11 +11,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IdentityProviderService.Persistence.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20230123195012_AddingOpenIddict")]
-    partial class AddingOpenIddict
+    partial class IdentityContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,7 +22,7 @@ namespace IdentityProviderService.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.Application", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.Application", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,7 +92,7 @@ namespace IdentityProviderService.Persistence.Migrations
                     b.ToTable("applications", "openid");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.Authorization", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.Authorization", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -148,7 +145,7 @@ namespace IdentityProviderService.Persistence.Migrations
                     b.ToTable("authorizations", "openid");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.Role", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -184,7 +181,7 @@ namespace IdentityProviderService.Persistence.Migrations
                     b.ToTable("roles", "identity");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.RoleClaim", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.RoleClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -214,7 +211,7 @@ namespace IdentityProviderService.Persistence.Migrations
                     b.ToTable("role_claims", "identity");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.Scope", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.Scope", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -266,7 +263,7 @@ namespace IdentityProviderService.Persistence.Migrations
                     b.ToTable("scopes", "openid");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.Token", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.Token", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -343,7 +340,7 @@ namespace IdentityProviderService.Persistence.Migrations
                     b.ToTable("tokens", "openid");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.User", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -428,7 +425,7 @@ namespace IdentityProviderService.Persistence.Migrations
                     b.ToTable("users", "identity");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.UserClaim", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.UserClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -458,7 +455,7 @@ namespace IdentityProviderService.Persistence.Migrations
                     b.ToTable("user_claims", "identity");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.UserLogin", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.UserLogin", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("text")
@@ -485,7 +482,7 @@ namespace IdentityProviderService.Persistence.Migrations
                     b.ToTable("user_logins", "identity");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.UserRole", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.UserRole", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
@@ -504,7 +501,7 @@ namespace IdentityProviderService.Persistence.Migrations
                     b.ToTable("users_roles", "identity");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.UserToken", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.UserToken", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
@@ -528,9 +525,9 @@ namespace IdentityProviderService.Persistence.Migrations
                     b.ToTable("user_tokens", "identity");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.Authorization", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.Authorization", b =>
                 {
-                    b.HasOne("IdentityProviderService.Persistence.Entities.Application", "Application")
+                    b.HasOne("IdentityProvider.Persistence.Entities.Application", "Application")
                         .WithMany("Authorizations")
                         .HasForeignKey("ApplicationId")
                         .HasConstraintName("fk_authorizations_applications_application_id");
@@ -538,9 +535,9 @@ namespace IdentityProviderService.Persistence.Migrations
                     b.Navigation("Application");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.RoleClaim", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.RoleClaim", b =>
                 {
-                    b.HasOne("IdentityProviderService.Persistence.Entities.Role", null)
+                    b.HasOne("IdentityProvider.Persistence.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -548,14 +545,14 @@ namespace IdentityProviderService.Persistence.Migrations
                         .HasConstraintName("fk_role_claims_asp_net_roles_role_id");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.Token", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.Token", b =>
                 {
-                    b.HasOne("IdentityProviderService.Persistence.Entities.Application", "Application")
+                    b.HasOne("IdentityProvider.Persistence.Entities.Application", "Application")
                         .WithMany("Tokens")
                         .HasForeignKey("ApplicationId")
                         .HasConstraintName("fk_tokens_applications_application_id");
 
-                    b.HasOne("IdentityProviderService.Persistence.Entities.Authorization", "Authorization")
+                    b.HasOne("IdentityProvider.Persistence.Entities.Authorization", "Authorization")
                         .WithMany("Tokens")
                         .HasForeignKey("AuthorizationId")
                         .HasConstraintName("fk_tokens_authorizations_authorization_id");
@@ -565,9 +562,9 @@ namespace IdentityProviderService.Persistence.Migrations
                     b.Navigation("Authorization");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.UserClaim", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.UserClaim", b =>
                 {
-                    b.HasOne("IdentityProviderService.Persistence.Entities.User", null)
+                    b.HasOne("IdentityProvider.Persistence.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -575,9 +572,9 @@ namespace IdentityProviderService.Persistence.Migrations
                         .HasConstraintName("fk_user_claims_asp_net_users_user_id");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.UserLogin", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.UserLogin", b =>
                 {
-                    b.HasOne("IdentityProviderService.Persistence.Entities.User", null)
+                    b.HasOne("IdentityProvider.Persistence.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -585,16 +582,16 @@ namespace IdentityProviderService.Persistence.Migrations
                         .HasConstraintName("fk_user_logins_users_user_id");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.UserRole", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.UserRole", b =>
                 {
-                    b.HasOne("IdentityProviderService.Persistence.Entities.Role", null)
+                    b.HasOne("IdentityProvider.Persistence.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_users_roles_roles_role_id");
 
-                    b.HasOne("IdentityProviderService.Persistence.Entities.User", null)
+                    b.HasOne("IdentityProvider.Persistence.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -602,9 +599,9 @@ namespace IdentityProviderService.Persistence.Migrations
                         .HasConstraintName("fk_users_roles_users_user_id");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.UserToken", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.UserToken", b =>
                 {
-                    b.HasOne("IdentityProviderService.Persistence.Entities.User", null)
+                    b.HasOne("IdentityProvider.Persistence.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -612,14 +609,14 @@ namespace IdentityProviderService.Persistence.Migrations
                         .HasConstraintName("fk_user_tokens_users_user_id");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.Application", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.Application", b =>
                 {
                     b.Navigation("Authorizations");
 
                     b.Navigation("Tokens");
                 });
 
-            modelBuilder.Entity("IdentityProviderService.Persistence.Entities.Authorization", b =>
+            modelBuilder.Entity("IdentityProvider.Persistence.Entities.Authorization", b =>
                 {
                     b.Navigation("Tokens");
                 });
