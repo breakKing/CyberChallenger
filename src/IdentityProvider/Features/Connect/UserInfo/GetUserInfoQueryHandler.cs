@@ -1,6 +1,6 @@
 ﻿using Mediator;
 
-namespace IdentityProviderService.Features.Connect.UserInfo;
+namespace IdentityProvider.Features.Connect.UserInfo;
 
 public sealed class GetUserInfoQueryHandler : IQueryHandler<GetUserInfoQuery, GetUserInfoResponse>
 {

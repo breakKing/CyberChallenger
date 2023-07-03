@@ -1,12 +1,12 @@
-﻿using IdentityProviderService.Common.Constants;
-using IdentityProviderService.Common.Interfaces;
-using IdentityProviderService.Persistence;
-using IdentityProviderService.Persistence.Entities;
+﻿using IdentityProvider.Common.Constants;
+using IdentityProvider.Common.Interfaces;
+using IdentityProvider.Persistence;
+using IdentityProvider.Persistence.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpenIddict.Abstractions;
 
-namespace IdentityProviderService.Common.Services;
+namespace IdentityProvider.Common.Services;
 
 public sealed class BootstrapService : IBootstrapService
 {

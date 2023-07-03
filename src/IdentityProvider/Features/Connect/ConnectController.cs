@@ -1,16 +1,15 @@
-﻿using IdentityProviderService.Common.Constants;
-using IdentityProviderService.Features.Connect.Login;
-using IdentityProviderService.Features.Connect.Refresh;
-using IdentityProviderService.Features.Connect.UserInfo;
+﻿using IdentityProvider.Common.Constants;
+using IdentityProvider.Features.Connect.Login;
+using IdentityProvider.Features.Connect.Refresh;
+using IdentityProvider.Features.Connect.UserInfo;
 using Mediator;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
 
-namespace IdentityProviderService.Features.Connect;
+namespace IdentityProvider.Features.Connect;
 
 [ApiController]
 public sealed class ConnectController : ControllerBase

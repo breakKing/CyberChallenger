@@ -1,4 +1,4 @@
-﻿namespace IdentityProviderService.Common.Interfaces;
+﻿namespace IdentityProvider.Common.Interfaces;
 
 public interface IBootstrapService
 {

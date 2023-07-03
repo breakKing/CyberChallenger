@@ -1,6 +1,6 @@
-﻿using IdentityProviderService.Common.Interfaces;
+﻿using IdentityProvider.Common.Interfaces;
 
-namespace IdentityProviderService.Common.Configuration;
+namespace IdentityProvider.Common.Configuration;
 
 public static class ApplicationPipeline
 {

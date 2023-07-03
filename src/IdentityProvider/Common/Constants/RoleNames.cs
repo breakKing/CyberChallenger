@@ -1,4 +1,4 @@
-﻿namespace IdentityProviderService.Common.Constants;
+﻿namespace IdentityProvider.Common.Constants;
 
 public static class RoleNames
 {

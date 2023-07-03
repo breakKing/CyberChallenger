@@ -1,4 +1,4 @@
-using IdentityProviderService.Common.Configuration;
+using IdentityProvider.Common.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 

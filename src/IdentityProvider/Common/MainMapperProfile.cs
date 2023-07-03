@@ -1,6 +1,6 @@
 ﻿using Mapster;
 
-namespace IdentityProviderService.Common;
+namespace IdentityProvider.Common;
 
 public sealed class MainMapperProfile : IRegister
 {

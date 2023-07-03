@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace IdentityProviderService.Features.Connect;
+namespace IdentityProvider.Features.Connect;
 
 public sealed class OidcResult
 {

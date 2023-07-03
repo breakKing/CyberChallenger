@@ -1,18 +1,18 @@
 ﻿using System.Reflection;
-using IdentityProviderService.Common.Constants;
-using IdentityProviderService.Common.Helpers;
-using IdentityProviderService.Common.Interfaces;
-using IdentityProviderService.Common.Models;
-using IdentityProviderService.Common.Services;
-using IdentityProviderService.Features.Connect;
-using IdentityProviderService.Persistence;
-using IdentityProviderService.Persistence.Entities;
+using IdentityProvider.Common.Constants;
+using IdentityProvider.Common.Helpers;
+using IdentityProvider.Common.Interfaces;
+using IdentityProvider.Common.Models;
+using IdentityProvider.Common.Services;
+using IdentityProvider.Features.Connect;
+using IdentityProvider.Persistence;
+using IdentityProvider.Persistence.Entities;
 using Mapster;
 using MapsterMapper;
 using OpenIddict.Abstractions;
 using OpenIddict.Validation.AspNetCore;
 
-namespace IdentityProviderService.Common.Configuration;
+namespace IdentityProvider.Common.Configuration;
 
 public static class DependencyInjection
 {

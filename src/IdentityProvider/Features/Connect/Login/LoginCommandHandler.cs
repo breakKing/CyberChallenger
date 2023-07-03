@@ -1,9 +1,9 @@
-﻿using IdentityProviderService.Persistence.Entities;
+﻿using IdentityProvider.Persistence.Entities;
 using Mediator;
 using Microsoft.AspNetCore.Identity;
 using OpenIddict.Abstractions;
 
-namespace IdentityProviderService.Features.Connect.Login;
+namespace IdentityProvider.Features.Connect.Login;
 
 public sealed class LoginCommandHandler : ICommandHandler<LoginCommand, LoginResponse>
 {

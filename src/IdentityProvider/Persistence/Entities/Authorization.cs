@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using OpenIddict.EntityFrameworkCore.Models;
 
-namespace IdentityProviderService.Persistence.Entities;
+namespace IdentityProvider.Persistence.Entities;
 
 public sealed class Authorization : OpenIddictEntityFrameworkCoreAuthorization<Guid, Application, Token>
 {

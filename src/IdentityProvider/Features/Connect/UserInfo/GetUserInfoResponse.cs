@@ -1,3 +1,3 @@
-﻿namespace IdentityProviderService.Features.Connect.UserInfo;
+﻿namespace IdentityProvider.Features.Connect.UserInfo;
 
 public sealed record GetUserInfoResponse(UserInfoDto? Data);

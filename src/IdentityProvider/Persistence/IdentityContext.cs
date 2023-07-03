@@ -1,8 +1,8 @@
-﻿using IdentityProviderService.Persistence.Entities;
+﻿using IdentityProvider.Persistence.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdentityProviderService.Persistence;
+namespace IdentityProvider.Persistence;
 
 public sealed class IdentityContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
 {

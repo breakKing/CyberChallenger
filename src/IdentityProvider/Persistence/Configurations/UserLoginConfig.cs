@@ -1,8 +1,8 @@
-﻿using IdentityProviderService.Persistence.Entities;
+﻿using IdentityProvider.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace IdentityProviderService.Persistence.Configurations;
+namespace IdentityProvider.Persistence.Configurations;
 
 public sealed class UserLoginConfig : IEntityTypeConfiguration<UserLogin>
 {

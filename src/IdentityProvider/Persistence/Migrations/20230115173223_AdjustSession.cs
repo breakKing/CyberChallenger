@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace IdentityProviderService.Persistence.Migrations
+namespace IdentityProvider.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class AdjustSession : Migration

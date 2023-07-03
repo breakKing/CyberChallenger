@@ -1,7 +1,7 @@
-﻿using IdentityProviderService.Persistence.Entities;
+﻿using IdentityProvider.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdentityProviderService.Persistence;
+namespace IdentityProvider.Persistence;
 
 public static class DependencyInjection
 {

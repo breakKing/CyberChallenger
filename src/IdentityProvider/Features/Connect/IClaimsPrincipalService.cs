@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
-using IdentityProviderService.Features.Connect.UserInfo;
-using IdentityProviderService.Persistence.Entities;
+using IdentityProvider.Features.Connect.UserInfo;
+using IdentityProvider.Persistence.Entities;
 
-namespace IdentityProviderService.Features.Connect;
+namespace IdentityProvider.Features.Connect;
 
 public interface IClaimsPrincipalService
 {

@@ -21,8 +21,6 @@ public sealed class RefreshEndpoint : EndpointWithoutRequestBase<RefreshResponse
         Post("refresh");
         
         Group<AuthGroup>();
-        
-        AllowAnonymous();
 
         ConfigureSwaggerDescription(new RefreshEndpointSummary(),
             HttpStatusCode.OK, 

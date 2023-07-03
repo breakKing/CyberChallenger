@@ -1,14 +1,14 @@
 ﻿using System.Collections.Immutable;
 using System.Security.Claims;
-using IdentityProviderService.Common.Models;
-using IdentityProviderService.Features.Connect.UserInfo;
-using IdentityProviderService.Persistence.Entities;
+using IdentityProvider.Common.Models;
+using IdentityProvider.Features.Connect.UserInfo;
+using IdentityProvider.Persistence.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using OpenIddict.Abstractions;
 
-namespace IdentityProviderService.Features.Connect;
+namespace IdentityProvider.Features.Connect;
 
 public sealed class ClaimsPrincipalService : IClaimsPrincipalService
 {

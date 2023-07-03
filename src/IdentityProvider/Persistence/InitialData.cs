@@ -1,7 +1,7 @@
-﻿using IdentityProviderService.Common.Constants;
-using IdentityProviderService.Persistence.Entities;
+﻿using IdentityProvider.Common.Constants;
+using IdentityProvider.Persistence.Entities;
 
-namespace IdentityProviderService.Persistence;
+namespace IdentityProvider.Persistence;
 
 public static class InitialData
 {

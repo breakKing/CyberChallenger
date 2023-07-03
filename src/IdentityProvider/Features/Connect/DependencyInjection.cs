@@ -1,4 +1,4 @@
-﻿namespace IdentityProviderService.Features.Connect;
+﻿namespace IdentityProvider.Features.Connect;
 
 public static class DependencyInjection
 {

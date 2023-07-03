@@ -1,4 +1,4 @@
-﻿namespace IdentityProviderService.Common.Models;
+﻿namespace IdentityProvider.Common.Models;
 
 public sealed class JwtOptions
 {

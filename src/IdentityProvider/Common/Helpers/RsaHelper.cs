@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 
-namespace IdentityProviderService.Common.Helpers;
+namespace IdentityProvider.Common.Helpers;
 
 public static class RsaHelper
 {

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace IdentityProviderService.Persistence.Migrations
+namespace IdentityProvider.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class SoftDeleteForUserAndRole : Migration
