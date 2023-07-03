@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FastEndpoints" Version="5.13.0" />
+      <PackageReference Include="FastEndpoints.Swagger" Version="5.13.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.8">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Common\Common.Presentation\Common.Presentation.csproj" />
+      <ProjectReference Include="..\Modules\Identity\Identity.csproj" />
+      <ProjectReference Include="..\Modules\Teams\Teams.Infrastructure\Teams.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

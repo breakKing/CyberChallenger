@@ -1,9 +1,0 @@
-﻿syntax = "proto3";
-
-option csharp_namespace = "Shared.Contracts.TeamService";
-
-// Событие "создание команды"
-message TeamCreatedGrpcEventV1 {
-  string id = 1;
-  string name = 2;
-}

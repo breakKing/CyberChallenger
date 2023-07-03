@@ -1,6 +1,0 @@
-﻿syntax = "proto3";
-
-option csharp_namespace = "Shared.Contracts.GameService";
-
-import "game_service_contracts.proto";
-
