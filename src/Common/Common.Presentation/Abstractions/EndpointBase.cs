@@ -38,6 +38,8 @@ public abstract class EndpointBase<TRequest, TResponse> : Endpoint<TRequest, Api
         EndpointSummaryBase summary, 
         params HttpStatusCode[] statusCodes)
     {
+        DontAutoTag();
+        
         Description(desc =>
         {
             foreach (var code in statusCodes)
