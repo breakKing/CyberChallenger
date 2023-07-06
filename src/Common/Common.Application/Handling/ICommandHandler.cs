@@ -1,7 +1,7 @@
 ﻿using LanguageExt.Common;
 using MediatR;
 
-namespace Common.Application.Primitives;
+namespace Common.Application.Handling;
 
 public interface ICommandHandler<in TRequest, TResponse> : IRequestHandler<TRequest, Result<TResponse>>
     where TRequest : ICommand<TResponse>

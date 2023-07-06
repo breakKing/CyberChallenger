@@ -1,14 +1,15 @@
-﻿using Common.Application.Primitives;
+﻿using ErrorOr;
 using FluentValidation;
-using LanguageExt.Common;
 using MediatR;
-using ValidationException = Common.Application.Exceptions.ValidationException;
 
-namespace Common.Application.PipelineBehaviors;
+namespace Common.Application.Pipeline;
 
-public sealed class ValidationPipelineBehavior<TRequest, TResponse> :
-    IApplicationPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+public sealed class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
+    where TRequest : notnull
+    where TResponse : IErrorOr, new()
 {
+    private const string ValidationErrorCode = "Validation";
+    
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
     public ValidationPipelineBehavior(IEnumerable<IValidator<TRequest>> validators)
@@ -17,9 +18,9 @@ public sealed class ValidationPipelineBehavior<TRequest, TResponse> :
     }
 
     /// <inheritdoc />
-    public async Task<Result<TResponse>> Handle(
+    public async Task<TResponse> Handle(
         TRequest request, 
-        RequestHandlerDelegate<Result<TResponse>> next, 
+        RequestHandlerDelegate<TResponse> next, 
         CancellationToken cancellationToken)
     {
         if (!_validators.Any())
@@ -43,10 +44,14 @@ public sealed class ValidationPipelineBehavior<TRequest, TResponse> :
                 })
             .ToDictionary(x => x.Key, x => x.Values);
         
-        if (errorsDictionary.Any())
+        if (errorsDictionary.Count > 0)
         {
-            var exception = new ValidationException(errorsDictionary);
-            return new Result<TResponse>(exception);
+            var errors = errorsDictionary
+                .SelectMany(e => e.Value)
+                .Select(e => Error.Validation(ValidationErrorCode, e))
+                .ToArray();
+
+            return (TResponse)(dynamic)errors;
         }
         
         return await next();
