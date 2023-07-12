@@ -1,9 +1,9 @@
 ﻿namespace Common.Domain.Primitives;
 
-public abstract class AggregateRoot : Entity
+public abstract class AggregateRoot<TKey> : Entity<TKey>
+    where TKey : IEquatable<TKey>
 {
-    /// <inheritdoc />
-    protected AggregateRoot(Guid id) : base(id)
+    protected AggregateRoot(TKey id) : base(id)
     {
         
     }

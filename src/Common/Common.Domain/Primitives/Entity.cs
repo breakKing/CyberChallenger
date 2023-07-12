@@ -1,23 +1,17 @@
-﻿using MassTransit;
+﻿namespace Common.Domain.Primitives;
 
-namespace Common.Domain.Primitives;
-
-public abstract class Entity : IEquatable<Entity>
+public abstract class Entity<TKey> : IEquatable<Entity<TKey>> 
+    where TKey : IEquatable<TKey>
 {
-    public Guid Id { get; private set; }
+    public TKey Id { get; }
 
-    protected Entity(Guid id)
+    protected Entity(TKey id)
     {
         Id = id;
     }
-
-    protected Entity()
-    {
-        Id = NewId.NextGuid();
-    }
-
+    
     /// <inheritdoc />
-    public bool Equals(Entity? other)
+    public bool Equals(Entity<TKey>? other)
     {
         if (ReferenceEquals(null, other))
         {
@@ -29,7 +23,7 @@ public abstract class Entity : IEquatable<Entity>
             return true;
         }
         
-        return Id.Equals(other.Id);
+        return EqualityComparer<TKey>.Default.Equals(Id, other.Id);
     }
 
     /// <inheritdoc />
@@ -50,21 +44,21 @@ public abstract class Entity : IEquatable<Entity>
             return false;
         }
         
-        return Equals((Entity)obj);
+        return Equals((Entity<TKey>)obj);
     }
 
     /// <inheritdoc />
     public override int GetHashCode()
     {
-        return Id.GetHashCode();
+        return EqualityComparer<TKey>.Default.GetHashCode(Id);
     }
 
-    public static bool operator ==(Entity? left, Entity? right)
+    public static bool operator ==(Entity<TKey>? left, Entity<TKey>? right)
     {
         return Equals(left, right);
     }
 
-    public static bool operator !=(Entity? left, Entity? right)
+    public static bool operator !=(Entity<TKey>? left, Entity<TKey>? right)
     {
         return !Equals(left, right);
     }
