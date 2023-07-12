@@ -1,14 +1,9 @@
-﻿using LanguageExt.Common;
+﻿using ErrorOr;
 using MediatR;
 
 namespace Common.Application.Handling;
 
-public interface ICommand<TResponse> : IRequest<Result<TResponse>>
-{
-    
-}
-
-public interface ICommand : ICommand<bool>
+public interface ICommand : IRequest<ErrorOr<bool>>
 {
     
 }

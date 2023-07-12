@@ -1,16 +1,10 @@
-﻿using LanguageExt.Common;
+﻿using ErrorOr;
 using MediatR;
 
 namespace Common.Application.Handling;
 
-public interface ICommandHandler<in TRequest, TResponse> : IRequestHandler<TRequest, Result<TResponse>>
-    where TRequest : ICommand<TResponse>
-{
-    
-}
-
-public interface ICommandHandler<in TRequest> : IRequestHandler<TRequest, Result<bool>>
-    where TRequest : ICommand
+public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand, ErrorOr<bool>>
+    where TCommand : ICommand
 {
     
 }

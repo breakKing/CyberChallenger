@@ -1,10 +1,10 @@
-﻿using LanguageExt.Common;
+﻿using ErrorOr;
 using MediatR;
 
 namespace Common.Application.Handling;
 
-public interface IQueryHandler<TRequest, TResponse> : IRequestHandler<TRequest, Result<TResponse>>
-    where TRequest : IQuery<TResponse>
+public interface IQueryHandler<in TQuery, TResponse> : IRequestHandler<TQuery, ErrorOr<TResponse>>
+    where TQuery : IQuery<TResponse>
 {
     
 }
