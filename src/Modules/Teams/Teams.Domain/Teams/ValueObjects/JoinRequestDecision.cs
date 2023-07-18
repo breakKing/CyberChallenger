@@ -6,7 +6,6 @@ public sealed record JoinRequestDecision : ValueObject<int>
 {
     private JoinRequestDecision(int value) : base(value)
     {
-        
     }
 
     public static readonly JoinRequestDecision Pending = new JoinRequestDecision(0);

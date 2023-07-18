@@ -6,7 +6,6 @@ public sealed record MemberRole : ValueObject<int>
 {
     private MemberRole(int value) : base(value)
     {
-        
     }
 
     public static readonly MemberRole Player = new MemberRole(0);

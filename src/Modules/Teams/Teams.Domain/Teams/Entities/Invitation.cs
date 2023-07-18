@@ -15,11 +15,11 @@ public sealed class Invitation : Entity<InvitationId>
     public DateTimeOffset? DecidedAt { get; private set; }
     public InvitationDecision Decision { get; private set; } = InvitationDecision.Pending;
     public string? DecisionMessage { get; private set; }
-    
+
     public Invitation(
-        TeamId teamId, 
-        MemberId invitorMemberId, 
-        UserId inviteeUserId, 
+        TeamId teamId,
+        MemberId invitorMemberId,
+        UserId inviteeUserId,
         string? invitorMessage) : base(InvitationId.Create())
     {
         TeamId = teamId;

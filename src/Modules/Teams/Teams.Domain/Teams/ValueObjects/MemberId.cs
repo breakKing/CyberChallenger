@@ -7,7 +7,6 @@ public sealed record MemberId : ValueObject<Guid>
 {
     private MemberId() : base(NewId.NextGuid())
     {
-        
     }
 
     public static MemberId Create() => new();

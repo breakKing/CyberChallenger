@@ -7,7 +7,6 @@ public sealed record InvitationId : ValueObject<Guid>
 {
     private InvitationId() : base(NewId.NextGuid())
     {
-        
     }
 
     public static InvitationId Create() => new();

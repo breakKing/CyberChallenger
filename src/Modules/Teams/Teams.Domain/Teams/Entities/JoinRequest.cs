@@ -15,11 +15,11 @@ public sealed class JoinRequest : Entity<JoinRequestId>
     public DateTimeOffset? DecidedAt { get; private set; }
     public JoinRequestDecision Decision { get; private set; } = JoinRequestDecision.Pending;
     public string? DecisionMessage { get; private set; }
-    
+
     /// <inheritdoc />
     public JoinRequest(
-        TeamId teamId, 
-        UserId requesterUserId, 
+        TeamId teamId,
+        UserId requesterUserId,
         string? requesterMessage = null) : base(JoinRequestId.Create())
     {
         TeamId = teamId;

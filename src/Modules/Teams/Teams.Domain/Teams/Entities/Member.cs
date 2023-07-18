@@ -10,7 +10,7 @@ public sealed class Member : Entity<MemberId>
     public UserId UserId { get; private set; }
     public MemberRole Role { get; private set; }
     public DateTimeOffset JoinedAt { get; private set; } = DateTimeOffset.UtcNow;
-    
+
     public Member(
         TeamId teamId,
         UserId userId,
