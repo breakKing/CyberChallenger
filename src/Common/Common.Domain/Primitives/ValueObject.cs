@@ -1,3 +1,11 @@
 ﻿namespace Common.Domain.Primitives;
 
-public abstract record ValueObject<TValue>(TValue Value);
+public abstract record ValueObject<TValue>
+{
+    public TValue Value { get; init; }
+
+    protected ValueObject(TValue value)
+    {
+        Value = value;
+    }
+}
